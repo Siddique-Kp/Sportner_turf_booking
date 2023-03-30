@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/consts/global_colors.dart';
 import 'package:sporter_turf_booking/consts/global_values.dart';
 import 'package:sporter_turf_booking/consts/textstyles.dart';
+import 'package:sporter_turf_booking/view_model/sign_up_view_model.dart';
 import '../components/text_form_field.dart';
 
 class UserSignUpScreen extends StatefulWidget {
@@ -14,21 +16,39 @@ class UserSignUpScreen extends StatefulWidget {
 
 class _UserSignUpScreenState extends State<UserSignUpScreen> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController userNameController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController confirfPassController = TextEditingController();
 
-  @override
-  void dispose() {
-    userNameController.dispose();
-    phoneController.dispose();
-    passController.dispose();
-    confirfPassController.dispose();
-    super.dispose();
-  }
+  // final TextEditingController userNameController = TextEditingController();
+  // final TextEditingController phoneController = TextEditingController();
+  // final TextEditingController confirfPassController = TextEditingController();
+
+  // @override
+  // void dispose() {
+  //   userNameController.dispose();
+  //   phoneController.dispose();
+  //   passController.dispose();
+  //   confirfPassController.dispose();
+  //   super.dispose();
+  // }
+
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  // }
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController userNameController =
+        context.watch<SignUpViewModel>().userNameController;
+    final TextEditingController phoneController =
+        context.watch<SignUpViewModel>().phoneController;
+    final TextEditingController passController =
+        context.watch<SignUpViewModel>().passController;
+    final TextEditingController confirfPassController =
+        context.watch<SignUpViewModel>().confirfPassController;
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    // context.read<SignUpViewModel>().checkTextFieldisEmpty();
+
+    // });
     return Scaffold(
       body: Stack(
         children: [
@@ -51,7 +71,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        kHeight30,
+                        kHeight50,
                         Text("Create Account", style: loginHeadingStyle),
                         Text(
                           "Create new account",
@@ -91,8 +111,23 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                         kHeight40,
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.grey.shade500),
-                          onPressed: () {
+                            backgroundColor: context
+                                .watch<SignUpViewModel>()
+                                .elevatedButtonColor,
+                          ),
+                          onPressed:
+                              //  userNameController.text.isEmpty ||
+                              //         phoneController.text.isEmpty ||
+                              //         passController.text.isEmpty ||
+                              //         confirfPassController.text.isEmpty
+                              //     ? null
+                              //     : () {
+                              //         if (_formKey.currentState!.validate()) {
+                              //           print("hiiiiiiiiiiii");
+                              //         }
+                              //       },
+
+                              () {
                             if (userNameController.text.isEmpty ||
                                 phoneController.text.isEmpty ||
                                 passController.text.isEmpty ||
@@ -123,7 +158,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
-                              "Already have an accound?",
+                              "Already have an account?",
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,

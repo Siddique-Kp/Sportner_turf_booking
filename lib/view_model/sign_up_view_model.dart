@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:sporter_turf_booking/consts/global_colors.dart';
 
@@ -8,7 +10,7 @@ class SignUpViewModel with ChangeNotifier {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passController = TextEditingController();
   final TextEditingController confirfPassController = TextEditingController();
-  Color _elevatedButtonColor = kButtonColor;
+  Color _elevatedButtonColor = Colors.grey;
   bool get isShowPassword => _isShowPassword;
   bool get isShowConfPassword => _isShowConfPassword;
   Color get elevatedButtonColor => _elevatedButtonColor;
@@ -28,11 +30,12 @@ class SignUpViewModel with ChangeNotifier {
         phoneController.text.isEmpty ||
         passController.text.isEmpty ||
         confirfPassController.text.isEmpty) {
+      log('hiiiiiiiii');
       _elevatedButtonColor = Colors.grey;
-      notifyListeners();
     } else {
-      _elevatedButtonColor = _elevatedButtonColor;
-      notifyListeners();
+      log('000000000000000');
+      _elevatedButtonColor = kButtonColor;
     }
+    notifyListeners();
   }
 }

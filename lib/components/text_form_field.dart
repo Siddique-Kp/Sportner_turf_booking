@@ -5,8 +5,8 @@ import 'package:sporter_turf_booking/consts/global_values.dart';
 import 'package:sporter_turf_booking/consts/textstyles.dart';
 import 'package:sporter_turf_booking/view_model/sign_up_view_model.dart';
 
-TextEditingController _passController = TextEditingController();
-TextEditingController get passController => _passController;
+// TextEditingController _passController = TextEditingController();
+// TextEditingController get passController => _passController;
 
 class TextFormWidget extends StatelessWidget {
   final TextEditingController controller;
@@ -33,11 +33,15 @@ class TextFormWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isShowPassword = context.watch<SignUpViewModel>().isShowPassword;
+    final passController = context.watch<SignUpViewModel>().passController;
     final isShowConfPassword =
         context.watch<SignUpViewModel>().isShowConfPassword;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: TextFormField(
+        onChanged: (value) {
+          context.read<SignUpViewModel>().checkTextFieldisEmpty();
+        },
         minLines: 1,
         controller: controller,
         obscureText: isPassword
@@ -84,7 +88,7 @@ class TextFormWidget extends StatelessWidget {
           if (isConfPass) {
             if (value == null || value.isEmpty) {
               return "Enter the Confirm password";
-            } else if (value != _passController.text) {
+            } else if (value != passController.text) {
               return "Password must match";
             }
           }
