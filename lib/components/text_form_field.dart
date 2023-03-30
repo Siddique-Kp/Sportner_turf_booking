@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/consts/global_colors.dart';
+import 'package:sporter_turf_booking/consts/global_values.dart';
 import 'package:sporter_turf_booking/consts/textstyles.dart';
+import 'package:sporter_turf_booking/view_model/sign_up_view_model.dart';
 
 TextEditingController _passController = TextEditingController();
 TextEditingController get passController => _passController;
@@ -28,10 +32,19 @@ class TextFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isShowPassword = context.watch<SignUpViewModel>().isShowPassword;
+    final isShowConfPassword =
+        context.watch<SignUpViewModel>().isShowConfPassword;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: TextFormField(
+        minLines: 1,
         controller: controller,
+        obscureText: isPassword
+            ? isShowPassword
+            : isConfPass
+                ? isShowConfPassword
+                : false,
         keyboardType: keyType,
         validator: (value) {
           if (isUser) {
@@ -40,6 +53,7 @@ class TextFormWidget extends StatelessWidget {
             }
           }
           if (isPhone) {
+            // FilteringTextInputFormatter.allow(RegExp(r'[0-9]'));
             if (value == null || value.isEmpty) {
               return "Mobile number is required";
             } else if (value.length != 10) {
@@ -77,28 +91,56 @@ class TextFormWidget extends StatelessWidget {
           return null;
         },
         decoration: InputDecoration(
-            
-            // filled: true,
-            // fillColor: Colors.grey[100],
-            
-            border:OutlineInputBorder(
-              
-              borderRadius: BorderRadius.circular(5),
-            ),
-            prefixIcon: isPhone
-                ? Padding(
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.green),
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+
+          // filled: true,
+          // fillColor: Colors.grey[100],
+
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          prefixIconColor: klightBlackColor,
+          prefixIcon: isPhone
+              ? Padding(
                   padding: const EdgeInsets.only(bottom: 2.3),
                   child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset("assets/india_flag.png",
-                            width: 50, height: 20),
-                        Text("+91", style: loginTextStyle)
-                      ],
-                    ),
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset("assets/india_flag.png",
+                          width: 50, height: 20),
+                      Text("+91", style: loginTextStyle)
+                    ],
+                  ),
                 )
-                : Icon(textFieldIcon,size: 27,),
-            labelText: labelText),
+              : Icon(textFieldIcon, size: 25),
+          suffixIconColor: klightBlackColor,
+          suffixIcon: isPassword
+              ? IconButton(
+                  onPressed: () {
+                    context.read<SignUpViewModel>().showUnshowPassword();
+                  },
+                  icon: isShowPassword
+                      ? const Icon(Icons.visibility_off)
+                      : const Icon(Icons.visibility),
+                )
+              : isConfPass
+                  ? IconButton(
+                      onPressed: () {
+                        context
+                            .read<SignUpViewModel>()
+                            .showUnshowConfPassword();
+                      },
+                      icon: isShowConfPassword
+                          ? const Icon(Icons.visibility_off)
+                          : const Icon(Icons.visibility),
+                    )
+                  : kHeight10,
+          labelText: labelText,
+          labelStyle: TextStyle(color: klightBlackColor),
+        ),
       ),
     );
   }
