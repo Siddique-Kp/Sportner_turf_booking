@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
           "/userLogin": (context) => const UserLoginScreen(),
           "/otpRegister": (context) =>  OtpVerificationPage()
         },
-        initialRoute: "/otpRegister",
+        initialRoute: "/userSignUp",
       ),
     );
   }

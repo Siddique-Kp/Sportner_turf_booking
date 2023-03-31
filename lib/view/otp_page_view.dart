@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/components/otp_textfield.dart';
 import 'package:sporter_turf_booking/consts/global_colors.dart';
 import 'package:sporter_turf_booking/consts/global_values.dart';
 import 'package:sporter_turf_booking/consts/textstyles.dart';
+import 'package:sporter_turf_booking/view_model/sign_up_view_model.dart';
 
 class OtpVerificationPage extends StatelessWidget {
   const OtpVerificationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final otpValue =
+        Provider.of<SignUpViewModel>(context, listen: false).otpValue;
+    final splitOtp = otpValue.split('');
     return Scaffold(
       body: GestureDetector(
         onTap: () {
@@ -39,7 +44,7 @@ class OtpVerificationPage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "Enter the verification code we just sent on\nyour mobile +91998877665",
+                    "Enter the verification code we just sent you\non mobile +91998877665",
                     style: TextStyle(
                       color: klightBlackColor,
                       fontWeight: FontWeight.w500,
@@ -66,7 +71,16 @@ class OtpVerificationPage extends StatelessWidget {
                     width: double.infinity,
                     height: 45,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed:splitOtp.length != 6? null: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title:const Text("Verification Code"),
+                                content: Text('Code entered is $otpValue'),
+                              );
+                            });
+                      },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
                       ),

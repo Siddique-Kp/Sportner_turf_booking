@@ -9,48 +9,20 @@ import '../components/login_button_widget.dart';
 import '../components/registering_text_widget.dart';
 import '../components/text_form_field.dart';
 
-class UserSignUpScreen extends StatefulWidget {
-  const UserSignUpScreen({super.key});
+class UserSignUpScreen extends StatelessWidget {
+  UserSignUpScreen({super.key});
 
-  @override
-  State<UserSignUpScreen> createState() => _UserSignUpScreenState();
-}
-
-class _UserSignUpScreenState extends State<UserSignUpScreen> {
   final _formKey = GlobalKey<FormState>();
-
-  // final TextEditingController userNameController = TextEditingController();
-  // final TextEditingController phoneController = TextEditingController();
-  // final TextEditingController confirfPassController = TextEditingController();
-
-  // @override
-  // void dispose() {
-  //   userNameController.dispose();
-  //   phoneController.dispose();
-  //   passController.dispose();
-  //   confirfPassController.dispose();
-  //   super.dispose();
-  // }
-
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  // }
 
   @override
   Widget build(BuildContext context) {
+    final signUpProvider = context.watch<SignUpViewModel>();
     TextEditingController userNameController =
-        context.watch<SignUpViewModel>().userNameController;
-    final TextEditingController phoneController =
-        context.watch<SignUpViewModel>().phoneController;
-    final TextEditingController passController =
-        context.watch<SignUpViewModel>().passController;
-    final TextEditingController confirfPassController =
-        context.watch<SignUpViewModel>().confirfPassController;
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    // context.read<SignUpViewModel>().checkTextFieldisEmpty();
-
-    // });
+        signUpProvider.userNameController;
+    TextEditingController phoneController = signUpProvider.phoneController;
+    TextEditingController passController = signUpProvider.passController;
+    TextEditingController confirfPassController =
+        signUpProvider.confirfPassController;
     return Scaffold(
       body: Stack(
         children: [
@@ -132,6 +104,10 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                           onTap: () {
                             Navigator.pushReplacementNamed(
                                 context, "/userLogin");
+                            Provider.of<SignUpViewModel>(context, listen: false)
+                                .clearTextField();
+                            Provider.of<SignUpViewModel>(context, listen: false)
+                                .checkTextFieldisEmpty();
                           },
                         )
                       ],
@@ -146,4 +122,3 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
     );
   }
 }
-

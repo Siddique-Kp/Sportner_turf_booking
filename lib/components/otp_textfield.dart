@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/consts/global_colors.dart';
+import 'package:sporter_turf_booking/view_model/sign_up_view_model.dart';
 
 class OtpTextfieldWidget extends StatelessWidget {
   const OtpTextfieldWidget({super.key});
@@ -14,18 +16,15 @@ class OtpTextfieldWidget extends StatelessWidget {
       focusedBorderColor: kButtonColor,
       cursorColor: klightBlackColor,
       onCodeChanged: (String code) {
-        //handle validation or checks here
+        Provider.of<SignUpViewModel>(context, listen: false)
+            .getOtp(code);
+
       },
+
       onSubmit: (String verificationCode) {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text("Verification Code"),
-                content: Text('Code entered is $verificationCode'),
-              );
-            });
-      }, // end onSubmit
+        Provider.of<SignUpViewModel>(context, listen: false)
+            .getOtp(verificationCode);
+      },
     );
   }
 }
