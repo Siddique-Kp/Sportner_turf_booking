@@ -1,6 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sporter_turf_booking/view/login_view.dart';
 import 'package:sporter_turf_booking/view/sign_up_view.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -20,7 +21,7 @@ class SplashScreen extends StatelessWidget {
             ),
           ),
         ),
-        nextScreen:  UserSignUpScreen(),
+        nextScreen:  UserLoginScreen(),
       ),
     );
   }

@@ -5,6 +5,8 @@ import 'package:sporter_turf_booking/consts/global_colors.dart';
 import 'package:sporter_turf_booking/consts/global_values.dart';
 import 'package:sporter_turf_booking/consts/textstyles.dart';
 import 'package:sporter_turf_booking/view_model/sign_up_view_model.dart';
+import '../components/login_button_widget.dart';
+import '../components/registering_text_widget.dart';
 import '../components/text_form_field.dart';
 
 class UserSignUpScreen extends StatefulWidget {
@@ -91,7 +93,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                           isPhone: true,
                           controller: phoneController,
                           labelText: 'Phone',
-                          textFieldIcon: Icons.phone_android_outlined,
+                          textFieldIcon: Icons.phone_iphone,
                           keyType: TextInputType.number,
                         ),
                         TextFormWidget(
@@ -109,25 +111,9 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                           keyType: TextInputType.text,
                         ),
                         kHeight40,
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: context
-                                .watch<SignUpViewModel>()
-                                .elevatedButtonColor,
-                          ),
-                          onPressed:
-                              //  userNameController.text.isEmpty ||
-                              //         phoneController.text.isEmpty ||
-                              //         passController.text.isEmpty ||
-                              //         confirfPassController.text.isEmpty
-                              //     ? null
-                              //     : () {
-                              //         if (_formKey.currentState!.validate()) {
-                              //           print("hiiiiiiiiiiii");
-                              //         }
-                              //       },
-
-                              () {
+                        LoginButtonWidget(
+                          title: "CREATE ACCOUNT",
+                          onPressed: () {
                             if (userNameController.text.isEmpty ||
                                 phoneController.text.isEmpty ||
                                 passController.text.isEmpty ||
@@ -138,47 +124,15 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                               print("hiiiiiiiiiiii");
                             }
                           },
-                          child: const SizedBox(
-                            width: double.infinity,
-                            height: 50,
-                            child: Center(
-                              child: Text(
-                                "CREATE ACCOUNT",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ),
-                          ),
                         ),
                         kHeight30,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              "Already have an account?",
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                // Navigator.pushReplacementNamed(
-                                //     context, "/userLogin");
-                              },
-                              child: const Text(
-                                "Login",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: kButtonColor,
-                                ),
-                              ),
-                            )
-                          ],
+                        RegisteringText(
+                          leftText: 'Already have an account? ',
+                          rightText: "Login",
+                          onTap: () {
+                            Navigator.pushReplacementNamed(
+                                context, "/userLogin");
+                          },
                         )
                       ],
                     ),
@@ -192,3 +146,4 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
     );
   }
 }
+

@@ -15,6 +15,7 @@ class TextFormWidget extends StatelessWidget {
   final TextInputType keyType;
   final bool isPassword;
   final bool isConfPass;
+  final bool isLoginPass;
   final bool isPhone;
   final bool isUser;
 
@@ -26,6 +27,7 @@ class TextFormWidget extends StatelessWidget {
     required this.keyType,
     this.isPassword = false,
     this.isConfPass = false,
+    this.isLoginPass = false,
     this.isPhone = false,
     this.isUser = false,
   });
@@ -92,6 +94,14 @@ class TextFormWidget extends StatelessWidget {
               return "Password must match";
             }
           }
+          if (isLoginPass) {
+            if (value == null || value.isEmpty) {
+              return "Enter the password";
+            } else {
+              return null;
+            }
+          }
+
           return null;
         },
         decoration: InputDecoration(
@@ -107,19 +117,21 @@ class TextFormWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
           ),
           prefixIconColor: klightBlackColor,
-          prefixIcon: isPhone
-              ? Padding(
-                  padding: const EdgeInsets.only(bottom: 2.3),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset("assets/india_flag.png",
-                          width: 50, height: 20),
-                      Text("+91", style: loginTextStyle)
-                    ],
-                  ),
-                )
-              : Icon(textFieldIcon, size: 25),
+          prefixIcon:
+          //  isPhone
+          //     ? Padding(
+          //         padding: const EdgeInsets.only(bottom: 2.3),
+          //         child: Row(
+          //           mainAxisSize: MainAxisSize.min,
+          //           children: [
+          //             Image.asset("assets/india_flag.png",
+          //                 width: 50, height: 20),
+          //             Text("+91", style: loginTextStyle)
+          //           ],
+          //         ),
+          //       )
+          //     :
+               Icon(textFieldIcon, size: 25),
           suffixIconColor: klightBlackColor,
           suffixIcon: isPassword
               ? IconButton(
