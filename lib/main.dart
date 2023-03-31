@@ -44,9 +44,9 @@ class MyApp extends StatelessWidget {
           "/splashScreen": (context) => const SplashScreen(),
           "/userSignUp": (context) => UserSignUpScreen(),
           "/userLogin": (context) => const UserLoginScreen(),
-          "/otpRegister": (context) =>  OtpVerificationPage()
+          "/otpRegister": (context) =>  const OtpVerificationPage()
         },
-        initialRoute: "/userSignUp",
+        initialRoute: "/splashScreen",
       ),
     );
   }

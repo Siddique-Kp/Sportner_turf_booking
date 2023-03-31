@@ -85,13 +85,17 @@ class UserSignUpScreen extends StatelessWidget {
                         kHeight40,
                         LoginButtonWidget(
                           title: "CREATE ACCOUNT",
-                          onPressed: () {
-                            if (userNameController.text.isEmpty ||
+                          onPressed: userNameController.text.isEmpty ||
                                 phoneController.text.isEmpty ||
                                 passController.text.isEmpty ||
-                                confirfPassController.text.isEmpty) {
-                              return;
-                            }
+                                confirfPassController.text.isEmpty?null:
+                          () {
+                            // if (userNameController.text.isEmpty ||
+                            //     phoneController.text.isEmpty ||
+                            //     passController.text.isEmpty ||
+                            //     confirfPassController.text.isEmpty) {
+                            //   return;
+                            // }
                             if (_formKey.currentState!.validate()) {
                               print("hiiiiiiiiiiii");
                             }

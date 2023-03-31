@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/consts/global_colors.dart';
-import '../view_model/sign_up_view_model.dart';
 
 class LoginButtonWidget extends StatelessWidget {
   const LoginButtonWidget({
@@ -19,10 +17,9 @@ class LoginButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
+        disabledBackgroundColor: kGreyColor,
         elevation: 0,
-        backgroundColor: isLogin
-            ? kButtonColor
-            : context.watch<SignUpViewModel>().elevatedButtonColor,
+        backgroundColor: kButtonColor,
       ),
       onPressed: onPressed,
       child: SizedBox(
@@ -32,7 +29,6 @@ class LoginButtonWidget extends StatelessWidget {
           child: Text(
             title,
             style: const TextStyle(
-              color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 15,
             ),

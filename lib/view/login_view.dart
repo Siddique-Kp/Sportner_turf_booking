@@ -80,7 +80,6 @@ class UserLoginScreen extends StatelessWidget {
                   isLogin: true,
                   onPressed: () {
                     Navigator.pushNamed(context, "/otpRegister");
-
                   },
                   title: "LOGIN",
                 ),
