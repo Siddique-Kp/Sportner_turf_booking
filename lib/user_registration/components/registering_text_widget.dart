@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../consts/global_colors.dart';
+import '../../utils/global_colors.dart';
 
 class RegisteringText extends StatelessWidget {
   const RegisteringText({

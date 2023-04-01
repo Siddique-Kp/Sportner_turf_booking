@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sporter_turf_booking/consts/global_colors.dart';
+import 'package:sporter_turf_booking/utils/global_colors.dart';
 
 class LoginButtonWidget extends StatelessWidget {
   const LoginButtonWidget({

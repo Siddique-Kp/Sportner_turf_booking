@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sporter_turf_booking/consts/global_colors.dart';
-import 'package:sporter_turf_booking/consts/global_values.dart';
-import 'package:sporter_turf_booking/view/login_view.dart';
-import 'package:sporter_turf_booking/view_model/sign_up_view_model.dart';
+import 'package:sporter_turf_booking/utils/global_colors.dart';
+import 'package:sporter_turf_booking/utils/global_values.dart';
+import 'package:sporter_turf_booking/user_registration/view/login_view.dart';
+import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 import 'pass_visible_button.dart';
 
 class TextFormWidget extends StatelessWidget {

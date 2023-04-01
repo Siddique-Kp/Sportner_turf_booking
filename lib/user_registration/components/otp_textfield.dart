@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:provider/provider.dart';
-import 'package:sporter_turf_booking/consts/global_colors.dart';
-import 'package:sporter_turf_booking/view_model/sign_up_view_model.dart';
+import 'package:sporter_turf_booking/utils/global_colors.dart';
+import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 
 class OtpTextfieldWidget extends StatelessWidget {
   const OtpTextfieldWidget({super.key});

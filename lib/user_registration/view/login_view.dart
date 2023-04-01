@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sporter_turf_booking/components/login_button_widget.dart';
-import 'package:sporter_turf_booking/components/registering_text_widget.dart';
-import 'package:sporter_turf_booking/components/text_form_field.dart';
-import '../consts/global_colors.dart';
-import '../consts/global_values.dart';
-import '../consts/textstyles.dart';
+import 'package:sporter_turf_booking/user_registration/components/login_button_widget.dart';
+import 'package:sporter_turf_booking/user_registration/components/registering_text_widget.dart';
+import 'package:sporter_turf_booking/user_registration/components/text_form_field.dart';
+import '../../utils/global_colors.dart';
+import '../../utils/global_values.dart';
+import '../../utils/textstyles.dart';
 
 TextEditingController loginPhoneController = TextEditingController();
 TextEditingController loginPassController = TextEditingController();

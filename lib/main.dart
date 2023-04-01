@@ -1,12 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sporter_turf_booking/consts/global_colors.dart';
-import 'package:sporter_turf_booking/view/login_view.dart';
-import 'package:sporter_turf_booking/view/otp_page_view.dart';
-import 'package:sporter_turf_booking/view/sign_up_view.dart';
-import 'package:sporter_turf_booking/view/splash_screen_view.dart';
-import 'package:sporter_turf_booking/view_model/sign_up_view_model.dart';
+import 'package:sporter_turf_booking/utils/global_colors.dart';
+import 'package:sporter_turf_booking/user_registration/view/login_view.dart';
+import 'package:sporter_turf_booking/user_registration/view/otp_page_view.dart';
+import 'package:sporter_turf_booking/user_registration/view/sign_up_view.dart';
+import 'package:sporter_turf_booking/user_registration/view/splash_screen_view.dart';
+import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 
 Future<void> main() async {
 WidgetsFlutterBinding.ensureInitialized();
