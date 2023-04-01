@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "529115035138",
+    "project_id": "sportner-turf-booking",
+    "storage_bucket": "sportner-turf-booking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:529115035138:android:4a9690d231efefb7dbd91b",
+        "android_client_info": {
+          "package_name": "com.example.sporter_turf_booking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "529115035138-0sajv07a6unn7g2gu1q4d2vm5bp9fvq2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB10lQPurH35HypOs8dDt7yNCjdEg6W3_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "529115035138-0sajv07a6unn7g2gu1q4d2vm5bp9fvq2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/consts/global_colors.dart';
@@ -7,7 +8,9 @@ import 'package:sporter_turf_booking/view/sign_up_view.dart';
 import 'package:sporter_turf_booking/view/splash_screen_view.dart';
 import 'package:sporter_turf_booking/view_model/sign_up_view_model.dart';
 
-void main() {
+Future<void> main() async {
+WidgetsFlutterBinding.ensureInitialized();
+await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -42,7 +45,7 @@ class MyApp extends StatelessWidget {
                 elevation: 0)),
         routes: {
           "/splashScreen": (context) => const SplashScreen(),
-          "/userSignUp": (context) => UserSignUpScreen(),
+          "/userSignUp": (context) => const UserSignUpScreen(),
           "/userLogin": (context) => const UserLoginScreen(),
           "/otpRegister": (context) =>  const OtpVerificationPage()
         },

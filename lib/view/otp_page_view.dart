@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/components/otp_textfield.dart';
@@ -9,10 +12,14 @@ import 'package:sporter_turf_booking/view_model/sign_up_view_model.dart';
 class OtpVerificationPage extends StatelessWidget {
   const OtpVerificationPage({super.key});
 
+  static String verify = "";
+
   @override
   Widget build(BuildContext context) {
     final otpValue = Provider.of<SignUpViewModel>(context).otpValue;
+    final mobileNumber = Provider.of<SignUpViewModel>(context).phoneController;
     final splitOtp = otpValue.split('');
+    final FirebaseAuth auth = FirebaseAuth.instance;
     return Scaffold(
       body: WillPopScope(
         onWillPop: () async {
@@ -48,7 +55,7 @@ class OtpVerificationPage extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Enter the verification code we just sent you\non mobile +91998877665",
+                      "Enter the verification code we just sent you\non mobile +91${mobileNumber.text}",
                       style: TextStyle(
                         color: klightBlackColor,
                         fontWeight: FontWeight.w500,
@@ -77,16 +84,18 @@ class OtpVerificationPage extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: splitOtp.length != 6
                             ? null
-                            : () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        title: const Text("Verification Code"),
-                                        content:
-                                            Text('Code entered is $otpValue'),
-                                      );
-                                    });
+                            : () async {
+                                try {
+                                  PhoneAuthCredential credential =
+                                      PhoneAuthProvider.credential(
+                                          verificationId:
+                                              OtpVerificationPage.verify,
+                                          smsCode: otpValue);
+                                  await auth.signInWithCredential(credential);
+                                  Navigator.pushNamed(context, "/userLogin");
+                                } catch (e) {
+                                  log(e.toString());
+                                }
                               },
                         style: ElevatedButton.styleFrom(
                           elevation: 0,

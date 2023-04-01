@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/consts/global_colors.dart';
 import 'package:sporter_turf_booking/consts/global_values.dart';
+import 'package:sporter_turf_booking/view/login_view.dart';
 import 'package:sporter_turf_booking/view_model/sign_up_view_model.dart';
+import 'pass_visible_button.dart';
 
 class TextFormWidget extends StatelessWidget {
   final TextEditingController controller;
@@ -12,6 +14,7 @@ class TextFormWidget extends StatelessWidget {
   final bool isPassword;
   final bool isConfPass;
   final bool isLoginPass;
+  final bool isLoginPhone;
   final bool isPhone;
   final bool isUser;
 
@@ -24,18 +27,19 @@ class TextFormWidget extends StatelessWidget {
     this.isPassword = false,
     this.isConfPass = false,
     this.isLoginPass = false,
+    this.isLoginPhone = false,
     this.isPhone = false,
     this.isUser = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final isShowPassword = context.watch<SignUpViewModel>().isShowPassword;
-    final passController = context.watch<SignUpViewModel>().passController;
-    final confpassController =
-        context.watch<SignUpViewModel>().confirfPassController;
-    final isShowConfPassword =
-        context.watch<SignUpViewModel>().isShowConfPassword;
+    final watchSignUpprovider = context.watch<SignUpViewModel>();
+    final readSignUpprovider = context.read<SignUpViewModel>();
+    final isShowPassword = watchSignUpprovider.isShowPassword;
+    final passController = watchSignUpprovider.passController;
+    final confpassController = watchSignUpprovider.confirfPassController;
+    final isShowConfPassword = watchSignUpprovider.isShowConfPassword;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: TextFormField(
@@ -48,7 +52,9 @@ class TextFormWidget extends StatelessWidget {
             ? isShowPassword
             : isConfPass
                 ? isShowConfPassword
-                : false,
+                : isLoginPass
+                    ? true
+                    : false,
         keyboardType: keyType,
         validator: (value) {
           if (isUser) {
@@ -59,6 +65,13 @@ class TextFormWidget extends StatelessWidget {
           if (isPhone) {
             if (value == null || value.isEmpty) {
               return "Mobile number is required";
+            } else if (value.length != 10) {
+              return "Enter valid mobile number";
+            }
+          }
+          if (isLoginPhone) {
+            if (value == null || value.isEmpty) {
+              return "Enter the mobile number";
             } else if (value.length != 10) {
               return "Enter valid mobile number";
             }
@@ -127,32 +140,29 @@ class TextFormWidget extends StatelessWidget {
               Icon(textFieldIcon, size: 25),
           suffixIconColor: klightBlackColor,
           suffixIcon: isPassword && passController.text.isNotEmpty
-              ? InkWell(
+              ? PassVisibleButton(
+                  isShowPassword: isShowPassword,
                   onTap: () {
-                    context.read<SignUpViewModel>().showUnshowPassword();
+                    readSignUpprovider.showUnshowPassword();
                   },
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  child: isShowPassword
-                      ? const Icon(Icons.visibility_off)
-                      : const Icon(Icons.visibility),
                 )
               : isConfPass && confpassController.text.isNotEmpty
-                  ? InkWell(
+                  ? PassVisibleButton(
+                      isShowPassword: isShowConfPassword,
                       onTap: () {
-                        context
-                            .read<SignUpViewModel>()
-                            .showUnshowConfPassword();
+                        readSignUpprovider.showUnshowConfPassword();
                       },
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      child: isShowConfPassword
-                          ? const Icon(Icons.visibility_off)
-                          : const Icon(Icons.visibility),
                     )
-                  : kHeight10,
+                  : isLoginPass && loginPassController.text.isNotEmpty
+                      ? PassVisibleButton(
+                          isShowPassword: isShowPassword,
+                          onTap: () {},
+                        )
+                      : kHeight10,
           labelText: labelText,
-          labelStyle: TextStyle(color: klightBlackColor),
+          labelStyle: TextStyle(
+            color: klightBlackColor,
+          ),
         ),
       ),
     );

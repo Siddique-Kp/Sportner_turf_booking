@@ -1,18 +1,32 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/consts/global_colors.dart';
 import 'package:sporter_turf_booking/consts/global_values.dart';
 import 'package:sporter_turf_booking/consts/textstyles.dart';
+import 'package:sporter_turf_booking/view/otp_page_view.dart';
 import 'package:sporter_turf_booking/view_model/sign_up_view_model.dart';
 import '../components/login_button_widget.dart';
 import '../components/registering_text_widget.dart';
 import '../components/text_form_field.dart';
 
-class UserSignUpScreen extends StatelessWidget {
-  UserSignUpScreen({super.key});
+class UserSignUpScreen extends StatefulWidget {
+  const UserSignUpScreen({super.key});
 
+  @override
+  State<UserSignUpScreen> createState() => _UserSignUpScreenState();
+}
+
+class _UserSignUpScreenState extends State<UserSignUpScreen> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController countryCode = TextEditingController();
+
+  @override
+  void initState() {
+    countryCode.text = "+91";
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,20 +100,34 @@ class UserSignUpScreen extends StatelessWidget {
                         LoginButtonWidget(
                           title: "CREATE ACCOUNT",
                           onPressed: userNameController.text.isEmpty ||
-                                phoneController.text.isEmpty ||
-                                passController.text.isEmpty ||
-                                confirfPassController.text.isEmpty?null:
-                          () {
-                            // if (userNameController.text.isEmpty ||
-                            //     phoneController.text.isEmpty ||
-                            //     passController.text.isEmpty ||
-                            //     confirfPassController.text.isEmpty) {
-                            //   return;
-                            // }
-                            if (_formKey.currentState!.validate()) {
-                              print("hiiiiiiiiiiii");
-                            }
-                          },
+                                  phoneController.text.isEmpty ||
+                                  passController.text.isEmpty ||
+                                  confirfPassController.text.isEmpty
+                              ? null
+                              : () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    await FirebaseAuth.instance
+                                        .verifyPhoneNumber(
+                                      phoneNumber: countryCode.text +
+                                          phoneController.text,
+                                      verificationCompleted:
+                                          (PhoneAuthCredential credential) {},
+                                      verificationFailed:
+                                          (FirebaseAuthException e) {
+                                            
+                                          },
+                                      codeSent: (String verificationId,
+                                          int? resendToken) {
+                                        OtpVerificationPage.verify =
+                                            verificationId;
+                                        Navigator.pushNamed(
+                                            context, "/otpRegister");
+                                      },
+                                      codeAutoRetrievalTimeout:
+                                          (String verificationId) {},
+                                    );
+                                  }
+                                },
                         ),
                         kHeight30,
                         RegisteringText(
