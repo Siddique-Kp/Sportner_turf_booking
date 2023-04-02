@@ -17,13 +17,13 @@ class OtpTextfieldWidget extends StatelessWidget {
       cursorColor:  MyColors.klightBlackColor,
       onCodeChanged: (String code) {
         Provider.of<SignUpViewModel>(context, listen: false)
-            .getOtp(code);
+            .setOtp(code);
 
       },
 
       onSubmit: (String verificationCode) {
         Provider.of<SignUpViewModel>(context, listen: false)
-            .getOtp(verificationCode);
+            .setOtp(verificationCode);
       },
     );
   }

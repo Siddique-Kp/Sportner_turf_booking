@@ -1,23 +1,36 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/user_registration/components/login_button_widget.dart';
 import 'package:sporter_turf_booking/user_registration/components/registering_text_widget.dart';
 import 'package:sporter_turf_booking/user_registration/components/text_form_field.dart';
 import 'package:sporter_turf_booking/user_registration/repo/user_login_service.dart';
+import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/global_values.dart';
 import '../../utils/textstyles.dart';
 
-TextEditingController loginPhoneController = TextEditingController();
-TextEditingController loginPassController = TextEditingController();
-
-class UserLoginScreen extends StatelessWidget {
+class UserLoginScreen extends StatefulWidget {
   const UserLoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final loginKey = GlobalKey<FormState>();
+  State<UserLoginScreen> createState() => _UserLoginScreenState();
+}
 
+class _UserLoginScreenState extends State<UserLoginScreen> {
+  late final dynamic loginKey;
+  @override
+  void initState() {
+    loginKey = GlobalKey<FormState>();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final userLoginViewModel = context.watch<UserLoginViewModel>();
+    log("Rebuilded hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
     return Scaffold(
       body: GestureDetector(
         onTap: () {
@@ -41,7 +54,7 @@ class UserLoginScreen extends StatelessWidget {
                   const Text(
                     "Sign to continue",
                     style: TextStyle(
-                      color:  MyColors.kGreyColor,
+                      color: MyColors.kGreyColor,
                     ),
                   ),
                   MySize.kHeight10,
@@ -53,14 +66,14 @@ class UserLoginScreen extends StatelessWidget {
                   MySize.kHeight20,
                   TextFormWidget(
                     isLoginPhone: true,
-                    controller: loginPhoneController,
+                    controller: userLoginViewModel.loginPhoneCntrllr,
                     labelText: 'Phone',
                     textFieldIcon: Icons.phone_iphone,
                     keyType: TextInputType.number,
                   ),
                   TextFormWidget(
                     isLoginPass: true,
-                    controller: loginPassController,
+                    controller: userLoginViewModel.loginPasswordCntrllr,
                     labelText: 'Password',
                     textFieldIcon: Icons.lock_outline,
                     keyType: TextInputType.text,
@@ -75,7 +88,7 @@ class UserLoginScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
-                          color:  MyColors.kButtonColor,
+                          color: MyColors.kButtonColor,
                         ),
                       ),
                     ],
@@ -84,7 +97,7 @@ class UserLoginScreen extends StatelessWidget {
                   LoginButtonWidget(
                     onPressed: () async {
                       if (loginKey.currentState!.validate()) {
-                        await UserLogInService.userSiginin();
+                        await UserLogInService.userLogin(context);
                         // Navigator.pushNamed(context, "/otpRegister");
                       }
                     },
@@ -129,7 +142,7 @@ class UserLoginScreen extends StatelessWidget {
                           const Text(
                             "Continue with google",
                             style: TextStyle(
-                              color:  MyColors.kGreyColor,
+                              color: MyColors.kGreyColor,
                               fontSize: 18,
                             ),
                           ),

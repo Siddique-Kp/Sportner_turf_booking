@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
-import 'package:sporter_turf_booking/user_registration/view/login_view.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 import 'pass_visible_button.dart';
 
@@ -40,6 +40,7 @@ class TextFormWidget extends StatelessWidget {
     final passController = watchSignUpprovider.passController;
     final confpassController = watchSignUpprovider.confirfPassController;
     final isShowConfPassword = watchSignUpprovider.isShowConfPassword;
+    final userLoginViewModel = context.watch<UserLoginViewModel>();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: TextFormField(
@@ -53,7 +54,7 @@ class TextFormWidget extends StatelessWidget {
             : isConfPass
                 ? isShowConfPassword
                 : isLoginPass
-                    ? true
+                    ? userLoginViewModel.isShowPassword
                     : false,
         keyboardType: keyType,
         validator: (value) {
@@ -143,20 +144,26 @@ class TextFormWidget extends StatelessWidget {
               ? PassVisibleButton(
                   isShowPassword: isShowPassword,
                   onTap: () {
-                    readSignUpprovider.showUnshowPassword();
+                    readSignUpprovider.setshowPassword();
                   },
                 )
               : isConfPass && confpassController.text.isNotEmpty
                   ? PassVisibleButton(
                       isShowPassword: isShowConfPassword,
                       onTap: () {
-                        readSignUpprovider.showUnshowConfPassword();
+                        readSignUpprovider.setshowConfPassword();
                       },
                     )
-                  : isLoginPass && loginPassController.text.isNotEmpty
+                  : isLoginPass &&
+                          userLoginViewModel
+                              .loginPasswordCntrllr.text.isNotEmpty
                       ? PassVisibleButton(
-                          isShowPassword: isShowPassword,
-                          onTap: () {},
+                          isShowPassword: userLoginViewModel.isShowPassword,
+                          onTap: () {
+                            context
+                                .read<UserLoginViewModel>()
+                                .setShowPassword();
+                          },
                         )
                       : MySize.kHeight10,
           labelText: labelText,

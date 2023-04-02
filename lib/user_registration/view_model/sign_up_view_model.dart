@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 
 class SignUpViewModel with ChangeNotifier {
-  bool _isShowPassword = true;
-  bool _isShowConfPassword = true;
-  String otpValue = '';
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passController = TextEditingController();
   final TextEditingController confirfPassController = TextEditingController();
+
+  bool _isShowPassword = true;
+  bool _isShowConfPassword = true;
+  String otpValue = '';
+
   bool get isShowPassword => _isShowPassword;
   bool get isShowConfPassword => _isShowConfPassword;
 
-  showUnshowPassword() {
+  setshowPassword() {
     _isShowPassword = !_isShowPassword;
     notifyListeners();
   }
 
-  showUnshowConfPassword() {
+  setshowConfPassword() {
     _isShowConfPassword = !_isShowConfPassword;
     notifyListeners();
   }
@@ -33,7 +35,7 @@ class SignUpViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  getOtp(String verificationCode) {
+  setOtp(String verificationCode) {
     otpValue = verificationCode;
     notifyListeners();
   }
