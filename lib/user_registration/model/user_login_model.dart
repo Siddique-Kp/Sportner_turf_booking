@@ -1,21 +1,31 @@
 class UserLoginModel {
+  String? mobile;
+  String? password;
   String? accessToken;
   String? name;
-  String? mobile;
 
-  UserLoginModel({this.accessToken, this.name, this.mobile});
+  UserLoginModel({
+    this.mobile,
+    this.password,
+    this.accessToken,
+    this.name,
+  });
 
   UserLoginModel.fromJson(Map<String, dynamic> json) {
+    mobile = json['mobile'];
+    password = json['password'];
     accessToken = json['accessToken'];
     name = json['name'];
-    mobile = json['mobile'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
+    data['mobile'] = mobile;
+    data['password'] = password;
     data['accessToken'] = accessToken;
     data['name'] = name;
-    data['mobile'] = mobile;
     return data;
   }
 }
+
+

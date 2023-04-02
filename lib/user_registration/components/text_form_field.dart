@@ -122,7 +122,7 @@ class TextFormWidget extends StatelessWidget {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
           ),
-          prefixIconColor: klightBlackColor,
+          prefixIconColor: MyColors.klightBlackColor,
           prefixIcon:
               //  isPhone
               //     ? Padding(
@@ -138,7 +138,7 @@ class TextFormWidget extends StatelessWidget {
               //       )
               //     :
               Icon(textFieldIcon, size: 25),
-          suffixIconColor: klightBlackColor,
+          suffixIconColor: MyColors.klightBlackColor,
           suffixIcon: isPassword && passController.text.isNotEmpty
               ? PassVisibleButton(
                   isShowPassword: isShowPassword,
@@ -158,10 +158,10 @@ class TextFormWidget extends StatelessWidget {
                           isShowPassword: isShowPassword,
                           onTap: () {},
                         )
-                      : kHeight10,
+                      : MySize.kHeight10,
           labelText: labelText,
-          labelStyle: TextStyle(
-            color: klightBlackColor,
+          labelStyle: const TextStyle(
+            color: MyColors.klightBlackColor,
           ),
         ),
       ),

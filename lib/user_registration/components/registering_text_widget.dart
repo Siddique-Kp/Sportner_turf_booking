@@ -21,10 +21,10 @@ class RegisteringText extends StatelessWidget {
       children: [
         Text(
           leftText,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
-            color: klightBlackColor
+            color: MyColors.klightBlackColor
           ),
         ),
         GestureDetector(
@@ -34,7 +34,7 @@ class RegisteringText extends StatelessWidget {
             style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w600,
-              color: kButtonColor,
+              color: MyColors.kButtonColor,
             ),
           ),
         )

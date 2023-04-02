@@ -42,10 +42,10 @@ class OtpVerificationPage extends StatelessWidget {
                   // mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    kHeight30,
+                    MySize.kHeight30,
                     Text(
                       "OTP Verification",
-                      style: loginHeadingStyle,
+                      style: MyTextStyles.loginHeadingStyle,
                     ),
                     Center(
                       child: SizedBox(
@@ -56,14 +56,14 @@ class OtpVerificationPage extends StatelessWidget {
                     ),
                     Text(
                       "Enter the verification code we just sent you\non mobile +91${mobileNumber.text}",
-                      style: TextStyle(
-                        color: klightBlackColor,
+                      style:const TextStyle(
+                        color: MyColors.klightBlackColor,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    kHeight30,
+                    MySize.kHeight30,
                     const OtpTextfieldWidget(),
-                    kHeight30,
+                    MySize.kHeight30,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: const [
@@ -72,12 +72,12 @@ class OtpVerificationPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
-                            color: kButtonColor,
+                            color: MyColors.kButtonColor,
                           ),
                         )
                       ],
                     ),
-                    kHeight40,
+                    MySize.kHeight40,
                     SizedBox(
                       width: double.infinity,
                       height: 45,

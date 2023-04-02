@@ -59,15 +59,15 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        kHeight50,
-                        Text("Create Account", style: loginHeadingStyle),
-                        Text(
+                        MySize.kHeight50,
+                        Text("Create Account", style: MyTextStyles.loginHeadingStyle),
+                        const Text(
                           "Create new account",
                           style: TextStyle(
-                            color: kGreyColor,
+                            color: MyColors.kGreyColor,
                           ),
                         ),
-                        kHeight50,
+                        MySize.kHeight50,
                         TextFormWidget(
                           isUser: true,
                           controller: userNameController,
@@ -96,7 +96,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                           textFieldIcon: Icons.lock_outline,
                           keyType: TextInputType.text,
                         ),
-                        kHeight40,
+                        MySize.kHeight40,
                         LoginButtonWidget(
                           title: "CREATE ACCOUNT",
                           onPressed: userNameController.text.isEmpty ||
@@ -129,7 +129,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                                   }
                                 },
                         ),
-                        kHeight30,
+                        MySize.kHeight30,
                         RegisteringText(
                           leftText: 'Already have an account? ',
                           rightText: "Login",

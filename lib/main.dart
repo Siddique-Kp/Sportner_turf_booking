@@ -29,16 +29,16 @@ class MyApp extends StatelessWidget {
         title: 'sportner turf booking app',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-            scaffoldBackgroundColor: scaffoldColor,
-            primaryColor: appMainGreenColor,
+            scaffoldBackgroundColor: MyColors.scaffoldColor,
+            primaryColor: MyColors.appMainGreenColor,
             elevatedButtonTheme: const ElevatedButtonThemeData(
                 style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(kButtonColor),
+              backgroundColor: MaterialStatePropertyAll(MyColors.kBlackColor),
             )),
             brightness: Brightness.light,
             appBarTheme: const AppBarTheme(
                 titleTextStyle: TextStyle(
-                  color: scaffoldColor,
+                  color: MyColors.scaffoldColor,
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),

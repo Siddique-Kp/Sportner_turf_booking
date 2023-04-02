@@ -12,9 +12,9 @@ class OtpTextfieldWidget extends StatelessWidget {
     return OtpTextField(
       numberOfFields: 6,
       fieldWidth: 45,
-      borderColor: kButtonColor,
-      focusedBorderColor: kButtonColor,
-      cursorColor: klightBlackColor,
+      borderColor: MyColors.kButtonColor,
+      focusedBorderColor:  MyColors.kButtonColor,
+      cursorColor:  MyColors.klightBlackColor,
       onCodeChanged: (String code) {
         Provider.of<SignUpViewModel>(context, listen: false)
             .getOtp(code);

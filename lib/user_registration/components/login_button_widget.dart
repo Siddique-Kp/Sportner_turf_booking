@@ -6,20 +6,19 @@ class LoginButtonWidget extends StatelessWidget {
     super.key,
     required this.onPressed,
     required this.title,
-    this.isLogin = false,
   });
 
   final VoidCallback? onPressed;
   final String title;
-  final bool isLogin;
+
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        disabledBackgroundColor: kGreyColor,
+        disabledBackgroundColor: MyColors.kGreyColor,
         elevation: 0,
-        backgroundColor: kButtonColor,
+        backgroundColor: MyColors.kButtonColor,
       ),
       onPressed: onPressed,
       child: SizedBox(

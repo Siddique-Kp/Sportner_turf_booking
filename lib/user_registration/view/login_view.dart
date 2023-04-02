@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sporter_turf_booking/user_registration/components/login_button_widget.dart';
 import 'package:sporter_turf_booking/user_registration/components/registering_text_widget.dart';
 import 'package:sporter_turf_booking/user_registration/components/text_form_field.dart';
+import 'package:sporter_turf_booking/user_registration/repo/user_login_service.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/global_values.dart';
 import '../../utils/textstyles.dart';
@@ -15,7 +16,7 @@ class UserLoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-final loginKey = GlobalKey<FormState>();
+    final loginKey = GlobalKey<FormState>();
 
     return Scaffold(
       body: GestureDetector(
@@ -35,21 +36,21 @@ final loginKey = GlobalKey<FormState>();
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  kHeight20,
-                  Text("Welcome Back", style: loginHeadingStyle),
-                  Text(
+                  MySize.kHeight20,
+                  Text("Welcome Back", style: MyTextStyles.loginHeadingStyle),
+                  const Text(
                     "Sign to continue",
                     style: TextStyle(
-                      color: kGreyColor,
+                      color:  MyColors.kGreyColor,
                     ),
                   ),
-                  kHeight10,
+                  MySize.kHeight10,
                   SvgPicture.asset(
                     "assets/login_pic.svg",
                     // ignore: deprecated_member_use
                     color: Colors.green,
                   ),
-                  kHeight20,
+                  MySize.kHeight20,
                   TextFormWidget(
                     isLoginPhone: true,
                     controller: loginPhoneController,
@@ -64,7 +65,7 @@ final loginKey = GlobalKey<FormState>();
                     textFieldIcon: Icons.lock_outline,
                     keyType: TextInputType.text,
                   ),
-                  kHeight10,
+                  MySize.kHeight10,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: const [
@@ -74,22 +75,22 @@ final loginKey = GlobalKey<FormState>();
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
-                          color: kButtonColor,
+                          color:  MyColors.kButtonColor,
                         ),
                       ),
                     ],
                   ),
-                  kHeight30,
+                  MySize.kHeight30,
                   LoginButtonWidget(
-                    isLogin: true,
-                    onPressed: () {
+                    onPressed: () async {
                       if (loginKey.currentState!.validate()) {
-                        Navigator.pushNamed(context, "/otpRegister");
+                        await UserLogInService.userSiginin();
+                        // Navigator.pushNamed(context, "/otpRegister");
                       }
                     },
                     title: "LOGIN",
                   ),
-                  kHeight20,
+                  MySize.kHeight20,
                   Row(
                     children: const [
                       Expanded(
@@ -104,7 +105,7 @@ final loginKey = GlobalKey<FormState>();
                       ),
                     ],
                   ),
-                  kHeight10,
+                  MySize.kHeight10,
                   InkWell(
                     onTap: () {},
                     child: Container(
@@ -124,20 +125,20 @@ final loginKey = GlobalKey<FormState>();
                             padding: const EdgeInsets.all(8.0),
                             child: Image.asset("assets/google-logo.png"),
                           ),
-                          kWidth20,
-                          Text(
+                          MySize.kWidth20,
+                          const Text(
                             "Continue with google",
                             style: TextStyle(
-                              color: kGreyColor,
+                              color:  MyColors.kGreyColor,
                               fontSize: 18,
                             ),
                           ),
-                          kWidth30,
+                          MySize.kWidth30,
                         ],
                       ),
                     ),
                   ),
-                  kHeight30,
+                  MySize.kHeight30,
                   RegisteringText(
                     onTap: () {
                       Navigator.pushNamed(context, "/userSignUp");
