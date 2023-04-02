@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/home/view/home_view.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/user_registration/view/login_view.dart';
@@ -51,7 +52,8 @@ class MyApp extends StatelessWidget {
           "/splashScreen": (context) => const SplashScreen(),
           "/userSignUp": (context) => const UserSignUpScreen(),
           "/userLogin": (context) => const UserLoginScreen(),
-          "/otpRegister": (context) =>  const OtpVerificationPage()
+          "/otpRegister": (context) =>  const OtpVerificationPage(),
+          "/homeScreen": (context) =>  const HomeScreenView(),
         },
         initialRoute: "/splashScreen",
       ),

@@ -32,7 +32,6 @@ class SignUpViewModel with ChangeNotifier {
     phoneController.clear();
     passController.clear();
     confirfPassController.clear();
-    notifyListeners();
   }
 
   setOtp(String verificationCode) {

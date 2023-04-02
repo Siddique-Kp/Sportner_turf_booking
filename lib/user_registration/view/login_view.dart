@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/user_registration/components/login_button_widget.dart';
 import 'package:sporter_turf_booking/user_registration/components/registering_text_widget.dart';
 import 'package:sporter_turf_booking/user_registration/components/text_form_field.dart';
-import 'package:sporter_turf_booking/user_registration/repo/user_login_service.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/global_values.dart';
@@ -20,7 +19,7 @@ class UserLoginScreen extends StatefulWidget {
 }
 
 class _UserLoginScreenState extends State<UserLoginScreen> {
-  late final dynamic loginKey;
+  late final GlobalKey<FormState> loginKey;
   @override
   void initState() {
     loginKey = GlobalKey<FormState>();
@@ -30,7 +29,6 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
   @override
   Widget build(BuildContext context) {
     final userLoginViewModel = context.watch<UserLoginViewModel>();
-    log("Rebuilded hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
     return Scaffold(
       body: GestureDetector(
         onTap: () {
@@ -95,10 +93,18 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                   ),
                   MySize.kHeight30,
                   LoginButtonWidget(
+                    isLogin: true,
                     onPressed: () async {
                       if (loginKey.currentState!.validate()) {
-                        await UserLogInService.userLogin(context);
-                        // Navigator.pushNamed(context, "/otpRegister");
+                        context
+                            .read<UserLoginViewModel>()
+                            .getLoginStatus(context);
+
+                        if (userLoginViewModel.loginError.code == 401) {
+                          log("incorrect username");
+                        } else {
+                          log("kkkkkkkkkkk");
+                        }
                       }
                     },
                     title: "LOGIN",
