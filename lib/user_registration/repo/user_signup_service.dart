@@ -11,7 +11,7 @@ import 'api_status.dart';
 class UserSignUpService {
   static Future<Object> createUser(BuildContext context) async {
     final userSignupViewModel = context.read<SignUpViewModel>();
-    final uri = Uri.parse(Urls.BASE_URL + Urls.USER_SIGNUP);
+    final uri = Uri.parse(Urls.kBASEURL + Urls.kUSERSIGNUP);
 
     final body = UserSignupModel(
       name: userSignupViewModel.userNameController.text,
@@ -33,17 +33,17 @@ class UserSignUpService {
       );
     } on HttpException {
       return Failure(
-        code: InvalidRespons.NO_INTERNET,
+        code: InvalidRespons.kNOINTERNET,
         errorResponse: "No internet",
       );
     } on FormatException {
       return Failure(
-        code: InvalidRespons.INVALID_FORMAT,
+        code: InvalidRespons.kINVALIDFORMAT,
         errorResponse: "Invalid Format",
       );
     } catch (e) {
       return Failure(
-        code: InvalidRespons.UNKNOWN_ERRO,
+        code: InvalidRespons.kUNKNOWNERROR,
         errorResponse: "Unknown Error",
       );
     }

@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 class UserLogInService {
   static Future<Object> userLogin(BuildContext context) async {
     final userLoginViewModel = context.read<UserLoginViewModel>();
-    final uri = Uri.parse(Urls.BASE_URL + Urls.USER_SIGNIN);
+    final uri = Uri.parse(Urls.kBASEURL + Urls.kUSERSIGNIN);
 
     try {
       final data = UserLoginModel(
@@ -36,17 +36,17 @@ class UserLogInService {
       );
     } on HttpException {
       return Failure(
-        code: InvalidRespons.NO_INTERNET,
+        code: InvalidRespons.kNOINTERNET,
         errorResponse: "No internet",
       );
     } on FormatException {
       return Failure(
-        code: InvalidRespons.INVALID_FORMAT,
+        code: InvalidRespons.kINVALIDFORMAT,
         errorResponse: "Invalid Format",
       );
     } catch (e) {
       return Failure(
-        code: InvalidRespons.UNKNOWN_ERRO,
+        code: InvalidRespons.kUNKNOWNERROR,
         errorResponse: "Unknown Error",
       );
     }

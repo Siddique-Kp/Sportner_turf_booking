@@ -1,14 +1,13 @@
-// ignore_for_file: constant_identifier_names
 
 class Urls {
-  static const String BASE_URL = "http://192.168.213.151:5000";
-  static const String USER_SIGNIN = "/signin";
-  static const String USER_SIGNUP = "/signup";
+  static const String kBASEURL = "http://192.168.213.151:5000";
+  static const String kUSERSIGNIN = "/signin";
+  static const String kUSERSIGNUP = "/signup";
 }
 
 class InvalidRespons {
-  static const USER_INVALID_RESPONSE = 100;
-  static const NO_INTERNET = 101;
-  static const INVALID_FORMAT = 102;
-  static const UNKNOWN_ERRO = 103;
+  static const kUSERINVALIDRESPONSE = 100;
+  static const kNOINTERNET = 101;
+  static const kINVALIDFORMAT = 102;
+  static const kUNKNOWNERROR = 103;
 }

@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -6,7 +5,6 @@ import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 import 'package:sporter_turf_booking/utils/textstyles.dart';
-import 'package:sporter_turf_booking/user_registration/view/otp_page_view.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 import '../components/login_button_widget.dart';
 import '../components/registering_text_widget.dart';

@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
         },
         theme: ThemeData(
             scaffoldBackgroundColor: MyColors.scaffoldColor,
+            // primarySwatch: PrimaryColor.appColor,
             primaryColor: MyColors.appMainGreenColor,
             elevatedButtonTheme: const ElevatedButtonThemeData(
               style: ButtonStyle(
@@ -80,3 +81,5 @@ class MyBehavior extends ScrollBehavior {
     return child;
   }
 }
+
+
