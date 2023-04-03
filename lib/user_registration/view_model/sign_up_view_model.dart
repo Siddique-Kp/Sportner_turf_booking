@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SignUpViewModel with ChangeNotifier {
+  
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passController = TextEditingController();
@@ -8,7 +9,6 @@ class SignUpViewModel with ChangeNotifier {
 
   bool _isShowPassword = true;
   bool _isShowConfPassword = true;
-  String otpValue = '';
 
   bool get isShowPassword => _isShowPassword;
   bool get isShowConfPassword => _isShowConfPassword;
@@ -32,15 +32,5 @@ class SignUpViewModel with ChangeNotifier {
     phoneController.clear();
     passController.clear();
     confirfPassController.clear();
-  }
-
-  setOtp(String verificationCode) {
-    otpValue = verificationCode;
-    notifyListeners();
-  }
-
-  clearOTP() {
-    otpValue = '';
-    notifyListeners();
   }
 }

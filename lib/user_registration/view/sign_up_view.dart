@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 import 'package:sporter_turf_booking/utils/textstyles.dart';
@@ -60,7 +61,8 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         MySize.kHeight50,
-                        Text("Create Account", style: MyTextStyles.loginHeadingStyle),
+                        Text("Create Account",
+                            style: MyTextStyles.loginHeadingStyle),
                         const Text(
                           "Create new account",
                           style: TextStyle(
@@ -106,26 +108,9 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                               ? null
                               : () async {
                                   if (_formKey.currentState!.validate()) {
-                                    await FirebaseAuth.instance
-                                        .verifyPhoneNumber(
-                                      phoneNumber: countryCode.text +
-                                          phoneController.text,
-                                      verificationCompleted:
-                                          (PhoneAuthCredential credential) {},
-                                      verificationFailed:
-                                          (FirebaseAuthException e) {
-                                            
-                                          },
-                                      codeSent: (String verificationId,
-                                          int? resendToken) {
-                                        OtpVerificationPage.verify =
-                                            verificationId;
-                                        Navigator.pushNamed(
-                                            context, "/otpRegister");
-                                      },
-                                      codeAutoRetrievalTimeout:
-                                          (String verificationId) {},
-                                    );
+                                    await context
+                                        .read<FirbaseAuthViewModel>()
+                                        .fireBasePhoneAuth(context);
                                   }
                                 },
                         ),

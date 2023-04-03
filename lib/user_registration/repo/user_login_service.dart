@@ -18,17 +18,17 @@ class UserLogInService {
         mobile: userLoginViewModel.loginPhoneCntrllr.text,
         password: userLoginViewModel.loginPasswordCntrllr.text,
       );
-
+      log("1");
       final response = await http.post(uri, body: data.toJson());
+      log(response.body.toString());
 
       if (response.statusCode == 200) {
-
         final responseData = userLoginModelFromJson(response.body);
         // log(responseData.mobile.toString());
 
         return Success(response: responseData);
       }
-      // log(response.statusCode.toString());
+      log(response.statusCode.toString());
 
       return Failure(
         code: response.statusCode,

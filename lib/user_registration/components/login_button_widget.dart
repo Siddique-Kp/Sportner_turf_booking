@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
+import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 
@@ -18,6 +20,7 @@ class LoginButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userLoginViewModel = context.watch<UserLoginViewModel>();
+    final firebaseViewModel = context.watch<FirbaseAuthViewModel>();
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         disabledBackgroundColor: MyColors.kGreyColor,
@@ -29,7 +32,8 @@ class LoginButtonWidget extends StatelessWidget {
         width: double.infinity,
         height: 50,
         child: Center(
-          child: userLoginViewModel.isLoading && isLogin
+          child: userLoginViewModel.isLoading && isLogin ||
+                  firebaseViewModel.isLoadingOtp && !isLogin
               ? const Padding(
                   padding: EdgeInsets.all(10.0),
                   child: CircularProgressIndicator(

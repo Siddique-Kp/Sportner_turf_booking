@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view/home_view.dart';
+import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/user_registration/view/login_view.dart';
@@ -11,8 +12,8 @@ import 'package:sporter_turf_booking/user_registration/view/splash_screen_view.d
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 
 Future<void> main() async {
-WidgetsFlutterBinding.ensureInitialized();
-await Firebase.initializeApp();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -29,17 +30,28 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => UserLoginViewModel(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => FirbaseAuthViewModel(),
+        ),
       ],
       child: MaterialApp(
         title: 'sportner turf booking app',
         debugShowCheckedModeBanner: false,
+        builder: (context, child) {
+          return ScrollConfiguration(
+            behavior: MyBehavior(),
+            child: child!,
+          );
+        },
         theme: ThemeData(
             scaffoldBackgroundColor: MyColors.scaffoldColor,
             primaryColor: MyColors.appMainGreenColor,
             elevatedButtonTheme: const ElevatedButtonThemeData(
-                style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(MyColors.kBlackColor),
-            )),
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStatePropertyAll(MyColors.kButtonColor),
+              ),
+            ),
             brightness: Brightness.light,
             appBarTheme: const AppBarTheme(
                 titleTextStyle: TextStyle(
@@ -52,11 +64,19 @@ class MyApp extends StatelessWidget {
           "/splashScreen": (context) => const SplashScreen(),
           "/userSignUp": (context) => const UserSignUpScreen(),
           "/userLogin": (context) => const UserLoginScreen(),
-          "/otpRegister": (context) =>  const OtpVerificationPage(),
-          "/homeScreen": (context) =>  const HomeScreenView(),
+          "/otpRegister": (context) => const OtpVerificationPage(),
+          "/homeScreen": (context) => const HomeScreenView(),
         },
         initialRoute: "/splashScreen",
       ),
     );
+  }
+}
+
+class MyBehavior extends ScrollBehavior {
+  @override
+  Widget buildOverscrollIndicator(
+      BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
   }
 }

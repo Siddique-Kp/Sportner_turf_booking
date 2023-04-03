@@ -96,15 +96,15 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                     isLogin: true,
                     onPressed: () async {
                       if (loginKey.currentState!.validate()) {
-                        context
+                        await context
                             .read<UserLoginViewModel>()
                             .getLoginStatus(context);
 
-                        if (userLoginViewModel.loginError.code == 401) {
-                          log("incorrect username");
-                        } else {
-                          log("kkkkkkkkkkk");
-                        }
+                        // if (userLoginViewModel.loginError.code == 401) {
+                        //   log("incorrect username");
+                        // } else {
+                        //   log("kkkkkkkkkkk");
+                        // }
                       }
                     },
                     title: "LOGIN",
