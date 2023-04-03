@@ -30,11 +30,17 @@ class UserLoginViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  setUserData(UserLoginModel userData)async {
+  setUserData(UserLoginModel userData) async {
+    if (_userData == null) {
+      return;
+    }
     _userData = userData;
   }
 
-  setLoginError(LoginError loginError)async {
+  setLoginError(LoginError loginError) async {
+    if (_loginError == null) {
+      return;
+    }
     _loginError = loginError;
   }
 
@@ -43,7 +49,7 @@ class UserLoginViewModel with ChangeNotifier {
     final response = await UserLogInService.userLogin(context);
 
     if (response is Success) {
-     await setUserData(response.response as UserLoginModel);
+      await setUserData(response.response as UserLoginModel);
       clearController();
       Navigator.pushNamed(context, NavigatorClass.homeScreen);
     }
@@ -53,7 +59,7 @@ class UserLoginViewModel with ChangeNotifier {
         code: response.code,
         message: response.errorResponse,
       );
-     await setLoginError(loginError);
+      await setLoginError(loginError);
     }
     setLoading(false);
   }
@@ -63,3 +69,4 @@ class UserLoginViewModel with ChangeNotifier {
     loginPasswordCntrllr.clear();
   }
 }
+

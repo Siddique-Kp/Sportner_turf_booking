@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           create: (context) => UserLoginViewModel(),
         ),
         ChangeNotifierProvider(
-          create: (context) => FirbaseAuthViewModel(),
+          create: (context) => FirebaseAuthViewModel(),
         ),
       ],
       child: MaterialApp(

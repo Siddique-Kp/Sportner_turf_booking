@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SignUpViewModel with ChangeNotifier {
-  
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passController = TextEditingController();
@@ -33,4 +32,5 @@ class SignUpViewModel with ChangeNotifier {
     passController.clear();
     confirfPassController.clear();
   }
+
 }

@@ -1,16 +1,46 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 
 import '../view/otp_page_view.dart';
 
-class FirbaseAuthViewModel with ChangeNotifier {
+class FirebaseAuthViewModel with ChangeNotifier {
+  final googleSigin = GoogleSignIn();
+  GoogleSignInAccount? _user;
   bool _isLoadingOtp = false;
   String otpValue = '';
 
-
   bool get isLoadingOtp => _isLoadingOtp;
+  GoogleSignInAccount get user => _user!;
+
+  Future firebaseGoogleAuth() async {
+    try {
+      final googleUser = await googleSigin.signIn();
+      if (googleUser == null) {
+        return;
+      }
+      _user = googleUser;
+
+      final googleAuth = await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      await FirebaseAuth.instance.signInWithCredential(credential);
+    } catch (e) {
+      log(e.toString());
+    }
+    notifyListeners();
+  }
+
+  firebaseGoogleLogout() async {
+    await googleSigin.disconnect();
+    FirebaseAuth.instance.signOut();
+  }
 
   setOtpLoading(bool loadingOtp) {
     _isLoadingOtp = loadingOtp;
@@ -37,7 +67,7 @@ class FirbaseAuthViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-    setOtp(String verificationCode) {
+  setOtp(String verificationCode) {
     otpValue = verificationCode;
     notifyListeners();
   }

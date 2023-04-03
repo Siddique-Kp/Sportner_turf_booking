@@ -45,14 +45,13 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
           GestureDetector(
             onTap: () {
               FocusScopeNode currentFocus = FocusScope.of(context);
-
               if (!currentFocus.hasPrimaryFocus) {
                 currentFocus.unfocus();
               }
             },
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Form(
                   key: _formKey,
                   child: SingleChildScrollView(
@@ -73,7 +72,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                         TextFormWidget(
                           isUser: true,
                           controller: userNameController,
-                          labelText: 'Username',
+                          labelText: 'Name',
                           textFieldIcon: Icons.person_outline,
                           keyType: TextInputType.text,
                         ),
@@ -107,9 +106,10 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                                   confirfPassController.text.isEmpty
                               ? null
                               : () async {
+                               
                                   if (_formKey.currentState!.validate()) {
                                     await context
-                                        .read<FirbaseAuthViewModel>()
+                                        .read<FirebaseAuthViewModel>()
                                         .fireBasePhoneAuth(context);
                                   }
                                 },

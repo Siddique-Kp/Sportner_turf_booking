@@ -19,14 +19,14 @@ class OtpVerificationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final otpValue = Provider.of<FirbaseAuthViewModel>(context).otpValue;
+    final otpValue = Provider.of<FirebaseAuthViewModel>(context).otpValue;
     final mobileNumber = Provider.of<SignUpViewModel>(context).phoneController;
     final splitOtp = otpValue.split('');
     final FirebaseAuth auth = FirebaseAuth.instance;
     return Scaffold(
       body: WillPopScope(
         onWillPop: () async {
-          Provider.of<FirbaseAuthViewModel>(context, listen: false).clearOTP();
+          Provider.of<FirebaseAuthViewModel>(context, listen: false).clearOTP();
           return true;
         },
         child: GestureDetector(
@@ -118,9 +118,9 @@ firbaseAuthentication(FirebaseAuth auth, otpValue, BuildContext context) async {
     Navigator.pushNamed(context, NavigatorClass.homeScreen);
   } on SocketException {
     log("No internet");
-    context.read<FirbaseAuthViewModel>().clearOTP();
+    context.read<FirebaseAuthViewModel>().clearOTP();
   } catch (e) {
-    context.read<FirbaseAuthViewModel>().clearOTP();
+    context.read<FirebaseAuthViewModel>().clearOTP();
 
     log(e.toString());
   }

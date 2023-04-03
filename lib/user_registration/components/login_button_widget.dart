@@ -20,7 +20,7 @@ class LoginButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userLoginViewModel = context.watch<UserLoginViewModel>();
-    final firebaseViewModel = context.watch<FirbaseAuthViewModel>();
+    final firebaseViewModel = context.watch<FirebaseAuthViewModel>();
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         disabledBackgroundColor: MyColors.kGreyColor,
