@@ -1,41 +1,19 @@
-import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
-import 'package:sporter_turf_booking/utils/navigations.dart';
-
-import '../../utils/keys.dart';
 
 class HomeScreenView extends StatelessWidget {
   const HomeScreenView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final userLoginViewModel = context.watch<UserLoginViewModel>();
-    final firebaseViewModel = context.read<FirebaseAuthViewModel>();
-    // final userData = FirebaseAuth.instance.currentUser;
-    final navigator = Navigator.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Kozhikode"),
         actions: [
           IconButton(
-              onPressed: () async {
-                if (FirebaseAuth.instance.currentUser != null) {
-                  final sharedPref = await SharedPreferences.getInstance();
-                  sharedPref.remove(GlobalKeys.userLoggedWithGoogle);
-                  await firebaseViewModel.firebaseGoogleLogout();
-                } else {
-                  SharedPreferences status =
-                      await SharedPreferences.getInstance();
-                  status.remove(GlobalKeys.userLoggedIN);
-                  status.remove(GlobalKeys.accesToken);
-                  navigator.pushNamedAndRemoveUntil(
-                      NavigatorClass.loginScreen, (route) => false);
-                }
+              onPressed: () {
+                context.read<FirebaseAuthViewModel>().userLoginStatus(context);
               },
               icon: const Icon(Icons.logout))
         ],

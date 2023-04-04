@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 import 'package:sporter_turf_booking/utils/keys.dart';
+import '../../utils/navigations.dart';
 import '../view/otp_page_view.dart';
 
 class FirebaseAuthViewModel with ChangeNotifier {
@@ -20,6 +21,7 @@ class FirebaseAuthViewModel with ChangeNotifier {
   Future firebaseGoogleAuth() async {
     try {
       final googleUser = await googleSigin.signIn();
+
       if (googleUser == null) {
         return;
       }
@@ -77,5 +79,29 @@ class FirebaseAuthViewModel with ChangeNotifier {
   clearOTP() {
     otpValue = '';
     notifyListeners();
+  }
+
+  userLoginStatus(context) async {
+    final navigator = Navigator.of(context);
+    final sharedPrefer = await SharedPreferences.getInstance();
+    final googleSigup = sharedPrefer.getBool(GlobalKeys.userLoggedWithGoogle);
+    final userLoggedin = sharedPrefer.getBool(GlobalKeys.userLoggedIN);
+    final userSignedUp = sharedPrefer.getBool(GlobalKeys.userSignedUp);
+    if (googleSigup == true) {
+      sharedPrefer.remove(GlobalKeys.userLoggedWithGoogle);
+      await firebaseGoogleLogout();
+      navigator.pushNamedAndRemoveUntil(
+          NavigatorClass.loginScreen, (route) => false);
+    } else if (userLoggedin == true) {
+      sharedPrefer.remove(GlobalKeys.userLoggedIN);
+      sharedPrefer.remove(GlobalKeys.accesToken);
+      navigator.pushNamedAndRemoveUntil(
+          NavigatorClass.loginScreen, (route) => false);
+    }else if(userSignedUp == true){
+       sharedPrefer.remove(GlobalKeys.userSignedUp);
+      sharedPrefer.remove(GlobalKeys.accesToken);
+      navigator.pushNamedAndRemoveUntil(
+          NavigatorClass.loginScreen, (route) => false);
+    }
   }
 }

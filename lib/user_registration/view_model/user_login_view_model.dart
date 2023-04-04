@@ -1,14 +1,14 @@
 import 'dart:developer';
 
-import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:sporter_turf_booking/user_registration/components/snackbar.dart';
 import 'package:sporter_turf_booking/user_registration/model/login_error_model.dart';
 import 'package:sporter_turf_booking/user_registration/model/user_login_model.dart';
 import 'package:sporter_turf_booking/user_registration/repo/api_status.dart';
-import 'package:sporter_turf_booking/user_registration/repo/user_login_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sporter_turf_booking/user_registration/repo/api_services.dart';
 import 'package:sporter_turf_booking/utils/keys.dart';
+import '../../utils/constants.dart';
 import '../../utils/navigations.dart';
 
 class UserLoginViewModel with ChangeNotifier {
@@ -49,11 +49,13 @@ class UserLoginViewModel with ChangeNotifier {
   getLoginStatus(BuildContext context) async {
     final navigator = Navigator.of(context);
     setLoading(true);
-    final response = await UserLogInService.userLogin(context);
+    final response = await ApiServices.postMethod(
+        Urls.kBASEURL + Urls.kUSERSIGNIN, userDataBody(),userLoginModelFromJson);
 
     if (response is Success) {
       final data = await setUserData(response.response as UserLoginModel);
       final accessToken = data!.accessToken;
+      log(accessToken.toString());
       clearController();
       setLoginStatus(accessToken!);
       navigator.pushNamedAndRemoveUntil(
@@ -88,11 +90,20 @@ class UserLoginViewModel with ChangeNotifier {
     await status.setString(GlobalKeys.accesToken, accessToken);
   }
 
+  Map<String, dynamic> userDataBody() {
+    final body = UserLoginModel(
+      mobile: loginPhoneCntrllr.text,
+      password: loginPasswordCntrllr.text,
+    );
+
+    return body.toJson();
+  }
+
   errorResonses(LoginError loginError, BuildContext context) {
     final statusCode = loginError.code;
     if (statusCode == 401) {
-       SnackBarWidget.snackBar(context, "Invalid username or password");
+      return SnackBarWidget.snackBar(context, "Invalid username or password");
     }
-     SnackBarWidget.snackBar(context, "No internet connection");
+    return SnackBarWidget.snackBar(context, "No internet connection");
   }
 }

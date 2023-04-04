@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,7 +30,6 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    log("rebuild111111111");
     final firebaseAuthViewModel = context.read<FirebaseAuthViewModel>();
     return Scaffold(
       body: StreamBuilder(
@@ -126,12 +124,6 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                               await context
                                   .read<UserLoginViewModel>()
                                   .getLoginStatus(context);
-
-                              // if (userLoginViewModel.loginError.code == 401) {
-                              //   log("incorrect username");
-                              // } else {
-                              //   log("kkkkkkkkkkk");
-                              // }
                             }
                           },
                           title: "LOGIN",

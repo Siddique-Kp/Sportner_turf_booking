@@ -118,7 +118,9 @@ firbaseAuthentication(FirebaseAuth auth, otpValue, BuildContext context) async {
   final signUpViewModel = context.read<SignUpViewModel>();
   try {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: OtpVerificationPage.verify, smsCode: otpValue);
+      verificationId: OtpVerificationPage.verify,
+      smsCode: otpValue,
+    );
     await auth.signInWithCredential(credential);
     signUpViewModel.getSignUpStatus(context);
   } on SocketException {

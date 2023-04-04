@@ -1,31 +1,27 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sporter_turf_booking/user_registration/model/user_signup_model.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 import 'package:http/http.dart' as http;
 import '../../utils/constants.dart';
 import 'api_status.dart';
 
-class UserSignUpService {
-  static Future<Object> userSigningUp(BuildContext context) async {
-    final userSignupViewModel = context.read<SignUpViewModel>();
-    final uri = Uri.parse(Urls.kBASEURL + Urls.kUSERSIGNUP);
-
-    final body = UserSignupModel(
-      name: userSignupViewModel.userNameController.text,
-      mobile: userSignupViewModel.phoneController.text,
-      password: userSignupViewModel.passController.text,
-    );
-
+class ApiServices {
+  static Future<Object> postMethod(
+    String url,
+    Map body,
+    Function function,
+  ) async {
     try {
-      final response = await http.post(uri, body: body.toJson());
+      final response = await http.post(Uri.parse(url), body: body);
 
-      if (response.statusCode == 201) {
-        return Success(response: userSignupModelFromJson(response.body));
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        log("Success");
+        return Success(response: function(response.body));
       }
+
+      log(response.body.toLowerCase());
+      log(response.statusCode.toString());
+
       return Failure(
         code: response.statusCode,
         errorResponse: "Invalid Response",

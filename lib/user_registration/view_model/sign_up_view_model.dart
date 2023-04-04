@@ -4,7 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporter_turf_booking/user_registration/model/login_error_model.dart';
-import 'package:sporter_turf_booking/user_registration/repo/user_signup_service.dart';
+import 'package:sporter_turf_booking/user_registration/repo/api_services.dart';
+import 'package:sporter_turf_booking/utils/constants.dart';
 
 import '../../utils/keys.dart';
 import '../../utils/navigations.dart';
@@ -70,8 +71,13 @@ class SignUpViewModel with ChangeNotifier {
   getSignUpStatus(BuildContext context) async {
     final navigator = Navigator.of(context);
     setLoading(true);
-    final response = await UserSignUpService.userSigningUp(context);
+    final response = await ApiServices.postMethod(
+      Urls.kBASEURL + Urls.kUSERSIGNUP,
+      userDatabody(),
+      userSignupModelFromJson,
+    );
     if (response is Success) {
+      log("success");
       final data = await setUserData(response.response as UserSignupModel);
       final accessToken = data!.accessToken;
       clearTextField();
@@ -81,19 +87,34 @@ class SignUpViewModel with ChangeNotifier {
           NavigatorClass.homeScreen, (route) => false);
     }
     if (response is Failure) {
+      log("Failed");
       SignUpError loginError = SignUpError(
         code: response.code,
         message: response.errorResponse,
       );
       await setLoginError(loginError);
+      clearPassword();
     }
     setLoading(false);
   }
 
   setSignupStatus(accessToken) async {
-    log("Shared prefer");
     final status = await SharedPreferences.getInstance();
-    await status.setBool(GlobalKeys.userLoggedIN, true);
+    await status.setBool(GlobalKeys.userSignedUp, true);
     await status.setString(GlobalKeys.accesToken, accessToken);
+  }
+
+  clearPassword() {
+    passController.clear();
+    confirfPassController.clear();
+  }
+
+  Map<String, dynamic> userDatabody() {
+    final body = UserSignupModel(
+      name: userNameController.text,
+      mobile: phoneController.text,
+      password: passController.text,
+    );
+    return body.toJson();
   }
 }
