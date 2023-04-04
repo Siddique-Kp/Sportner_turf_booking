@@ -1,4 +1,8 @@
+import 'dart:developer';
+
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:sporter_turf_booking/user_registration/components/snackbar.dart';
 import 'package:sporter_turf_booking/user_registration/model/login_error_model.dart';
 import 'package:sporter_turf_booking/user_registration/model/user_login_model.dart';
 import 'package:sporter_turf_booking/user_registration/repo/api_status.dart';
@@ -36,11 +40,10 @@ class UserLoginViewModel with ChangeNotifier {
     return _userData;
   }
 
-  setLoginError(LoginError loginError) async {
-    if (_loginError == null) {
-      return;
-    }
+  setLoginError(LoginError loginError, context) async {
     _loginError = loginError;
+
+    return errorResonses(_loginError!, context);
   }
 
   getLoginStatus(BuildContext context) async {
@@ -58,11 +61,14 @@ class UserLoginViewModel with ChangeNotifier {
     }
 
     if (response is Failure) {
+      await setLoading(false);
+
+      clearPassword();
       LoginError loginError = LoginError(
         code: response.code,
         message: response.errorResponse,
       );
-      await setLoginError(loginError);
+      await setLoginError(loginError, context);
     }
     setLoading(false);
   }
@@ -72,9 +78,21 @@ class UserLoginViewModel with ChangeNotifier {
     loginPasswordCntrllr.clear();
   }
 
+  clearPassword() {
+    loginPasswordCntrllr.clear();
+  }
+
   setLoginStatus(String accessToken) async {
     final status = await SharedPreferences.getInstance();
     await status.setBool(GlobalKeys.userLoggedIN, true);
     await status.setString(GlobalKeys.accesToken, accessToken);
+  }
+
+  errorResonses(LoginError loginError, BuildContext context) {
+    final statusCode = loginError.code;
+    if (statusCode == 401) {
+       SnackBarWidget.snackBar(context, "Invalid username or password");
+    }
+     SnackBarWidget.snackBar(context, "No internet connection");
   }
 }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
+import 'package:sporter_turf_booking/utils/navigations.dart';
 import 'package:sporter_turf_booking/utils/textstyles.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 import '../components/login_button_widget.dart';
@@ -29,6 +31,8 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setSystemUIOverlayStyle(
+    //    const SystemUiOverlayStyle(statusBarColor: MyColors.appMainGreenColor));
     final signUpProvider = context.watch<SignUpViewModel>();
     TextEditingController userNameController =
         signUpProvider.userNameController;
@@ -104,7 +108,6 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                                   confirfPassController.text.isEmpty
                               ? null
                               : () async {
-                               
                                   if (_formKey.currentState!.validate()) {
                                     await context
                                         .read<FirebaseAuthViewModel>()
@@ -118,10 +121,10 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                           rightText: "Login",
                           onTap: () {
                             Navigator.pushReplacementNamed(
-                                context, "/userLogin");
-                            Provider.of<SignUpViewModel>(context, listen: false)
-                                .clearTextField();
-                            Provider.of<SignUpViewModel>(context, listen: false)
+                                context, NavigatorClass.loginScreen);
+                            context.read<SignUpViewModel>().clearTextField();
+                            context
+                                .read<SignUpViewModel>()
                                 .checkTextFieldisEmpty();
                           },
                         )

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -18,13 +19,11 @@ class UserLogInService {
         mobile: userLoginViewModel.loginPhoneCntrllr.text,
         password: userLoginViewModel.loginPasswordCntrllr.text,
       );
-      log("1");
       final response = await http.post(uri, body: data.toJson());
       log(response.body.toString());
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 ) {
         final responseData = userLoginModelFromJson(response.body);
-        // log(responseData.mobile.toString());
 
         return Success(response: responseData);
       }
@@ -43,6 +42,16 @@ class UserLogInService {
       return Failure(
         code: InvalidRespons.kINVALIDFORMAT,
         errorResponse: "Invalid Format",
+      );
+    } on SocketException {
+      return Failure(
+        code: InvalidRespons.kNOINTERNET,
+        errorResponse: "No internet",
+      );
+    } on TimeoutException {
+      return Failure(
+        code: InvalidRespons.kTIMEOUT,
+        errorResponse: "Time out try again",
       );
     } catch (e) {
       return Failure(

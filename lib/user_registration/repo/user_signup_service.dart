@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class UserSignUpService {
       final response = await http.post(uri, body: body.toJson());
 
       if (response.statusCode == 201) {
-       return Success(response: userSignupModelFromJson(response.body));
+        return Success(response: userSignupModelFromJson(response.body));
       }
       return Failure(
         code: response.statusCode,
@@ -38,6 +39,16 @@ class UserSignUpService {
       return Failure(
         code: InvalidRespons.kINVALIDFORMAT,
         errorResponse: "Invalid Format",
+      );
+    } on SocketException {
+      return Failure(
+        code: InvalidRespons.kNOINTERNET,
+        errorResponse: "No internet",
+      );
+    } on TimeoutException {
+      return Failure(
+        code: InvalidRespons.kTIMEOUT,
+        errorResponse: "Time out try again",
       );
     } catch (e) {
       return Failure(

@@ -8,6 +8,7 @@ import 'package:sporter_turf_booking/user_registration/components/login_button_w
 import 'package:sporter_turf_booking/user_registration/components/registering_text_widget.dart';
 import 'package:sporter_turf_booking/user_registration/components/text_form_field.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
+import 'package:sporter_turf_booking/utils/navigations.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/global_values.dart';
 import '../../utils/textstyles.dart';
@@ -188,7 +189,11 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                         MySize.kHeight30,
                         RegisteringText(
                           onTap: () {
-                            Navigator.pushNamed(context, "/userSignUp");
+                            Navigator.pushNamed(
+                                context, NavigatorClass.signUpScreen);
+                            context
+                                .read<UserLoginViewModel>()
+                                .clearController();
                           },
                           leftText: "Don't have account? ",
                           rightText: "Register",

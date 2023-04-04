@@ -1,4 +1,3 @@
-
 class Urls {
   static const String kBASEURL = "http://192.168.213.151:5000";
   static const String kUSERSIGNIN = "/signin";
@@ -10,4 +9,5 @@ class InvalidRespons {
   static const kNOINTERNET = 101;
   static const kINVALIDFORMAT = 102;
   static const kUNKNOWNERROR = 103;
+  static const kTIMEOUT = 104;
 }
