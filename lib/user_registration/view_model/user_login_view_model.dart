@@ -104,6 +104,6 @@ class UserLoginViewModel with ChangeNotifier {
     if (statusCode == 401) {
       return SnackBarWidget.snackBar(context, "Invalid username or password");
     }
-    return SnackBarWidget.snackBar(context, "No internet connection");
+    return SnackBarWidget.snackBar(context,loginError.message.toString());
   }
 }

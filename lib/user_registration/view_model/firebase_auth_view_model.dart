@@ -82,23 +82,29 @@ class FirebaseAuthViewModel with ChangeNotifier {
   }
 
   userLoginStatus(context) async {
+    log("11111111111");
     final navigator = Navigator.of(context);
     final sharedPrefer = await SharedPreferences.getInstance();
     final googleSigup = sharedPrefer.getBool(GlobalKeys.userLoggedWithGoogle);
     final userLoggedin = sharedPrefer.getBool(GlobalKeys.userLoggedIN);
     final userSignedUp = sharedPrefer.getBool(GlobalKeys.userSignedUp);
     if (googleSigup == true) {
+      log("222222222");
       sharedPrefer.remove(GlobalKeys.userLoggedWithGoogle);
       await firebaseGoogleLogout();
       navigator.pushNamedAndRemoveUntil(
           NavigatorClass.loginScreen, (route) => false);
     } else if (userLoggedin == true) {
+      log("333333333");
+
       sharedPrefer.remove(GlobalKeys.userLoggedIN);
       sharedPrefer.remove(GlobalKeys.accesToken);
       navigator.pushNamedAndRemoveUntil(
           NavigatorClass.loginScreen, (route) => false);
-    }else if(userSignedUp == true){
-       sharedPrefer.remove(GlobalKeys.userSignedUp);
+    } else if (userSignedUp == true) {
+      log("4444444444444");
+
+      sharedPrefer.remove(GlobalKeys.userSignedUp);
       sharedPrefer.remove(GlobalKeys.accesToken);
       navigator.pushNamedAndRemoveUntil(
           NavigatorClass.loginScreen, (route) => false);
