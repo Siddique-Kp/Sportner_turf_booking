@@ -7,7 +7,6 @@ import 'package:sporter_turf_booking/user_registration/components/otp_textfield.
 import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
-import 'package:sporter_turf_booking/utils/navigations.dart';
 import 'package:sporter_turf_booking/utils/textstyles.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 
@@ -20,6 +19,7 @@ class OtpVerificationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final otpValue = Provider.of<FirebaseAuthViewModel>(context).otpValue;
     final mobileNumber = Provider.of<SignUpViewModel>(context).phoneController;
+    final signUpViewModel = context.watch<SignUpViewModel>();
     final splitOtp = otpValue.split('');
     final FirebaseAuth auth = FirebaseAuth.instance;
     return Scaffold(
@@ -92,10 +92,15 @@ class OtpVerificationPage extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           elevation: 0,
                         ),
-                        child: const Text(
-                          "Verify",
-                          style: TextStyle(fontSize: 16),
-                        ),
+                        child: signUpViewModel.isLoading
+                            ? const CircularProgressIndicator(
+                                color: MyColors.kWhiteColor,
+                                strokeWidth: 2,
+                              )
+                            : const Text(
+                                "Verify",
+                                style: TextStyle(fontSize: 16),
+                              ),
                       ),
                     )
                   ],
@@ -110,16 +115,17 @@ class OtpVerificationPage extends StatelessWidget {
 }
 
 firbaseAuthentication(FirebaseAuth auth, otpValue, BuildContext context) async {
+  final signUpViewModel = context.read<SignUpViewModel>();
   try {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: OtpVerificationPage.verify, smsCode: otpValue);
     await auth.signInWithCredential(credential);
-    Navigator.pushNamed(context, NavigatorClass.homeScreen);
+    signUpViewModel.getSignUpStatus(context);
   } on SocketException {
     log("No internet");
-    context.read<FirebaseAuthViewModel>().clearOTP();
+    // context.read<FirebaseAuthViewModel>().clearOTP();
   } catch (e) {
-    context.read<FirebaseAuthViewModel>().clearOTP();
+    // context.read<FirebaseAuthViewModel>().clearOTP();
 
     log(e.toString());
   }

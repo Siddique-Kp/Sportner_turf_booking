@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +15,7 @@ class HomeScreenView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final userLoginViewModel = context.watch<UserLoginViewModel>();
+    final firebaseViewModel = context.read<FirebaseAuthViewModel>();
     // final userData = FirebaseAuth.instance.currentUser;
     final navigator = Navigator.of(context);
     return Scaffold(
@@ -22,7 +25,9 @@ class HomeScreenView extends StatelessWidget {
           IconButton(
               onPressed: () async {
                 if (FirebaseAuth.instance.currentUser != null) {
-                  context.read<FirebaseAuthViewModel>().firebaseGoogleLogout();
+                  final sharedPref = await SharedPreferences.getInstance();
+                  sharedPref.remove(GlobalKeys.userLoggedWithGoogle);
+                  await firebaseViewModel.firebaseGoogleLogout();
                 } else {
                   SharedPreferences status =
                       await SharedPreferences.getInstance();

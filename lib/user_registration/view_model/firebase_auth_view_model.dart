@@ -1,11 +1,11 @@
 import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
-
+import 'package:sporter_turf_booking/utils/keys.dart';
 import '../view/otp_page_view.dart';
 
 class FirebaseAuthViewModel with ChangeNotifier {
@@ -31,6 +31,8 @@ class FirebaseAuthViewModel with ChangeNotifier {
         idToken: googleAuth.idToken,
       );
       await FirebaseAuth.instance.signInWithCredential(credential);
+      final sharedPref = await SharedPreferences.getInstance();
+      sharedPref.setBool(GlobalKeys.userLoggedWithGoogle, true);
     } catch (e) {
       log(e.toString());
     }

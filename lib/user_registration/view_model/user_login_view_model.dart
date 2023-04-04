@@ -11,7 +11,7 @@ class UserLoginViewModel with ChangeNotifier {
   TextEditingController loginPhoneCntrllr = TextEditingController();
   TextEditingController loginPasswordCntrllr = TextEditingController();
 
-  bool _isShowPassword = false;
+  bool _isShowPassword = true;
   bool _isLoading = false;
   UserLoginModel? _userData;
   LoginError? _loginError;
@@ -44,6 +44,7 @@ class UserLoginViewModel with ChangeNotifier {
   }
 
   getLoginStatus(BuildContext context) async {
+    final navigator = Navigator.of(context);
     setLoading(true);
     final response = await UserLogInService.userLogin(context);
 
@@ -52,7 +53,8 @@ class UserLoginViewModel with ChangeNotifier {
       final accessToken = data!.accessToken;
       clearController();
       setLoginStatus(accessToken!);
-      Navigator.pushNamed(context, NavigatorClass.homeScreen);
+      navigator.pushNamedAndRemoveUntil(
+          NavigatorClass.homeScreen, (route) => false);
     }
 
     if (response is Failure) {

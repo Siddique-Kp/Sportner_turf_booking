@@ -53,7 +53,7 @@ class TextFormWidget extends StatelessWidget {
           FilteringTextInputFormatter.deny(RegExp(r'\s')),
           isPhone || isLoginPhone
               ? LengthLimitingTextInputFormatter(10)
-              : LengthLimitingTextInputFormatter(null),
+              : LengthLimitingTextInputFormatter(20),
         ],
         controller: controller,
         obscureText: isPassword

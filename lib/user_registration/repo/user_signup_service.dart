@@ -9,7 +9,7 @@ import '../../utils/constants.dart';
 import 'api_status.dart';
 
 class UserSignUpService {
-  static Future<Object> createUser(BuildContext context) async {
+  static Future<Object> userSigningUp(BuildContext context) async {
     final userSignupViewModel = context.read<SignUpViewModel>();
     final uri = Uri.parse(Urls.kBASEURL + Urls.kUSERSIGNUP);
 
@@ -22,11 +22,9 @@ class UserSignUpService {
     try {
       final response = await http.post(uri, body: body.toJson());
 
-      if (response.statusCode == 200) {
-        Success(response: userSignupModelFromJson(response.body));
-        log(response.body);
+      if (response.statusCode == 201) {
+       return Success(response: userSignupModelFromJson(response.body));
       }
-      log(response.body.toString());
       return Failure(
         code: response.statusCode,
         errorResponse: "Invalid Response",

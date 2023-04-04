@@ -7,3 +7,13 @@ class LoginError {
     this.message,
   });
 }
+
+class SignUpError {
+  int? code;
+  Object? message;
+
+  SignUpError({
+    this.code,
+    this.message,
+  });
+}

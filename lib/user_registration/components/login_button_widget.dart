@@ -33,11 +33,9 @@ class LoginButtonWidget extends StatelessWidget {
         child: Center(
           child: userLoginViewModel.isLoading && isLogin ||
                   firebaseViewModel.isLoadingOtp && !isLogin
-              ? const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: CircularProgressIndicator(
-                    color: MyColors.kWhiteColor,
-                  ),
+              ? const CircularProgressIndicator(
+                  strokeWidth: 3,
+                  color: MyColors.kWhiteColor,
                 )
               : Text(
                   title,
