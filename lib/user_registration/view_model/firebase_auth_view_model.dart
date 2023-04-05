@@ -11,16 +11,19 @@ import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_m
 import 'package:sporter_turf_booking/utils/keys.dart';
 import '../../utils/navigations.dart';
 import '../model/firebase_exeptions.dart';
-import '../view/otp_page_view.dart';
 
 class FirebaseAuthViewModel with ChangeNotifier {
   final googleSigin = GoogleSignIn();
   GoogleSignInAccount? _user;
   bool _isLoadingOtp = false;
+  String _verifyOTP = '';
   String otpValue = '';
+  int? _otpResendToken;
 
   bool get isLoadingOtp => _isLoadingOtp;
   GoogleSignInAccount get user => _user!;
+  String get verifyOTP => _verifyOTP;
+  int get otpResendToken => _otpResendToken!;
 
   Future firebaseGoogleAuth(context) async {
     final navigator = Navigator.of(context);
@@ -50,11 +53,6 @@ class FirebaseAuthViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  firebaseGoogleLogout() async {
-    await googleSigin.disconnect();
-    FirebaseAuth.instance.signOut();
-  }
-
   setOtpLoading(bool loadingOtp) {
     _isLoadingOtp = loadingOtp;
     notifyListeners();
@@ -76,8 +74,8 @@ class FirebaseAuthViewModel with ChangeNotifier {
       },
       codeSent: (String verificationId, int? resendToken) {
         log("code sent");
-
-        OtpVerificationPage.verify = verificationId;
+        _otpResendToken = resendToken;
+        _verifyOTP = verificationId;
         Navigator.pushNamed(context, NavigatorClass.otpScreen);
         setOtpLoading(false);
       },
@@ -104,7 +102,7 @@ class FirebaseAuthViewModel with ChangeNotifier {
     setOtpLoading(true);
     try {
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: OtpVerificationPage.verify,
+        verificationId: _verifyOTP,
         smsCode: otpValue,
       );
       await auth.signInWithCredential(credential);
@@ -119,6 +117,25 @@ class FirebaseAuthViewModel with ChangeNotifier {
       FirebaseExpeptions.cases(error, context);
     }
     setOtpLoading(false);
+  }
+
+  resentOTPtoPhone(BuildContext context) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    String countryCode = "+91";
+
+    await auth.verifyPhoneNumber(
+      phoneNumber:
+          countryCode + context.read<SignUpViewModel>().phoneController.text,
+      verificationCompleted: (phoneAuthCredential) {},
+      verificationFailed: (error) {},
+      codeSent: (verificationId, forceResendingToken) {
+        _verifyOTP = verificationId;
+        _otpResendToken = forceResendingToken;
+      },
+      codeAutoRetrievalTimeout: (verificationId) {},
+      forceResendingToken: _otpResendToken,
+      timeout: const Duration(seconds: 60),
+    );
   }
 
   // ----------- user Login status
@@ -145,5 +162,10 @@ class FirebaseAuthViewModel with ChangeNotifier {
       navigator.pushNamedAndRemoveUntil(
           NavigatorClass.loginScreen, (route) => false);
     }
+  }
+
+  firebaseGoogleLogout() async {
+    await googleSigin.disconnect();
+    FirebaseAuth.instance.signOut();
   }
 }
