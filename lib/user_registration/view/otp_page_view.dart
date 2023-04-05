@@ -1,6 +1,3 @@
-import 'dart:developer';
-import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/user_registration/components/otp_textfield.dart';
@@ -9,6 +6,7 @@ import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 import 'package:sporter_turf_booking/utils/textstyles.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
+
 
 class OtpVerificationPage extends StatelessWidget {
   const OtpVerificationPage({super.key});
@@ -19,9 +17,8 @@ class OtpVerificationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final otpValue = Provider.of<FirebaseAuthViewModel>(context).otpValue;
     final mobileNumber = Provider.of<SignUpViewModel>(context).phoneController;
-    final signUpViewModel = context.watch<SignUpViewModel>();
+    final firebaseViewModel = context.watch<FirebaseAuthViewModel>();
     final splitOtp = otpValue.split('');
-    final FirebaseAuth auth = FirebaseAuth.instance;
     return Scaffold(
       body: WillPopScope(
         onWillPop: () async {
@@ -87,12 +84,14 @@ class OtpVerificationPage extends StatelessWidget {
                         onPressed: splitOtp.length != 6
                             ? null
                             : () {
-                                firbaseAuthentication(auth, otpValue, context);
+                                context
+                                    .read<FirebaseAuthViewModel>()
+                                    .firbaseAuthenticationWithOTP(context);
                               },
                         style: ElevatedButton.styleFrom(
                           elevation: 0,
                         ),
-                        child: signUpViewModel.isLoading
+                        child: firebaseViewModel.isLoadingOtp
                             ? const CircularProgressIndicator(
                                 color: MyColors.kWhiteColor,
                                 strokeWidth: 2,
@@ -111,24 +110,5 @@ class OtpVerificationPage extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-firbaseAuthentication(FirebaseAuth auth, otpValue, BuildContext context) async {
-  final signUpViewModel = context.read<SignUpViewModel>();
-  try {
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-      verificationId: OtpVerificationPage.verify,
-      smsCode: otpValue,
-    );
-    await auth.signInWithCredential(credential);
-    signUpViewModel.getSignUpStatus(context);
-  } on SocketException {
-    log("No internet");
-    // context.read<FirebaseAuthViewModel>().clearOTP();
-  } catch (e) {
-    // context.read<FirebaseAuthViewModel>().clearOTP();
-
-    log(e.toString());
   }
 }

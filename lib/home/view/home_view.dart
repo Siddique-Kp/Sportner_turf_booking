@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
-import 'package:sporter_turf_booking/utils/navigations.dart';
 
 class HomeScreenView extends StatelessWidget {
   const HomeScreenView({super.key});
@@ -16,7 +13,6 @@ class HomeScreenView extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () async {
-                log("Got");
                 context.read<FirebaseAuthViewModel>().userLoginStatus(context);
               },
               icon: const Icon(Icons.logout))

@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:sporter_turf_booking/user_registration/components/snackbar.dart';
 import 'package:sporter_turf_booking/user_registration/model/login_error_model.dart';

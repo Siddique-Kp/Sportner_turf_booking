@@ -1,12 +1,16 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sporter_turf_booking/user_registration/components/snackbar.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 import 'package:sporter_turf_booking/utils/keys.dart';
 import '../../utils/navigations.dart';
+import '../model/firebase_exeptions.dart';
 import '../view/otp_page_view.dart';
 
 class FirebaseAuthViewModel with ChangeNotifier {
@@ -18,7 +22,8 @@ class FirebaseAuthViewModel with ChangeNotifier {
   bool get isLoadingOtp => _isLoadingOtp;
   GoogleSignInAccount get user => _user!;
 
-  Future firebaseGoogleAuth() async {
+  Future firebaseGoogleAuth(context) async {
+    final navigator = Navigator.of(context);
     try {
       final googleUser = await googleSigin.signIn();
 
@@ -33,10 +38,14 @@ class FirebaseAuthViewModel with ChangeNotifier {
         idToken: googleAuth.idToken,
       );
       await FirebaseAuth.instance.signInWithCredential(credential);
+      navigator.pushReplacementNamed(NavigatorClass.homeScreen);
       final sharedPref = await SharedPreferences.getInstance();
       sharedPref.setBool(GlobalKeys.userLoggedWithGoogle, true);
-    } catch (e) {
-      log(e.toString());
+    } on PlatformException catch (e) {
+      log(e.code);
+      SnackBarWidget.snackBar(context, "No internet connection");
+    } on FirebaseAuthException catch (e) {
+      FirebaseExpeptions.cases(e, context);
     }
     notifyListeners();
   }
@@ -57,16 +66,24 @@ class FirebaseAuthViewModel with ChangeNotifier {
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber:
           countryCode + context.read<SignUpViewModel>().phoneController.text,
-      verificationCompleted: (PhoneAuthCredential credential) {},
-      verificationFailed: (FirebaseAuthException e) {
+      verificationCompleted: (PhoneAuthCredential credential) {
+        log("Credential");
+      },
+      verificationFailed: (FirebaseAuthException error) {
+        log("Error");
         setOtpLoading(false);
+        FirebaseExpeptions.cases(error, context);
       },
       codeSent: (String verificationId, int? resendToken) {
+        log("code sent");
+
         OtpVerificationPage.verify = verificationId;
-        Navigator.pushNamed(context, "/otpRegister");
+        Navigator.pushNamed(context, NavigatorClass.otpScreen);
         setOtpLoading(false);
       },
-      codeAutoRetrievalTimeout: (String verificationId) {},
+      codeAutoRetrievalTimeout: (String verificationId) {
+        log("time out");
+      },
     );
     notifyListeners();
   }
@@ -81,29 +98,48 @@ class FirebaseAuthViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  firbaseAuthenticationWithOTP(BuildContext context) async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final signUpViewModel = context.read<SignUpViewModel>();
+    setOtpLoading(true);
+    try {
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: OtpVerificationPage.verify,
+        smsCode: otpValue,
+      );
+      await auth.signInWithCredential(credential);
+      await signUpViewModel.getSignUpStatus(context);
+      setOtpLoading(false);
+    } on SocketException {
+      log("No internet");
+      SnackBarWidget.snackBar(context, "No internet connection");
+    } on PlatformException {
+      SnackBarWidget.snackBar(context, "No internet connection");
+    } on FirebaseAuthException catch (error) {
+      FirebaseExpeptions.cases(error, context);
+    }
+    setOtpLoading(false);
+  }
+
+  // ----------- user Login status
+
   userLoginStatus(context) async {
-    log("11111111111");
     final navigator = Navigator.of(context);
     final sharedPrefer = await SharedPreferences.getInstance();
     final googleSigup = sharedPrefer.getBool(GlobalKeys.userLoggedWithGoogle);
     final userLoggedin = sharedPrefer.getBool(GlobalKeys.userLoggedIN);
     final userSignedUp = sharedPrefer.getBool(GlobalKeys.userSignedUp);
     if (googleSigup == true) {
-      log("222222222");
       sharedPrefer.remove(GlobalKeys.userLoggedWithGoogle);
       await firebaseGoogleLogout();
       navigator.pushNamedAndRemoveUntil(
           NavigatorClass.loginScreen, (route) => false);
     } else if (userLoggedin == true) {
-      log("333333333");
-
       sharedPrefer.remove(GlobalKeys.userLoggedIN);
       sharedPrefer.remove(GlobalKeys.accesToken);
       navigator.pushNamedAndRemoveUntil(
           NavigatorClass.loginScreen, (route) => false);
     } else if (userSignedUp == true) {
-      log("4444444444444");
-
       sharedPrefer.remove(GlobalKeys.userSignedUp);
       sharedPrefer.remove(GlobalKeys.accesToken);
       navigator.pushNamedAndRemoveUntil(

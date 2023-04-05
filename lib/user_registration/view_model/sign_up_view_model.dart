@@ -1,9 +1,6 @@
 import 'dart:developer';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sporter_turf_booking/user_registration/components/snackbar.dart';
 import 'package:sporter_turf_booking/user_registration/model/login_error_model.dart';
 import 'package:sporter_turf_booking/user_registration/repo/api_services.dart';
 import 'package:sporter_turf_booking/utils/constants.dart';
@@ -72,12 +69,6 @@ class SignUpViewModel with ChangeNotifier {
   getSignUpStatus(BuildContext context) async {
     final navigator = Navigator.of(context);
     setLoading(true);
-    if (FirebaseAuth.instance.currentUser!.phoneNumber ==
-        "+91${phoneController.text}") {
-      return SnackBarWidget.snackBar(
-          context, "User with this mobile number already exists");
-    }
-    log("${FirebaseAuth.instance.currentUser!.phoneNumber}");
     final response = await ApiServices.postMethod(
       Urls.kBASEURL + Urls.kUSERSIGNUP,
       userDatabody(),
@@ -89,7 +80,6 @@ class SignUpViewModel with ChangeNotifier {
       final accessToken = data!.accessToken;
       clearTextField();
       setSignupStatus(accessToken!);
-      await FirebaseAuth.instance.currentUser!.delete();
       navigator.pushNamedAndRemoveUntil(
           NavigatorClass.homeScreen, (route) => false);
     }

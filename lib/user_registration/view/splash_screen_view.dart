@@ -6,7 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporter_turf_booking/home/view/home_view.dart';
 import 'package:sporter_turf_booking/user_registration/view/login_view.dart';
-import 'package:sporter_turf_booking/user_registration/view/sign_up_view.dart';
 import 'package:sporter_turf_booking/utils/keys.dart';
 
 class SplashScreen extends StatelessWidget {
