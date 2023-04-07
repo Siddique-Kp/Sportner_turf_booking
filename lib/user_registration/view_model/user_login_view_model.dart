@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:sporter_turf_booking/user_registration/components/snackbar.dart';
 import 'package:sporter_turf_booking/user_registration/model/login_error_model.dart';
 import 'package:sporter_turf_booking/user_registration/model/user_login_model.dart';
-import 'package:sporter_turf_booking/user_registration/repo/api_status.dart';
+import 'package:sporter_turf_booking/repo/api_status.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sporter_turf_booking/user_registration/repo/api_services.dart';
+import 'package:sporter_turf_booking/repo/api_services.dart';
 import 'package:sporter_turf_booking/utils/keys.dart';
 import '../../utils/constants.dart';
 import '../../utils/navigations.dart';
@@ -41,7 +41,6 @@ class UserLoginViewModel with ChangeNotifier {
 
   setLoginError(LoginError loginError, context) async {
     _loginError = loginError;
-
     return errorResonses(_loginError!, context);
   }
 
@@ -49,16 +48,18 @@ class UserLoginViewModel with ChangeNotifier {
     final navigator = Navigator.of(context);
     setLoading(true);
     final response = await ApiServices.postMethod(
-        Urls.kBASEURL + Urls.kUSERSIGNIN, userDataBody(),userLoginModelFromJson);
+        Urls.kBASEURL + Urls.kUSERSIGNIN,
+        userDataBody(),
+        userLoginModelFromJson);
 
     if (response is Success) {
       final data = await setUserData(response.response as UserLoginModel);
       final accessToken = data!.accessToken;
       log(accessToken.toString());
       clearController();
-      setLoginStatus(accessToken!);
-      navigator.pushNamedAndRemoveUntil(
-          NavigatorClass.homeScreen, (route) => false);
+      await setLoginStatus(accessToken!);
+      navigator.pushReplacementNamed(
+          NavigatorClass.homeScreen);
     }
 
     if (response is Failure) {
@@ -85,8 +86,8 @@ class UserLoginViewModel with ChangeNotifier {
 
   setLoginStatus(String accessToken) async {
     final status = await SharedPreferences.getInstance();
-    await status.setBool(GlobalKeys.userLoggedIN, true);
-    await status.setString(GlobalKeys.accesToken, accessToken);
+    status.setBool(GlobalKeys.userLoggedIN, true);
+    status.setString(GlobalKeys.accesToken, accessToken);
   }
 
   Map<String, dynamic> userDataBody() {
@@ -103,6 +104,6 @@ class UserLoginViewModel with ChangeNotifier {
     if (statusCode == 401) {
       return SnackBarWidget.snackBar(context, "Invalid username or password");
     }
-    return SnackBarWidget.snackBar(context,loginError.message.toString());
+    return SnackBarWidget.snackBar(context, loginError.message.toString());
   }
 }

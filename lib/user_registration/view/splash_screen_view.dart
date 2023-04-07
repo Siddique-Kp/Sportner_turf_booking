@@ -44,14 +44,18 @@ class SplashScreen extends StatelessWidget {
 
 Future<Widget> loginStatus() async {
   final status = await SharedPreferences.getInstance();
-  final userLoggedIn = status.getBool(GlobalKeys.userLoggedIN);
-  final userSignedIn = status.getBool(GlobalKeys.userSignedUp);
-  final userSignedWithGoogle = status.getBool(GlobalKeys.userLoggedWithGoogle);
-  if (userLoggedIn == false ||
-      userLoggedIn == null && userSignedIn == false ||
-      userSignedIn == null && userSignedWithGoogle == false ||
-      userSignedWithGoogle == null) {
+  final userLoggedIn = status.getBool(GlobalKeys.userLoggedIN) ?? false;
+  final userSignedIn = status.getBool(GlobalKeys.userSignedUp) ?? false;
+  final userSignedWithGoogle =
+      status.getBool(GlobalKeys.userLoggedWithGoogle) ?? false;
+  log(userLoggedIn.toString());
+  log(userSignedIn.toString());
+  log(userSignedWithGoogle.toString());
+  if (userLoggedIn == false &&
+      userSignedIn == false &&
+      userSignedWithGoogle == false) {
     return const UserLoginScreen();
+  } else {
+    return const HomeScreenView();
   }
-  return const HomeScreenView();
 }

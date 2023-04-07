@@ -8,6 +8,7 @@ import 'package:sporter_turf_booking/utils/global_values.dart';
 import 'package:sporter_turf_booking/utils/navigations.dart';
 import 'package:sporter_turf_booking/utils/textstyles.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
+import '../components/curved_background.dart';
 import '../components/login_button_widget.dart';
 import '../components/registering_text_widget.dart';
 import '../components/text_form_field.dart';
@@ -33,6 +34,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
   Widget build(BuildContext context) {
     // SystemChrome.setSystemUIOverlayStyle(
     //    const SystemUiOverlayStyle(statusBarColor: MyColors.appMainGreenColor));
+    final size = MediaQuery.of(context).size;
     final signUpProvider = context.watch<SignUpViewModel>();
     TextEditingController userNameController =
         signUpProvider.userNameController;
@@ -43,7 +45,15 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          SvgPicture.asset("assets/login_top.svg"),
+          // SvgPicture.asset("assets/login_top.svg"),
+          Container(
+            width: size.width,
+            height: size.height,
+            color: MyColors.kWhiteColor,
+            child: CustomPaint(
+              painter: CurvePainter(),
+            ),
+          ),
           GestureDetector(
             onTap: () {
               FocusScopeNode currentFocus = FocusScope.of(context);

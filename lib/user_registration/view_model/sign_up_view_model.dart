@@ -2,14 +2,14 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporter_turf_booking/user_registration/model/login_error_model.dart';
-import 'package:sporter_turf_booking/user_registration/repo/api_services.dart';
+import 'package:sporter_turf_booking/repo/api_services.dart';
 import 'package:sporter_turf_booking/utils/constants.dart';
 
 import '../../utils/keys.dart';
 import '../../utils/navigations.dart';
 import '../components/snackbar.dart';
 import '../model/user_signup_model.dart';
-import '../repo/api_status.dart';
+import '../../repo/api_status.dart';
 
 class SignUpViewModel with ChangeNotifier {
   final TextEditingController userNameController = TextEditingController();
