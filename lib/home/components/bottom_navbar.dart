@@ -29,8 +29,8 @@ class BottomBarView extends StatelessWidget {
         showSelectedLabels: false,
         type: BottomNavigationBarType.fixed,
         showUnselectedLabels: false,
-        backgroundColor: MyColors.kWhiteColor,
-        elevation: 6,
+        backgroundColor: MyColors.kWhiteColor, 
+        elevation: 5,
         selectedItemColor: MyColors.appMainGreenColor,
         unselectedItemColor: MyColors.kGreyColor,
         items: const [

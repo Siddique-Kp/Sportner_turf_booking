@@ -6,6 +6,8 @@ import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 
+import '../components/venue_card_widget.dart';
+
 class HomeScreenView extends StatelessWidget {
   const HomeScreenView({super.key});
 
@@ -55,146 +57,122 @@ class HomeScreenView extends StatelessWidget {
           )
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: size.width,
-            height: 155,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 25),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      MySize.kHeight20,
-                      Text(
-                        "Hello Siddique",
-                        style: TextStyle(
-                            color: MyColors.kBlackColor,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      MySize.kHeight10,
-                      Text(
-                        "Find your arena",
-                        style: TextStyle(
-                          color: MyColors.kBlackColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 19,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: size.width,
+              height: 155,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        MySize.kHeight20,
+                        Text(
+                          "Hello Siddique",
+                          style: TextStyle(
+                              color: MyColors.kBlackColor,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                MySize.kHeight30,
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 15),
-                    child: Wrap(
-                      direction: Axis.horizontal,
-                      children: SportNameCard.sportItemsdata(),
+                        MySize.kHeight10,
+                        Text(
+                          "Find your arena",
+                          style: TextStyle(
+                            color: MyColors.kBlackColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 19,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "Near you",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 17,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  style: const ButtonStyle(
-                    visualDensity: VisualDensity.compact,
-                  ),
-                  child: const Text("View all"),
-                ),
-              ],
-            ),
-          ),
-          MySize.kHeight20,
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                MySize.kWidth25,
-                Container(
-                  width: 150,
-                  height: 200,
-                  decoration: BoxDecoration(
-                    // color: Colors.red,
-                    border: Border.all(width: 1, color: MyColors.kGreyColor),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 150,
-                        height: 90,
-                        child: Image.asset(
-                          "assets/turf_image.png",
-                          fit: BoxFit.cover,
-                        ),
+                  MySize.kHeight20,
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Wrap(
+                        direction: Axis.horizontal,
+                        children: SportNameCard.sportItemsdata(),
                       ),
-                      MySize.kHeight10,
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "The Java Stadium",
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14,
-                              ),
-                            ),
-                            const Text(
-                              "1.2 KM away",
-                              style: TextStyle(
-                                fontSize: 11,
-                                color: MyColors.kGreyColor,
-                              ),
-                            ),
-                            Row(
-                              children: const [
-                                Icon(
-                                  Icons.sports_soccer_rounded,
-                                  size: 19,
-                                ),
-                                Icon(
-                                  Icons.sports_cricket_rounded,
-                                  size: 22,
-                                ),
-                              ],
-                            ),
-                            const RatingStarWidget(value: 3)
-                          ],
-                        ),
-                      )
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          )
-        ],
+            HomeComponents.viewAllText(
+              lText: "Nearest Turf",
+              onPressed: () {},
+            ),
+            MySize.kHeight20,
+            SizedBox(
+              width: size.width,
+              height: 190,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GridView.builder(
+                      itemCount: 4,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        mainAxisExtent: 165,
+                      ),
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return const Padding(
+                          padding:  EdgeInsets.only(left: 15),
+                          child: VenueCardWidget(),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            MySize.kHeight20,
+            HomeComponents.viewAllText(
+              lText: "Turf with offers",
+              onPressed: () {},
+            ),
+             SizedBox(
+              width: size.width,
+              height: 190,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GridView.builder(
+                      itemCount: 4,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 1,
+                        mainAxisExtent: 165,
+                      ),
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return const Padding(
+                          padding:  EdgeInsets.only(left: 15),
+                          child: VenueCardWidget(isOffer: true,),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
+

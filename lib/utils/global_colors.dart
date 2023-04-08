@@ -9,6 +9,7 @@ class MyColors {
   static const kBlackColor = Colors.black;
   static const klightBlackColor = Colors.black54;
   static const kGreyColor = Colors.grey;
+  static const kOfferColor = Color.fromARGB(255,2,184,165);
 }
 
 class PrimaryColor {

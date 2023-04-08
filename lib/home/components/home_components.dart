@@ -20,3 +20,33 @@ class RatingStarWidget extends StatelessWidget {
     );
   }
 }
+
+class HomeComponents {
+  static Widget viewAllText({
+    required String lText,
+    VoidCallback? onPressed,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            lText,
+            style: const TextStyle(
+              fontWeight: FontWeight.w600,
+              fontSize: 17,
+            ),
+          ),
+          TextButton(
+            onPressed: onPressed,
+            style: const ButtonStyle(
+              visualDensity: VisualDensity.compact,
+            ),
+            child: const Text("View all"),
+          ),
+        ],
+      ),
+    );
+  }
+}
