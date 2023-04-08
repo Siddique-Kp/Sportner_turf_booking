@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view/home_view.dart';
+import 'package:sporter_turf_booking/home/view_model/home_view_model.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => FirebaseAuthViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => HomeViewModel(),
         ),
       ],
       child: MaterialApp(

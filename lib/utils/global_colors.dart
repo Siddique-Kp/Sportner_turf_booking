@@ -28,3 +28,11 @@ class PrimaryColor {
     },
   );
 }
+
+class SportsColor{
+  static const cFootball = Color(0xFFD2F1D2);
+  static const cCricket =  Color.fromARGB(255, 251, 204, 195);
+  static const cBasketBall = Color.fromARGB(255, 221, 181, 131);
+  static const cBadminton = Color.fromARGB(255, 96, 221, 96);
+  static const cVolleyBall = Color.fromARGB(255, 107, 188, 238);
+}

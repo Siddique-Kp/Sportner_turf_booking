@@ -12,6 +12,7 @@ static const kHeight10 = SizedBox(height: 10);
 
 static const kWidth10 = SizedBox(width: 10);
 static const kWidth20 = SizedBox(width: 20);
+static const kWidth25 = SizedBox(width: 25);
 static const kWidth30 = SizedBox(width: 30);
 static const kWidth40 = SizedBox(width: 40);
 static const kWidth50 = SizedBox(width: 50);

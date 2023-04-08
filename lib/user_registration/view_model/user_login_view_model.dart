@@ -21,8 +21,8 @@ class UserLoginViewModel with ChangeNotifier {
 
   bool get isShowPassword => _isShowPassword;
   bool get isLoading => _isLoading;
-  UserLoginModel get userData => _userData!;
-  LoginError get loginError => _loginError!;
+  UserLoginModel? get userData => _userData;
+  LoginError? get loginError => _loginError;
 
   setShowPassword() {
     _isShowPassword = !_isShowPassword;
