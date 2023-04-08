@@ -57,6 +57,6 @@ Future<Widget> loginStatus() async {
       userSignedWithGoogle == false) {
     return const UserLoginScreen();
   } else {
-    return const BottomBarView();
+    return  BottomBarView();
   }
 }

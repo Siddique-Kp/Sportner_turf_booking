@@ -7,19 +7,15 @@ import 'package:sporter_turf_booking/home/view/venue_view.dart';
 import 'package:sporter_turf_booking/home/view_model/home_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 
-class BottomBarView extends StatefulWidget {
-  const BottomBarView({super.key});
+class BottomBarView extends StatelessWidget {
+   BottomBarView({super.key});
 
-  @override
-  State<BottomBarView> createState() => _BottomBarViewState();
-}
-
-class _BottomBarViewState extends State<BottomBarView> {
-  List views = [
+ final List views = [
     const HomeScreenView(),
     const VenueScreenView(),
     const UserProfileView(),
   ];
+
   @override
   Widget build(BuildContext context) {
     final bottomBarVieModel = Provider.of<HomeViewModel>(context);

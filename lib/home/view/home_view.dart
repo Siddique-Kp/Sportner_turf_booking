@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/home/components/home_components.dart';
 import 'package:sporter_turf_booking/home/components/sport_name_card.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
@@ -45,13 +45,14 @@ class HomeScreenView extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () async {
-                context.read<FirebaseAuthViewModel>().userLoginStatus(context);
-              },
-              icon: const Icon(
-                Icons.logout,
-                color: MyColors.kBlackColor,
-              ))
+            onPressed: () async {
+              context.read<FirebaseAuthViewModel>().userLoginStatus(context);
+            },
+            icon: const Icon(
+              Icons.logout,
+              color: MyColors.kBlackColor,
+            ),
+          )
         ],
       ),
       body: Column(
@@ -91,46 +92,12 @@ class HomeScreenView extends StatelessWidget {
                 MySize.kHeight30,
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      MySize.kWidth20,
-                      SportsNameCard(
-                        sports: "Football",
-                        onTap: () {},
-                        color: SportsColor.cFootball,
-                        child: const Icon(Icons.sports_soccer),
-                      ),
-                      MySize.kWidth10,
-                      SportsNameCard(
-                        sports: "Cricket",
-                        onTap: () {},
-                        color: SportsColor.cCricket,
-                        child: const Icon(Icons.sports_cricket),
-                      ),
-                      MySize.kWidth10,
-                      SportsNameCard(
-                        sports: "Basketball",
-                        onTap: () {},
-                        color: SportsColor.cBasketBall,
-                        child: const Icon(
-                          Icons.sports_basketball,
-                          color: Color.fromARGB(255, 188, 130, 78),
-                        ),
-                      ),
-                      MySize.kWidth10,
-                      SportsNameCard(
-                        sports: "Vollyball",
-                        onTap: () {},
-                        color: SportsColor.cVolleyBall,
-                        child: const Icon(Icons.sports_volleyball),
-                      ),
-                      MySize.kWidth10,
-                      SportsNameCard(
-                          sports: "Badminton",
-                          onTap: () {},
-                          color: SportsColor.cBadminton,
-                          child: const Icon(CupertinoIcons.sportscourt)),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Wrap(
+                      direction: Axis.horizontal,
+                      children: SportNameCard.sportItemsdata(),
+                    ),
                   ),
                 ),
               ],
@@ -180,6 +147,44 @@ class HomeScreenView extends StatelessWidget {
                         child: Image.asset(
                           "assets/turf_image.png",
                           fit: BoxFit.cover,
+                        ),
+                      ),
+                      MySize.kHeight10,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "The Java Stadium",
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14,
+                              ),
+                            ),
+                            const Text(
+                              "1.2 KM away",
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: MyColors.kGreyColor,
+                              ),
+                            ),
+                            Row(
+                              children: const [
+                                Icon(
+                                  Icons.sports_soccer_rounded,
+                                  size: 19,
+                                ),
+                                Icon(
+                                  Icons.sports_cricket_rounded,
+                                  size: 22,
+                                ),
+                              ],
+                            ),
+                            const RatingStarWidget(value: 3)
+                          ],
                         ),
                       )
                     ],
