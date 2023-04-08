@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view/home_view.dart';
 import 'package:sporter_turf_booking/home/view_model/home_view_model.dart';
+import 'package:sporter_turf_booking/user_registration/view/forget_password_view.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
+import 'package:sporter_turf_booking/user_registration/view_model/forget_password_view_model.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/user_registration/view/login_view.dart';
@@ -36,6 +38,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => HomeViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ForgetPassViewModel(),
         ),
       ],
       child: MaterialApp(
@@ -71,6 +76,7 @@ class MyApp extends StatelessWidget {
           "/userLogin": (context) => const UserLoginScreen(),
           "/otpRegister": (context) => const OtpVerificationPage(),
           "/homeScreen": (context) => const HomeScreenView(),
+          "/forgetPass": (context) =>  ForgetPasswordScreen(),
         },
         initialRoute: "/splashScreen",
       ),

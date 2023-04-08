@@ -58,8 +58,8 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                     ),
                     MySize.kHeight10,
                     SizedBox(
-                      height: size.height*0.2,
-                      width: size.width*0.5,
+                      height: size.height * 0.2,
+                      width: size.width * 0.5,
                       child: SvgPicture.asset(
                         "assets/login_pic.svg",
                         fit: BoxFit.contain,
@@ -69,15 +69,16 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                     ),
                     MySize.kHeight10,
                     Consumer<UserLoginViewModel>(
-                        builder: (context, userLoginViewModel, child) {
-                      return TextFormWidget(
-                        isLoginPhone: true,
-                        controller: userLoginViewModel.loginPhoneCntrllr,
-                        labelText: 'Phone',
-                        textFieldIcon: Icons.phone_iphone,
-                        keyType: TextInputType.number,
-                      );
-                    },),
+                      builder: (context, userLoginViewModel, child) {
+                        return TextFormWidget(
+                          isLoginPhone: true,
+                          controller: userLoginViewModel.loginPhoneCntrllr,
+                          labelText: 'Phone',
+                          textFieldIcon: Icons.phone_iphone,
+                          keyType: TextInputType.number,
+                        );
+                      },
+                    ),
                     Consumer<UserLoginViewModel>(
                         builder: (context, userLoginViewModel, child) {
                       return TextFormWidget(
@@ -91,14 +92,19 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                     MySize.kHeight10,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
-                        Text(
-                          "Forgot Password?",
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            color: MyColors.kButtonColor,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, NavigatorClass.forgetPassScreen);
+                          },
+                          child: const Text(
+                            "Forgot Password?",
+                            textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: MyColors.kButtonColor,
+                            ),
                           ),
                         ),
                       ],
