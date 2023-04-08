@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:sporter_turf_booking/user_registration/components/snackbar.dart';
-import 'package:sporter_turf_booking/user_registration/model/login_error_model.dart';
+import 'package:sporter_turf_booking/user_registration/model/error_response_model.dart';
 import 'package:sporter_turf_booking/user_registration/model/user_login_model.dart';
 import 'package:sporter_turf_booking/repo/api_status.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,12 +17,12 @@ class UserLoginViewModel with ChangeNotifier {
   bool _isShowPassword = true;
   bool _isLoading = false;
   UserLoginModel? _userData;
-  LoginError? _loginError;
+  ErrorResponseModel? _loginError;
 
   bool get isShowPassword => _isShowPassword;
   bool get isLoading => _isLoading;
   UserLoginModel? get userData => _userData;
-  LoginError? get loginError => _loginError;
+  ErrorResponseModel? get loginError => _loginError;
 
   setShowPassword() {
     _isShowPassword = !_isShowPassword;
@@ -39,7 +39,7 @@ class UserLoginViewModel with ChangeNotifier {
     return _userData;
   }
 
-  setLoginError(LoginError loginError, context) async {
+  setLoginError(ErrorResponseModel loginError, context) async {
     _loginError = loginError;
     return errorResonses(_loginError!, context);
   }
@@ -58,19 +58,17 @@ class UserLoginViewModel with ChangeNotifier {
       log(accessToken.toString());
       clearController();
       await setLoginStatus(accessToken!);
-      navigator.pushReplacementNamed(
-          NavigatorClass.homeScreen);
+      navigator.pushReplacementNamed(NavigatorClass.homeScreen);
     }
 
     if (response is Failure) {
-      await setLoading(false);
-
+      setLoading(false);
       clearPassword();
-      LoginError loginError = LoginError(
+      ErrorResponseModel loginError = ErrorResponseModel(
         code: response.code,
         message: response.errorResponse,
       );
-      await setLoginError(loginError, context);
+      setLoginError(loginError, context);
     }
     setLoading(false);
   }
@@ -99,7 +97,7 @@ class UserLoginViewModel with ChangeNotifier {
     return body.toJson();
   }
 
-  errorResonses(LoginError loginError, BuildContext context) {
+  errorResonses(ErrorResponseModel loginError, BuildContext context) {
     final statusCode = loginError.code;
     if (statusCode == 401) {
       return SnackBarWidget.snackBar(context, "Invalid username or password");

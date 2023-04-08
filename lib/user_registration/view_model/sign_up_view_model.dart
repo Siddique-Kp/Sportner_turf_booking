@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sporter_turf_booking/user_registration/model/login_error_model.dart';
+import 'package:sporter_turf_booking/user_registration/model/error_response_model.dart';
 import 'package:sporter_turf_booking/repo/api_services.dart';
 import 'package:sporter_turf_booking/utils/constants.dart';
 
@@ -20,14 +20,14 @@ class SignUpViewModel with ChangeNotifier {
   bool _isShowPassword = true;
   bool _isShowConfPassword = true;
   bool _isLoading = false;
-  SignUpError? _signUpError;
+  ErrorResponseModel? _signUpError;
   UserSignupModel? _userData;
 
   bool get isShowPassword => _isShowPassword;
   bool get isShowConfPassword => _isShowConfPassword;
   bool get isLoading => _isLoading;
   UserSignupModel get userData => _userData!;
-  SignUpError get signUpError => _signUpError!;
+  ErrorResponseModel get signUpError => _signUpError!;
 
   setshowPassword() {
     _isShowPassword = !_isShowPassword;
@@ -60,7 +60,7 @@ class SignUpViewModel with ChangeNotifier {
     return _userData;
   }
 
-  setLoginError(SignUpError signUpError, context) async {
+  setLoginError(ErrorResponseModel signUpError, context) async {
     _signUpError = signUpError;
     return errorResonses(_signUpError!, context);
   }
@@ -84,11 +84,11 @@ class SignUpViewModel with ChangeNotifier {
     }
     if (response is Failure) {
       log("Failed");
-      SignUpError loginError = SignUpError(
+      ErrorResponseModel signUpError = ErrorResponseModel(
         code: response.code,
         message: response.errorResponse,
       );
-      await setLoginError(loginError,context);
+      setLoginError(signUpError,context);
       clearPassword();
     }
     setLoading(false);
@@ -114,7 +114,7 @@ class SignUpViewModel with ChangeNotifier {
     return body.toJson();
   }
 
-  errorResonses(SignUpError signUperror, BuildContext context) {
+  errorResonses(ErrorResponseModel signUperror, BuildContext context) {
     final statusCode = signUperror.code;
     if (statusCode == 409) {
       return SnackBarWidget.snackBar(context, "User with this mobile number already exists");
