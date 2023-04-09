@@ -7,6 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporter_turf_booking/user_registration/components/snackbar.dart';
+import 'package:sporter_turf_booking/user_registration/view/otp_page_view.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 import 'package:sporter_turf_booking/utils/keys.dart';
 import '../../utils/navigations.dart';
@@ -58,12 +59,15 @@ class FirebaseAuthViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  fireBasePhoneAuth(BuildContext context) async {
+  fireBasePhoneAuth(
+    BuildContext context,
+    String mobileNumber,
+    bool isForgotPass,
+  ) async {
     setOtpLoading(true);
     String countryCode = "+91";
     await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber:
-          countryCode + context.read<SignUpViewModel>().phoneController.text,
+      phoneNumber: countryCode + mobileNumber,
       verificationCompleted: (PhoneAuthCredential credential) {
         log("Credential");
       },
@@ -76,7 +80,9 @@ class FirebaseAuthViewModel with ChangeNotifier {
         log("code sent");
         _otpResendToken = resendToken;
         _verifyOTP = verificationId;
-        Navigator.pushNamed(context, NavigatorClass.otpScreen);
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => OtpVerificationPage(isForgotPass: isForgotPass),
+        ));
         setOtpLoading(false);
       },
       codeAutoRetrievalTimeout: (String verificationId) {
@@ -96,17 +102,21 @@ class FirebaseAuthViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  firbaseAuthenticationWithOTP(BuildContext context) async {
+  firbaseAuthenticationWithOTP(BuildContext context, bool isForgotPass) async {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final signUpViewModel = context.read<SignUpViewModel>();
+    final navigator = Navigator.of(context);
     setOtpLoading(true);
     try {
+      log('came here');
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: _verifyOTP,
         smsCode: otpValue,
       );
       await auth.signInWithCredential(credential);
-      await signUpViewModel.getSignUpStatus(context);
+      isForgotPass
+          ? navigator.pushNamed(NavigatorClass.changeforgetPass)
+          : await signUpViewModel.getSignUpStatus(context);
       setOtpLoading(false);
     } on SocketException {
       log("No internet");

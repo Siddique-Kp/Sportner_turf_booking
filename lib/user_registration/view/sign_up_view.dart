@@ -121,7 +121,10 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                                   if (_formKey.currentState!.validate()) {
                                     await context
                                         .read<FirebaseAuthViewModel>()
-                                        .fireBasePhoneAuth(context);
+                                        .fireBasePhoneAuth(
+                                            context,
+                                            signUpProvider.phoneController.text,
+                                            false);
                                   }
                                 },
                         ),

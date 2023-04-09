@@ -60,10 +60,19 @@ class ForgetPasswordScreen extends StatelessWidget {
                     onPressed: forgetPassViewModel.phoneController.text.isEmpty
                         ? null
                         : () {
-                            if (_forgetKey.currentState!.validate()) {}
+                            if (_forgetKey.currentState!.validate()) {
+                              context
+                                  .read<ForgetPassViewModel>()
+                                  .getForgetPassStatus(context);
+                            }
                           },
                     style: ElevatedButton.styleFrom(elevation: 0),
-                    child: const Text("Send OTP"),
+                    child: forgetPassViewModel.isLoading
+                        ? const CircularProgressIndicator(
+                          color: MyColors.kWhiteColor,
+                          strokeWidth: 3,
+                        )
+                        : const Text("Send OTP"),
                   ),
                 ),
               ],

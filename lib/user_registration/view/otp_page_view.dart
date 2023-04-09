@@ -2,20 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/user_registration/components/otp_textfield.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
+import 'package:sporter_turf_booking/user_registration/view_model/forget_password_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 import 'package:sporter_turf_booking/utils/textstyles.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 
 class OtpVerificationPage extends StatelessWidget {
-  const OtpVerificationPage({super.key});
+  final bool isForgotPass;
+  const OtpVerificationPage({
+    super.key,
+    this.isForgotPass = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     bool isVisible = true;
     bool isResentOn = true;
     final otpValue = Provider.of<FirebaseAuthViewModel>(context).otpValue;
-    final mobileNumber = Provider.of<SignUpViewModel>(context).phoneController;
+    final mobileNumber = isForgotPass
+        ? Provider.of<ForgetPassViewModel>(context).phoneController
+        : Provider.of<SignUpViewModel>(context).phoneController;
+    final forgetmobileNumber =
+        Provider.of<ForgetPassViewModel>(context).phoneController;
     final firebaseViewModel = context.watch<FirebaseAuthViewModel>();
     final splitOtp = otpValue.split('');
     return Scaffold(
@@ -126,7 +135,8 @@ class OtpVerificationPage extends StatelessWidget {
                               : () {
                                   context
                                       .read<FirebaseAuthViewModel>()
-                                      .firbaseAuthenticationWithOTP(context);
+                                      .firbaseAuthenticationWithOTP(
+                                          context, isForgotPass);
                                 },
                           style: ElevatedButton.styleFrom(
                             elevation: 0,

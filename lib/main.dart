@@ -13,6 +13,7 @@ import 'package:sporter_turf_booking/user_registration/view/otp_page_view.dart';
 import 'package:sporter_turf_booking/user_registration/view/sign_up_view.dart';
 import 'package:sporter_turf_booking/user_registration/view/splash_screen_view.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
+import 'package:sporter_turf_booking/utils/navigations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -70,15 +71,8 @@ class MyApp extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
                 elevation: 0)),
-        routes: {
-          "/splashScreen": (context) => const SplashScreen(),
-          "/userSignUp": (context) => const UserSignUpScreen(),
-          "/userLogin": (context) => const UserLoginScreen(),
-          "/otpRegister": (context) => const OtpVerificationPage(),
-          "/homeScreen": (context) => const HomeScreenView(),
-          "/forgetPass": (context) =>  ForgetPasswordScreen(),
-        },
-        initialRoute: "/splashScreen",
+        routes: NavigatorClass.routes(),
+        initialRoute: NavigatorClass.splashScreen,
       ),
     );
   }
