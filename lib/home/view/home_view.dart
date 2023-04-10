@@ -45,17 +45,7 @@ class HomeScreenView extends StatelessWidget {
             )
           ],
         ),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              context.read<FirebaseAuthViewModel>().userLoginStatus(context);
-            },
-            icon: const Icon(
-              Icons.logout,
-              color: MyColors.black,
-            ),
-          )
-        ],
+      
       ),
       body: SingleChildScrollView(
         child: Column(
