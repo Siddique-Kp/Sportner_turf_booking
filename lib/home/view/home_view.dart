@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/components/home_components.dart';
 import 'package:sporter_turf_booking/home/components/sport_name_card.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 
@@ -18,6 +16,7 @@ class HomeScreenView extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: MyColors.white,
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const Icon(
               Icons.location_on,

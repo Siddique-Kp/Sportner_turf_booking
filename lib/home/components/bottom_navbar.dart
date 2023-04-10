@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view/home_view.dart';
 import 'package:sporter_turf_booking/home/view/user_profile_view.dart';
@@ -18,6 +19,8 @@ class BottomBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     SystemChrome.setSystemUIOverlayStyle(
+       const SystemUiOverlayStyle(statusBarColor: MyColors.white));
     final bottomBarVieModel = Provider.of<HomeViewModel>(context);
     return Scaffold(
       body: views[bottomBarVieModel.bottomBarIndex],
