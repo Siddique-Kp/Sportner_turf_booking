@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sporter_turf_booking/user_registration/view/change_pass_view.dart';
 
+import '../home/components/bottom_navbar.dart';
 import '../home/view/home_view.dart';
 import '../user_registration/view/forget_password_view.dart';
 import '../user_registration/view/login_view.dart';
@@ -16,6 +17,7 @@ class NavigatorClass {
   static const signUpScreen = "/userSignUp";
   static const otpScreen = "/otpRegister";
   static const splashScreen = "/splashScreen";
+  static const mainScreen = "/bottomBarView";
 
   static Map<String, Widget Function(BuildContext)> routes() {
     Map<String, Widget Function(BuildContext)> routes = {
@@ -26,6 +28,7 @@ class NavigatorClass {
       "/homeScreen": (context) => const HomeScreenView(),
       "/forgetPass": (context) => ForgetPasswordScreen(),
       "/changeforgetPass": (context) =>  ChangePassView(),
+      "/bottomBarView": (context) =>  BottomBarView(),
     };
 
     return routes;

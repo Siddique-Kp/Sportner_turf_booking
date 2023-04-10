@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../utils/global_colors.dart';
 
 class SportsItems {
@@ -23,7 +24,7 @@ class SportsItems {
     ),
     SportsItems(
       sportName: "Cricket",
-      sportIcon: const Icon(Icons.sports_cricket),
+      sportIcon:  const Icon(Icons.sports_cricket),
       sportColor: SportsColor.cCricket,
       onTap: () {},
     ),
@@ -36,7 +37,7 @@ class SportsItems {
     SportsItems(
       sportName: "Vollyball",
       sportIcon: const Icon(Icons.sports_volleyball),
-      sportColor:SportsColor.cVolleyBall,
+      sportColor: SportsColor.cVolleyBall,
       onTap: () {},
     ),
     SportsItems(
@@ -49,8 +50,9 @@ class SportsItems {
 }
 
 class SportNameCard {
-  static sportItemsdata() {
+  static sportItemsdata(BuildContext context) {
     final sports = SportsItems.sports;
+    final size = MediaQuery.of(context).size;
     return List.generate(sports.length, (index) {
       final sportItems = sports[index];
       return Padding(
@@ -59,13 +61,13 @@ class SportNameCard {
           child: InkWell(
             onTap: sportItems.onTap,
             child: SizedBox(
-              height: 40,
-              width: 110,
+              height: size.height*0.05,
+              width: size.width*0.30,
               child: Row(
                 children: [
                   Container(
-                    width: 40,
-                    height: 40,
+                    width:size.height*0.05,
+                    height: size.height*0.05,
                     decoration: BoxDecoration(
                       color: sportItems.sportColor,
                       borderRadius: const BorderRadius.only(
@@ -76,8 +78,8 @@ class SportNameCard {
                     child: sportItems.sportIcon,
                   ),
                   SizedBox(
-                    width: 60,
-                    height: 40,
+                    width:size.width*0.15,
+                    height: size.height*0.05,
                     child: Center(
                       child: Text(
                         sportItems.sportName,

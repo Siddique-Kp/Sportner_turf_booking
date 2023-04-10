@@ -40,7 +40,7 @@ class VenueCardWidget extends StatelessWidget {
                   "1.2 KM away",
                   style: TextStyle(
                     fontSize: 11,
-                    color: MyColors.kGreyColor,
+                    color: MyColors.grey,
                   ),
                 ),
                 MySize.kHeight5,
@@ -66,7 +66,7 @@ class VenueCardWidget extends StatelessWidget {
                             child: Text(
                               "%",
                               style: TextStyle(
-                                color: MyColors.kWhiteColor,
+                                color: MyColors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/user_registration/view/login_view.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
-import 'package:sporter_turf_booking/utils/navigations.dart';
 import 'package:sporter_turf_booking/utils/textstyles.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 import '../components/curved_background.dart';
@@ -47,7 +48,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
           Container(
             width: size.width,
             height: size.height,
-            color: MyColors.kWhiteColor,
+            color: MyColors.white,
             child: CustomPaint(
               painter: CurvePainter(),
             ),
@@ -73,10 +74,10 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                         Text("Create Account",
                             style: MyTextStyles.loginHeadingStyle),
                         const Text(
-                          "Create new account",
+                          "Let,s have some Fun",
                           style: TextStyle(
-                            color: MyColors.kGreyColor,
-                          ),
+                              // color: MyColors.kGreyColor,
+                              ),
                         ),
                         MySize.kHeight50,
                         TextFormWidget(
@@ -131,8 +132,11 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                           leftText: 'Already have an account? ',
                           rightText: "Login",
                           onTap: () {
-                            Navigator.pushReplacementNamed(
-                                context, NavigatorClass.loginScreen);
+                            // Navigator.pushReplacementNamed(
+                            //     context, NavigatorClass.loginScreen);
+                            Get.to(() => const UserLoginScreen(),
+                                transition: Transition.topLevel,
+                                duration: const Duration(seconds: 2));
                             context.read<SignUpViewModel>().clearTextField();
                             context
                                 .read<SignUpViewModel>()

@@ -44,7 +44,7 @@ class FirebaseAuthViewModel with ChangeNotifier {
         idToken: googleAuth.idToken,
       );
       await FirebaseAuth.instance.signInWithCredential(credential);
-      navigator.pushReplacementNamed(NavigatorClass.homeScreen);
+      navigator.pushReplacementNamed(NavigatorClass.mainScreen);
       final sharedPref = await SharedPreferences.getInstance();
       sharedPref.setBool(GlobalKeys.userLoggedWithGoogle, true);
     } on PlatformException catch (e) {

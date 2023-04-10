@@ -22,19 +22,21 @@ class RegisteringText extends StatelessWidget {
         Text(
           leftText,
           style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            color: MyColors.klightBlackColor
-          ),
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: MyColors.black),
         ),
         GestureDetector(
           onTap: onTap,
-          child: Text(
-            rightText,
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
-              color: MyColors.kButtonColor,
+          child: SizedBox(
+            height: 20,
+            child: Text(
+              rightText,
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: MyColors.kButtonColor,
+              ),
             ),
           ),
         )

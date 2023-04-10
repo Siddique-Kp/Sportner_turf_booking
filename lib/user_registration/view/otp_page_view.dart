@@ -62,7 +62,7 @@ class OtpVerificationPage extends StatelessWidget {
                       Text(
                         "Enter the verification code we just sent you\non mobile +91${mobileNumber.text}",
                         style: const TextStyle(
-                          color: MyColors.klightBlackColor,
+                          color: MyColors.black,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -115,7 +115,7 @@ class OtpVerificationPage extends StatelessWidget {
                                   style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
-                                    color: MyColors.kGreyColor,
+                                    color: MyColors.grey,
                                   ),
                                 ),
                               );
@@ -141,7 +141,7 @@ class OtpVerificationPage extends StatelessWidget {
                           ),
                           child: firebaseViewModel.isLoadingOtp
                               ? const CircularProgressIndicator(
-                                  color: MyColors.kWhiteColor,
+                                  color: MyColors.white,
                                   strokeWidth: 2,
                                 )
                               : const Text(

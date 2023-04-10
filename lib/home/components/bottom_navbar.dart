@@ -21,7 +21,7 @@ class BottomBarView extends StatelessWidget {
     final bottomBarVieModel = Provider.of<HomeViewModel>(context);
     return Scaffold(
       body: views[bottomBarVieModel.bottomBarIndex],
-      backgroundColor: MyColors.kWhiteColor,
+      backgroundColor: MyColors.white,
       bottomNavigationBar: BottomNavigationBar(
         onTap: bottomBarVieModel.bottomOnChanged,
         currentIndex: bottomBarVieModel.bottomBarIndex,
@@ -29,10 +29,10 @@ class BottomBarView extends StatelessWidget {
         showSelectedLabels: false,
         type: BottomNavigationBarType.fixed,
         showUnselectedLabels: false,
-        backgroundColor: MyColors.kWhiteColor, 
+        backgroundColor: MyColors.white, 
         elevation: 5,
-        selectedItemColor: MyColors.appMainGreenColor,
-        unselectedItemColor: MyColors.kGreyColor,
+        selectedItemColor: MyColors.appColor,
+        unselectedItemColor: MyColors.grey,
         items: const [
           BottomNavigationBarItem(
             label: "Home",

@@ -80,7 +80,7 @@ class SignUpViewModel with ChangeNotifier {
       clearTextField();
       setSignupStatus(accessToken!);
       navigator.pushNamedAndRemoveUntil(
-          NavigatorClass.homeScreen, (route) => false);
+          NavigatorClass.mainScreen, (route) => false);
     }
     if (response is Failure) {
       log("Failed");

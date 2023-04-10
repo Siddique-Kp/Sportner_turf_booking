@@ -39,7 +39,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                 const Text(
                   "Enter the registered mobile number here.",
                   style: TextStyle(
-                    color: MyColors.klightBlackColor,
+                    color: MyColors.black,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -71,7 +71,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(elevation: 0),
                     child: forgetPassViewModel.isLoadingotp || firebaseauthViewModel.isLoadingOtp
                         ? const CircularProgressIndicator(
-                          color: MyColors.kWhiteColor,
+                          color: MyColors.white,
                           strokeWidth: 3,
                         )
                         : const Text("Send OTP"),

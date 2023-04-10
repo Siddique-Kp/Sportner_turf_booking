@@ -58,7 +58,7 @@ class UserLoginViewModel with ChangeNotifier {
       log(accessToken.toString());
       clearController();
       await setLoginStatus(accessToken!);
-      navigator.pushReplacementNamed(NavigatorClass.homeScreen);
+      navigator.pushReplacementNamed(NavigatorClass.mainScreen);
     }
 
     if (response is Failure) {

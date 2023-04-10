@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/user_registration/components/login_button_widget.dart';
 import 'package:sporter_turf_booking/user_registration/components/registering_text_widget.dart';
 import 'package:sporter_turf_booking/user_registration/components/text_form_field.dart';
+import 'package:sporter_turf_booking/user_registration/view/sign_up_view.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
 import 'package:sporter_turf_booking/utils/navigations.dart';
 import '../../utils/global_colors.dart';
@@ -53,7 +55,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                     const Text(
                       "Sign to continue",
                       style: TextStyle(
-                        color: MyColors.kGreyColor,
+                        color: MyColors.grey,
                       ),
                     ),
                     MySize.kHeight10,
@@ -95,7 +97,8 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, NavigatorClass.forgetPassScreen);
+                            Navigator.pushNamed(
+                                context, NavigatorClass.forgetPassScreen);
                           },
                           child: const Text(
                             "Forgot Password?",
@@ -162,7 +165,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                             const Text(
                               "Continue with google",
                               style: TextStyle(
-                                color: MyColors.kGreyColor,
+                                color: MyColors.grey,
                                 fontSize: 18,
                               ),
                             ),
@@ -174,8 +177,11 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                     MySize.kHeight30,
                     RegisteringText(
                       onTap: () {
-                        Navigator.pushNamed(
-                            context, NavigatorClass.signUpScreen);
+                        // Navigator.pushNamed(
+                        //     context, NavigatorClass.signUpScreen);
+                        Get.to(() => const UserSignUpScreen(),
+                            transition: Transition.topLevel,
+                            duration: const Duration(seconds: 2));
                         context.read<UserLoginViewModel>().clearController();
                       },
                       leftText: "Don't have account? ",

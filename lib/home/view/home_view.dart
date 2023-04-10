@@ -16,12 +16,12 @@ class HomeScreenView extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: MyColors.kWhiteColor,
+        backgroundColor: MyColors.white,
         title: Row(
           children: [
             const Icon(
               Icons.location_on,
-              color: MyColors.kBlackColor,
+              color: MyColors.black,
             ),
             MySize.kWidth10,
             Column(
@@ -30,14 +30,14 @@ class HomeScreenView extends StatelessWidget {
                 Text(
                   "Kozhikode",
                   style: TextStyle(
-                      color: MyColors.kBlackColor,
+                      color: MyColors.black,
                       fontSize: 19,
                       fontWeight: FontWeight.w500),
                 ),
                 Text(
                   "Kerala,India",
                   style: TextStyle(
-                    color: MyColors.kBlackColor,
+                    color: MyColors.black,
                     fontSize: 12,
                   ),
                 ),
@@ -52,7 +52,7 @@ class HomeScreenView extends StatelessWidget {
             },
             icon: const Icon(
               Icons.logout,
-              color: MyColors.kBlackColor,
+              color: MyColors.black,
             ),
           )
         ],
@@ -63,7 +63,7 @@ class HomeScreenView extends StatelessWidget {
           children: [
             SizedBox(
               width: size.width,
-              height: 155,
+              height: size.height*0.20,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -76,7 +76,7 @@ class HomeScreenView extends StatelessWidget {
                         Text(
                           "Hello Siddique",
                           style: TextStyle(
-                              color: MyColors.kBlackColor,
+                              color: MyColors.black,
                               fontSize: 15,
                               fontWeight: FontWeight.w500),
                         ),
@@ -84,7 +84,7 @@ class HomeScreenView extends StatelessWidget {
                         Text(
                           "Find your arena",
                           style: TextStyle(
-                            color: MyColors.kBlackColor,
+                            color: MyColors.black,
                             fontWeight: FontWeight.bold,
                             fontSize: 19,
                           ),
@@ -99,7 +99,7 @@ class HomeScreenView extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 10),
                       child: Wrap(
                         direction: Axis.horizontal,
-                        children: SportNameCard.sportItemsdata(),
+                        children: SportNameCard.sportItemsdata(context),
                       ),
                     ),
                   ),
@@ -112,8 +112,8 @@ class HomeScreenView extends StatelessWidget {
             ),
             MySize.kHeight20,
             SizedBox(
-              width: size.width,
-              height: 190,
+              // width: size.width,
+              height: size.height*0.25,
               child: Row(
                 children: [
                   Expanded(
