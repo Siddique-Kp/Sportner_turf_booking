@@ -1,17 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:sporter_turf_booking/home/view/home_view.dart';
 import 'package:sporter_turf_booking/home/view_model/home_view_model.dart';
-import 'package:sporter_turf_booking/user_registration/view/forget_password_view.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/forget_password_view_model.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
-import 'package:sporter_turf_booking/user_registration/view/login_view.dart';
-import 'package:sporter_turf_booking/user_registration/view/otp_page_view.dart';
-import 'package:sporter_turf_booking/user_registration/view/sign_up_view.dart';
-import 'package:sporter_turf_booking/user_registration/view/splash_screen_view.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 import 'package:sporter_turf_booking/utils/navigations.dart';
 
@@ -44,7 +39,7 @@ class MyApp extends StatelessWidget {
           create: (context) => ForgetPassViewModel(),
         ),
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         title: 'sportner turf booking app',
         debugShowCheckedModeBanner: false,
         builder: (context, child) {

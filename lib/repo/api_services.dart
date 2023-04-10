@@ -8,14 +8,14 @@ class ApiServices {
   static Future<Object> postMethod(
     String url,
     Map body,
-    Function function,
+    Function? jsonDecode,
   ) async {
     try {
       final response = await http.post(Uri.parse(url), body: body);
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         log("Success");
-        return Success(response: function(response.body));
+        return Success(response:jsonDecode == null ? null: jsonDecode(response.body));
       }
       log(response.body.toLowerCase());
       log(response.statusCode.toString());

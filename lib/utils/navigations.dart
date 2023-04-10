@@ -25,7 +25,7 @@ class NavigatorClass {
       "/otpRegister": (context) => const OtpVerificationPage(),
       "/homeScreen": (context) => const HomeScreenView(),
       "/forgetPass": (context) => ForgetPasswordScreen(),
-      "/changeforgetPass": (context) => const ChangePassView(),
+      "/changeforgetPass": (context) =>  ChangePassView(),
     };
 
     return routes;

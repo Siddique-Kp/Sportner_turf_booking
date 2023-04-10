@@ -1,11 +1,9 @@
 import 'dart:developer';
-
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporter_turf_booking/home/components/bottom_navbar.dart';
-import 'package:sporter_turf_booking/home/view/home_view.dart';
 import 'package:sporter_turf_booking/user_registration/view/login_view.dart';
 import 'package:sporter_turf_booking/utils/keys.dart';
 

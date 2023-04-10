@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/user_registration/view_model/forget_password_view_model.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
@@ -14,6 +15,7 @@ class TextFormWidget extends StatelessWidget {
   final IconData textFieldIcon;
   final TextInputType keyType;
   final bool isPassword;
+  final bool isForgetPass;
   final bool isConfPass;
   final bool isLoginPass;
   final bool isLoginPhone;
@@ -27,6 +29,7 @@ class TextFormWidget extends StatelessWidget {
     required this.textFieldIcon,
     required this.keyType,
     this.isPassword = false,
+    this.isForgetPass = false,
     this.isConfPass = false,
     this.isLoginPass = false,
     this.isLoginPhone = false,
@@ -38,7 +41,9 @@ class TextFormWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final watchSignUpprovider = context.watch<SignUpViewModel>();
     final isShowPassword = watchSignUpprovider.isShowPassword;
-    final passController = watchSignUpprovider.passController;
+    final passController = isForgetPass
+        ? context.watch<ForgetPassViewModel>().newpasswordController
+        : watchSignUpprovider.passController;
     final confpassController = watchSignUpprovider.confirfPassController;
     final isShowConfPassword = watchSignUpprovider.isShowConfPassword;
     final userLoginViewModel = context.watch<UserLoginViewModel>();
@@ -65,8 +70,8 @@ class TextFormWidget extends StatelessWidget {
                     : false,
         keyboardType: keyType,
         validator: (value) {
-         return Validator.textFieldValidator(
-          value: value,
+          return Validator.textFieldValidator(
+            value: value,
             isUser: isUser,
             isPhone: isPhone,
             isLoginPhone: isLoginPhone,
@@ -143,5 +148,3 @@ class TextFormWidget extends StatelessWidget {
     );
   }
 }
-
-

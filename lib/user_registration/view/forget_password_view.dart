@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/user_registration/components/text_form_field.dart';
+import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/forget_password_view_model.dart';
 
 import '../../utils/global_colors.dart';
@@ -14,6 +15,7 @@ class ForgetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final forgetPassViewModel = context.watch<ForgetPassViewModel>();
+    final firebaseauthViewModel = context.watch<FirebaseAuthViewModel>();
     return Scaffold(
       body: GestureDetector(
         onTap: () {
@@ -67,7 +69,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                             }
                           },
                     style: ElevatedButton.styleFrom(elevation: 0),
-                    child: forgetPassViewModel.isLoading
+                    child: forgetPassViewModel.isLoadingotp || firebaseauthViewModel.isLoadingOtp
                         ? const CircularProgressIndicator(
                           color: MyColors.kWhiteColor,
                           strokeWidth: 3,

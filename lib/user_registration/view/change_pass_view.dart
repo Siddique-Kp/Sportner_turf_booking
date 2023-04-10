@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/user_registration/components/text_form_field.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/forget_password_view_model.dart';
+import 'package:sporter_turf_booking/utils/global_colors.dart';
+import 'package:sporter_turf_booking/utils/global_values.dart';
 
 class ChangePassView extends StatelessWidget {
-  const ChangePassView({super.key});
+  ChangePassView({super.key});
+  final _changepassKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,21 +22,60 @@ class ChangePassView extends StatelessWidget {
           }
         },
         child: SafeArea(
-            child: ListView(
-          children: [
-            TextFormWidget(
-                controller: forgetPassViewModel.newpasswordController,
-                labelText: "New password",
-                textFieldIcon: Icons.lock,
-                keyType: TextInputType.text),
-            TextFormWidget(
-                controller: forgetPassViewModel.newConfpasswordController,
-                labelText: "Confirm Password",
-                textFieldIcon: Icons.lock,
-                keyType: TextInputType.text),
-            ElevatedButton(onPressed: () {}, child: const Text("SUBMIT"))
-          ],
-        )),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Form(
+              key: _changepassKey,
+              child: ListView(
+                children: [
+                  const SizedBox(height: 20,),
+                  const Text(
+                    "Create a new password",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 19,
+                      color: MyColors.klightBlackColor,
+                    ),
+                  ),
+                  MySize.kHeight50,
+                  TextFormWidget(
+                      isPassword: true,
+                      controller: forgetPassViewModel.newpasswordController,
+                      labelText: "New password",
+                      textFieldIcon: Icons.lock,
+                      keyType: TextInputType.text,
+                      ),
+                  TextFormWidget(
+                      isConfPass: true,
+                      controller: forgetPassViewModel.newConfpasswordController,
+                      labelText: "Confirm Password",
+                      textFieldIcon: Icons.lock,
+                      keyType: TextInputType.text,
+                      isForgetPass: true,
+                      ),
+                  MySize.kHeight30,
+                  SizedBox(
+                    height: 45,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (_changepassKey.currentState!.validate()) {
+                          context.read<ForgetPassViewModel>().setNewPassword(context);
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(elevation: 0),
+                      child: forgetPassViewModel.isLoading
+                          ? const CircularProgressIndicator(
+                              color: MyColors.kWhiteColor,
+                              strokeWidth: 3,
+                            )
+                          : const Text("SUBMIT"),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

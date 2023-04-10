@@ -23,8 +23,6 @@ class OtpVerificationPage extends StatelessWidget {
     final mobileNumber = isForgotPass
         ? Provider.of<ForgetPassViewModel>(context).phoneController
         : Provider.of<SignUpViewModel>(context).phoneController;
-    final forgetmobileNumber =
-        Provider.of<ForgetPassViewModel>(context).phoneController;
     final firebaseViewModel = context.watch<FirebaseAuthViewModel>();
     final splitOtp = otpValue.split('');
     return Scaffold(

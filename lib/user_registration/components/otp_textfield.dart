@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
@@ -11,10 +12,11 @@ class OtpTextfieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final firebaseAuthViewModel = context.read<FirebaseAuthViewModel>();
     return OtpTextField(
       inputFormatters: [FilteringTextInputFormatter.deny(RegExp(r'\s'))],
       numberOfFields: 6,
-      
+      clearText: firebaseAuthViewModel.clearOtp,
       fieldWidth: 45,
       borderColor: MyColors.kButtonColor,
       focusedBorderColor: MyColors.kButtonColor,

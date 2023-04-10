@@ -17,6 +17,7 @@ class FirebaseAuthViewModel with ChangeNotifier {
   final googleSigin = GoogleSignIn();
   GoogleSignInAccount? _user;
   bool _isLoadingOtp = false;
+  bool _clearOtp = false;
   String _verifyOTP = '';
   String otpValue = '';
   int? _otpResendToken;
@@ -25,6 +26,7 @@ class FirebaseAuthViewModel with ChangeNotifier {
   GoogleSignInAccount get user => _user!;
   String get verifyOTP => _verifyOTP;
   int get otpResendToken => _otpResendToken!;
+  bool get clearOtp => _clearOtp;
 
   Future firebaseGoogleAuth(context) async {
     final navigator = Navigator.of(context);
@@ -99,6 +101,7 @@ class FirebaseAuthViewModel with ChangeNotifier {
 
   clearOTP() {
     otpValue = '';
+    _clearOtp = true;
     notifyListeners();
   }
 
@@ -114,6 +117,7 @@ class FirebaseAuthViewModel with ChangeNotifier {
         smsCode: otpValue,
       );
       await auth.signInWithCredential(credential);
+      clearOTP();
       isForgotPass
           ? navigator.pushNamed(NavigatorClass.changeforgetPass)
           : await signUpViewModel.getSignUpStatus(context);
