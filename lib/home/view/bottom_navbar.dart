@@ -9,7 +9,7 @@ import 'package:sporter_turf_booking/home/view_model/home_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 
 class BottomBarView extends StatelessWidget {
-   BottomBarView({super.key});
+    BottomBarView({super.key});
 
  final List views = [
     const HomeScreenView(),
@@ -45,12 +45,8 @@ class BottomBarView extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             label: "Venue",
-            icon: InkResponse(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              child: Icon(
-                CupertinoIcons.sportscourt,
-              ),
+            icon: Icon(
+              CupertinoIcons.sportscourt,
             ),
           ),
           BottomNavigationBarItem(

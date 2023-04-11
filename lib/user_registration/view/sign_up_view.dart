@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/user_registration/view/login_view.dart';
@@ -31,8 +32,8 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setSystemUIOverlayStyle(
-    //    const SystemUiOverlayStyle(statusBarColor: MyColors.appMainGreenColor));
+    SystemChrome.setSystemUIOverlayStyle(
+       const SystemUiOverlayStyle(statusBarColor: MyColors.appColor));
     final size = MediaQuery.of(context).size;
     final signUpProvider = context.watch<SignUpViewModel>();
     TextEditingController userNameController =

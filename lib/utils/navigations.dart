@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sporter_turf_booking/user_registration/view/change_pass_view.dart';
 
-import '../home/components/bottom_navbar.dart';
+import '../home/view/bottom_navbar.dart';
 import '../home/view/home_view.dart';
 import '../user_registration/view/forget_password_view.dart';
 import '../user_registration/view/login_view.dart';
