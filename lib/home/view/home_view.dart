@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 import '../components/appbar_widget.dart';
-import '../components/home_header_section.dart';
-import '../components/home_nearest_turf_widget.dart';
-import '../components/home_offered_turf_widget.dart';
+import '../components/home_components/home_header_section.dart';
+import '../components/home_components/home_nearest_turf_widget.dart';
+import '../components/home_components/home_offered_turf_widget.dart';
 
 class HomeScreenView extends StatelessWidget {
   const HomeScreenView({super.key});

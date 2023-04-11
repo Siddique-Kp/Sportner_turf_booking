@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'home_components.dart';
-import 'venue_card_widget.dart';
+import '../venue_card_widget.dart';
 
 class TurfWithOfferWidget extends StatelessWidget {
   const TurfWithOfferWidget({

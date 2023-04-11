@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/home/view_model/bottom_nav_view_model.dart';
 
-import '../../utils/global_values.dart';
+import '../../../utils/global_values.dart';
 import 'home_components.dart';
-import 'venue_card_widget.dart';
+import '../venue_card_widget.dart';
 
 class HomeNearestTurfWidget extends StatelessWidget {
   const HomeNearestTurfWidget({
@@ -15,7 +17,9 @@ class HomeNearestTurfWidget extends StatelessWidget {
     return Column(children: [
       HomeComponents.viewAllText(
         lText: "Nearest Turf",
-        onPressed: () {},
+        onPressed: () {
+          context.read<BottomNavViewModel>().changeBottomNavindex(1); 
+        },
       ),
       MySize.kHeight20,
       SizedBox(

@@ -5,13 +5,13 @@ import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view/home_view.dart';
 import 'package:sporter_turf_booking/home/view/user_profile_view.dart';
 import 'package:sporter_turf_booking/home/view/venue_view.dart';
-import 'package:sporter_turf_booking/home/view_model/home_view_model.dart';
+import 'package:sporter_turf_booking/home/view_model/bottom_nav_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 
 class BottomBarView extends StatelessWidget {
-    BottomBarView({super.key});
+  BottomBarView({super.key});
 
- final List views = [
+  final List views = [
     const HomeScreenView(),
     const VenueScreenView(),
     const UserProfileView(),
@@ -19,9 +19,9 @@ class BottomBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     SystemChrome.setSystemUIOverlayStyle(
-       const SystemUiOverlayStyle(statusBarColor: MyColors.white));
-    final bottomBarVieModel = Provider.of<HomeViewModel>(context);
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    final bottomBarVieModel = Provider.of<BottomNavViewModel>(context);
     return Scaffold(
       body: views[bottomBarVieModel.bottomBarIndex],
       backgroundColor: MyColors.white,
@@ -32,7 +32,7 @@ class BottomBarView extends StatelessWidget {
         showSelectedLabels: false,
         type: BottomNavigationBarType.fixed,
         showUnselectedLabels: false,
-        backgroundColor: MyColors.white, 
+        backgroundColor: MyColors.white,
         elevation: 5,
         selectedItemColor: MyColors.appColor,
         unselectedItemColor: MyColors.grey,

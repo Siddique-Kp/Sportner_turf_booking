@@ -4,7 +4,7 @@ import 'package:sporter_turf_booking/home/components/appbar_widget.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 import '../../user_registration/view_model/firebase_auth_view_model.dart';
-import '../components/profile_settings_list_tile.dart';
+import '../components/profile_components/profile_settings_list_tile.dart';
 
 class UserProfileView extends StatelessWidget {
   const UserProfileView({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/global_values.dart';
-import 'home_components.dart';
+import 'home_components/home_components.dart';
 
 class VenueListCardWidget extends StatelessWidget {
   const VenueListCardWidget({
@@ -57,7 +57,9 @@ class VenueListCardWidget extends StatelessWidget {
             height: 30,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(elevation: 0),
-              onPressed: () {},
+              onPressed: () {
+               
+              },
               child: const Text("View"),
             ),
           ),

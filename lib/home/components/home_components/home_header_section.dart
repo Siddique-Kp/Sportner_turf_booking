@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../utils/global_colors.dart';
-import '../../utils/global_values.dart';
-import 'sport_name_card.dart';
+import '../../../utils/global_colors.dart';
+import '../../../utils/global_values.dart';
+import '../sport_name_card.dart';
 
 class HomeHeaderSection extends StatelessWidget {
   const HomeHeaderSection({
