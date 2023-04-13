@@ -41,6 +41,7 @@ class AppBarWidget extends StatelessWidget {
       title: isHomeAppBar
           ? Row(
               mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 const Icon(
                   Icons.location_on,

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -7,47 +9,16 @@ import 'package:sporter_turf_booking/utils/global_values.dart';
 
 import '../../../utils/textstyles.dart';
 
-class DateContainerWidget extends StatefulWidget {
+class DateContainerWidget extends StatelessWidget {
   const DateContainerWidget({
     super.key,
   });
 
-  @override
-  State<DateContainerWidget> createState() => _DateContainerWidgetState();
-}
-
-class _DateContainerWidgetState extends State<DateContainerWidget> {
-  List<DateTime> _dates = [];
-  DateTime? _selectedDate;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Initialize _dates to show the next five days
-    DateTime now = DateTime.now();
-    for (int i = 0; i < 5; i++) {
-      _dates.add(now.add(Duration(days: i)));
-    }
-
-    // Initialize _selectedDate to the current date
-    _selectedDate = now;
-  }
-
+  // @override
   @override
   Widget build(BuildContext context) {
     final bookingSlotViewModel = context.read<BookingSlotViewModel>();
     final bookingSlotViewModelWatch = context.watch<BookingSlotViewModel>();
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   // Initialize _dates to show the next five days
-    //   DateTime now = DateTime.now();
-    //   for (int i = 0; i < 5; i++) {
-    //     _dates.add(now.add(Duration(days: i)));
-    //   }
-
-    //   // Initialize _selectedDate to the current date
-    //   _selectedDate = now;
-    // });
     return SizedBox(
       height: 55,
       width: double.infinity,
@@ -67,8 +38,8 @@ class _DateContainerWidgetState extends State<DateContainerWidget> {
               onPressed: () {
                 showDatePicker(
                   context: context,
-                  initialDate:
-                      bookingSlotViewModelWatch.selectedInitialDate ?? DateTime.now(),
+                  initialDate: bookingSlotViewModelWatch.selectedInitialDate ??
+                      DateTime.now(),
                   firstDate: DateTime.now(),
                   lastDate: DateTime.now().add(const Duration(days: 30)),
                 ).then((selectedDate) {
@@ -88,6 +59,7 @@ class _DateContainerWidgetState extends State<DateContainerWidget> {
   Widget _dateContainer(index, BuildContext context) {
     final bookingSlotViewModel = context.read<BookingSlotViewModel>();
     final bookingSlotViewModelWatch = context.watch<BookingSlotViewModel>();
+    final _dates = bookingSlotViewModelWatch.dates;
     return GestureDetector(
       onTap: () {
         bookingSlotViewModel.setSelectedDate(_dates[index]);
@@ -96,6 +68,12 @@ class _DateContainerWidgetState extends State<DateContainerWidget> {
         height: 55,
         width: 55,
         decoration: BoxDecoration(
+          border: Border.all(
+            color:
+                bookingSlotViewModelWatch.selectedInitialDate == _dates[index]
+                    ? MyColors.appColor
+                    : MyColors.black,
+          ),
           borderRadius: BorderRadius.circular(6),
           color: bookingSlotViewModelWatch.selectedInitialDate == _dates[index]
               ? MyColors.appColor

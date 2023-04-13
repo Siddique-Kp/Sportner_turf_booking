@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:sporter_turf_booking/home/components/appbar_widget.dart';
 import 'package:sporter_turf_booking/home/components/turf_details_components/available_sport_widget.dart';
@@ -12,6 +14,7 @@ class BookingSlotView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log("Rebuildeed");
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(50),

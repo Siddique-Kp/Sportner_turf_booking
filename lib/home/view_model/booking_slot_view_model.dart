@@ -20,4 +20,18 @@ class BookingSlotViewModel with ChangeNotifier {
     }
     notifyListeners();
   }
+
+
+
+  BookingSlotViewModel(){
+      // Initialize _dates to show the next five days
+    DateTime now = DateTime.now();
+    for (int i = 0; i < 5; i++) {
+      _dates.add(now.add(Duration(days: i)));
+    }
+
+    // Initialize _selectedDate to the current date
+    selectedInitialDate = now;
+
+  }
 }
