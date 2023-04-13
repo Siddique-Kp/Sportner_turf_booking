@@ -33,7 +33,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                 MySize.kHeight50,
                 Text(
                   "Forgot Password ?",
-                  style: MyTextStyles.loginHeadingStyle,
+                  style: AppTextStyles.loginHeading,
                 ),
                 MySize.kHeight10,
                 const Text(

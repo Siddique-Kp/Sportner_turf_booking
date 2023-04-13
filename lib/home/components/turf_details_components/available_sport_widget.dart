@@ -10,46 +10,32 @@ class AvailableSportsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "Available Sports",
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 14,
-            color: MyColors.black,
-          ),
-        ),
-        MySize.kHeight20,
-        SizedBox(
-          height: 60,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemCount: 5,
-            separatorBuilder: (context, index) => MySize.kWidth10,
-            itemBuilder: (BuildContext context, int index) {
-              return SizedBox(
-                width: 80.0,
-                child: Column(
-                  children: const [
-                    Icon(Icons.sports_soccer),
-                    MySize.kHeight5,
-                    Text(
-                      "Football",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12,
-                        color: MyColors.black,
-                      ),
-                    )
-                  ],
-                ),
-              );
-            },
-          ),
-        )
-      ],
+    return SizedBox(
+      height: 60,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: 4,
+        separatorBuilder: (context, index) => MySize.kWidth10,
+        itemBuilder: (BuildContext context, int index) {
+          return SizedBox(
+            width: 70.0,
+            child: Column(
+              children: const [
+                Icon(Icons.sports_soccer),
+                MySize.kHeight10,
+                Text(
+                  "Football",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 11,
+                    color: MyColors.black,
+                  ),
+                )
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }

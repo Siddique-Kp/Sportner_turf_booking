@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporter_turf_booking/repo/api_services.dart';
 import 'package:sporter_turf_booking/utils/keys.dart';
 import '../../utils/constants.dart';
-import '../../utils/navigations.dart';
+import '../../utils/routes/navigations.dart';
 
 class UserLoginViewModel with ChangeNotifier {
   TextEditingController loginPhoneCntrllr = TextEditingController();

@@ -10,7 +10,7 @@ import 'package:sporter_turf_booking/user_registration/components/snackbar.dart'
 import 'package:sporter_turf_booking/user_registration/view/otp_page_view.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
 import 'package:sporter_turf_booking/utils/keys.dart';
-import '../../utils/navigations.dart';
+import '../../utils/routes/navigations.dart';
 import '../model/firebase_exeptions.dart';
 
 class FirebaseAuthViewModel with ChangeNotifier {

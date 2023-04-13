@@ -9,7 +9,9 @@ import 'package:sporter_turf_booking/user_registration/view_model/forget_passwor
 import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
-import 'package:sporter_turf_booking/utils/navigations.dart';
+import 'package:sporter_turf_booking/utils/routes/navigations.dart';
+
+import 'home/view_model/booking_slot_view_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +45,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => ForgetPassViewModel(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => BookingSlotViewModel(),
+        ),
       ],
       child: GetMaterialApp(
         title: 'sportner turf booking app',
@@ -68,8 +73,9 @@ class MyApp extends StatelessWidget {
             ),
             brightness: Brightness.light,
             appBarTheme: const AppBarTheme(
+              // iconTheme: IconThemeData(color: MyColors.black),
                 titleTextStyle: TextStyle(
-                  color: MyColors.scaffoldColor,
+                  color: MyColors.black,
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),

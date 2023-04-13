@@ -14,6 +14,7 @@ class VenueScreenView extends StatelessWidget {
         preferredSize: Size.fromHeight(size.height * 0.08),
         child: AppBarWidget(
           isVenueScreen: true,
+          isHomeAppBar: true,
           filterPressed: () {},
           searchPressed: () {},
         ),

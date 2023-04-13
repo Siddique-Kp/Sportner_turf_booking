@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
+import 'package:sporter_turf_booking/utils/routes/navigations.dart';
 import '../components/turf_details_components/available_sport_widget.dart';
 import '../components/turf_details_components/contact_info_widget.dart';
 import '../components/turf_details_components/turf_details_head.dart';
@@ -60,9 +62,26 @@ class TurfDetailsView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Column(
                 children: [
+                  /// Here is heder section --------
                   const TurfDetailsHeader(),
                   MySize.kHeight20,
-                  const AvailableSportsWidget(),
+
+                  /// here is the avalable sports section ------
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        "Available Sports",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                          color: MyColors.black,
+                        ),
+                      ),
+                      MySize.kHeight20,
+                      AvailableSportsWidget(),
+                    ],
+                  ),
                   MySize.kHeight10,
                   SizedBox(
                     width: double.infinity,
@@ -74,7 +93,7 @@ class TurfDetailsView extends StatelessWidget {
                           size: 28,
                         ),
                         label: const Text(
-                          "Get loaction",
+                          "Get location",
                           style: TextStyle(fontSize: 19),
                         )),
                   ),
@@ -98,7 +117,6 @@ class TurfDetailsView extends StatelessWidget {
                   MySize.kHeight30,
                   const TurfDetailsContactInfo(),
                   MySize.kHeight50,
-                 
                 ],
               ),
             ),
@@ -110,16 +128,12 @@ class TurfDetailsView extends StatelessWidget {
         width: double.infinity,
         margin: const EdgeInsets.all(20),
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, NavigatorClass.bookingSlotScreen);
+          },
           child: const Text("BOOK NOW"),
         ),
       ),
     );
   }
 }
-
-
-
-
-
-

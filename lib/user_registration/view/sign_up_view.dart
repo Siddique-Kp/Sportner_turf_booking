@@ -73,7 +73,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                       children: [
                         MySize.kHeight50,
                         Text("Create Account",
-                            style: MyTextStyles.loginHeadingStyle),
+                            style: AppTextStyles.loginHeading),
                         const Text(
                           "Let,s have some Fun",
                           style: TextStyle(

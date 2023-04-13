@@ -14,7 +14,7 @@ class HomeScreenView extends StatelessWidget {
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(size.height * 0.07),
-          child: const AppBarWidget()),
+          child: const AppBarWidget(isHomeAppBar: true,)),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

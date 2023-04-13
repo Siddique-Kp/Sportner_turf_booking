@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:sporter_turf_booking/home/view/booking_slot_view.dart';
 import 'package:sporter_turf_booking/user_registration/view/change_pass_view.dart';
 
-import '../home/view/bottom_navbar.dart';
-import '../home/view/home_view.dart';
-import '../user_registration/view/forget_password_view.dart';
-import '../user_registration/view/login_view.dart';
-import '../user_registration/view/otp_page_view.dart';
-import '../user_registration/view/sign_up_view.dart';
-import '../user_registration/view/splash_screen_view.dart';
+import '../../home/view/bottom_navbar.dart';
+import '../../home/view/home_view.dart';
+import '../../user_registration/view/forget_password_view.dart';
+import '../../user_registration/view/login_view.dart';
+import '../../user_registration/view/otp_page_view.dart';
+import '../../user_registration/view/sign_up_view.dart';
+import '../../user_registration/view/splash_screen_view.dart';
 
 class NavigatorClass {
   static const homeScreen = "/homeScreen";
@@ -18,6 +19,7 @@ class NavigatorClass {
   static const otpScreen = "/otpRegister";
   static const splashScreen = "/splashScreen";
   static const mainScreen = "/bottomBarView";
+  static const bookingSlotScreen = "/bookingSlotScreen";
 
   static Map<String, Widget Function(BuildContext)> routes() {
     Map<String, Widget Function(BuildContext)> routes = {
@@ -29,6 +31,7 @@ class NavigatorClass {
       "/forgetPass": (context) => ForgetPasswordScreen(),
       "/changeforgetPass": (context) =>  ChangePassView(),
       "/bottomBarView": (context) =>  BottomBarView(),
+      "/bookingSlotScreen": (context) =>  const BookingSlotView(),
     };
 
     return routes;

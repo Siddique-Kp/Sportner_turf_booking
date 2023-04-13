@@ -7,7 +7,7 @@ import 'package:sporter_turf_booking/user_registration/components/registering_te
 import 'package:sporter_turf_booking/user_registration/components/text_form_field.dart';
 import 'package:sporter_turf_booking/user_registration/view/sign_up_view.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
-import 'package:sporter_turf_booking/utils/navigations.dart';
+import 'package:sporter_turf_booking/utils/routes/navigations.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/global_values.dart';
 import '../../utils/textstyles.dart';
@@ -51,7 +51,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     MySize.kHeight20,
-                    Text("Welcome Back", style: MyTextStyles.loginHeadingStyle),
+                    Text("Welcome Back", style: AppTextStyles.loginHeading),
                     const Text(
                       "Sign to continue",
                       style: TextStyle(

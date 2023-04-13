@@ -50,7 +50,7 @@ class OtpVerificationPage extends StatelessWidget {
                       MySize.kHeight30,
                       Text(
                         "OTP Verification",
-                        style: MyTextStyles.loginHeadingStyle,
+                        style: AppTextStyles.loginHeading,
                       ),
                       Center(
                         child: SizedBox(
