@@ -1,19 +1,42 @@
 import 'package:flutter/material.dart';
 
 class BookingSlotViewModel with ChangeNotifier {
-  DateTime? selectedInitialDate;
-  final List<DateTime> _dates = [];
+  BookingSlotViewModel() {
+    DateTime now = DateTime.now();
+    for (int i = 0; i < 5; i++) {
+      _dates.add(now.add(Duration(days: i)));
+    }
+    _selectedDate = now;
+  }
 
-  // DateTime? get selectedDate => selectedInitialDate;
+  DateTime? _selectedDate;
+  final List<DateTime> _dates = [];
+  String _selectedRadioButton = "";
+  String _selectedTimeFrom = "HH:MM";
+  String _selectedTimeTo = "HH:MM";
+
+  DateTime? get selectedDate => _selectedDate;
   List<DateTime> get dates => _dates;
+  String get selectedRadioButton => _selectedRadioButton;
+  String get selectedTimeFrom => _selectedTimeFrom;
+  String get selectedTimeTo => _selectedTimeTo;
+
+  // Radio button controller -----------
+
+  setRadioButton(String selectedButton) {
+    _selectedRadioButton = selectedButton;
+    notifyListeners();
+  }
+
+  // Date format controller ---------------
 
   setSelectedDate(DateTime? selectedDate) {
-    selectedInitialDate = selectedDate;
+    _selectedDate = selectedDate;
     notifyListeners();
   }
 
   setDate(DateTime selectedDate) {
-    selectedInitialDate = selectedDate;
+    _selectedDate = selectedDate;
     _dates.clear();
     for (int i = 0; i < 5; i++) {
       _dates.add(selectedDate.add(Duration(days: i)));
@@ -21,17 +44,14 @@ class BookingSlotViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  // Time slot controller ----------------
 
-
-  BookingSlotViewModel(){
-      // Initialize _dates to show the next five days
-    DateTime now = DateTime.now();
-    for (int i = 0; i < 5; i++) {
-      _dates.add(now.add(Duration(days: i)));
-    }
-
-    // Initialize _selectedDate to the current date
-    selectedInitialDate = now;
-
+  setSelectedTimeFrom(String selectedTime) {
+    _selectedTimeFrom = selectedTime;
+    notifyListeners();
+  }
+  setSelectedTimeTo(String selectedTime) {
+    _selectedTimeTo = selectedTime;
+    notifyListeners();
   }
 }

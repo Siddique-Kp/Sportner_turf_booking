@@ -27,7 +27,6 @@ class AppBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: MyColors.white,
-      centerTitle: false,
       leading: isNormalAppbar
           ? IconButton(
               onPressed: () {
