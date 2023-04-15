@@ -26,7 +26,7 @@ class DateContainerWidget extends StatelessWidget {
             shrinkWrap: true,
             itemCount: 5,
             scrollDirection: Axis.horizontal,
-            separatorBuilder: (context, index) => MySize.kWidth5,
+            separatorBuilder: (context, index) => AppSizes.kWidth5,
             itemBuilder: (context, index) {
               return _dateContainer(index, context, size);
             },

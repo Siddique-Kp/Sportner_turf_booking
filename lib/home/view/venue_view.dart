@@ -23,7 +23,7 @@ class VenueScreenView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: ListView.separated(
           itemCount: 10,
-          separatorBuilder: (context, index) => MySize.kHeight20,
+          separatorBuilder: (context, index) => AppSizes.kHeight20,
           itemBuilder: (context, index) {
             return const SizedBox(
               width: double.infinity,

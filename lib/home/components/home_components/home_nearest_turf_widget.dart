@@ -21,7 +21,7 @@ class HomeNearestTurfWidget extends StatelessWidget {
           context.read<BottomNavViewModel>().changeBottomNavindex(1); 
         },
       ),
-      MySize.kHeight20,
+      AppSizes.kHeight20,
       SizedBox(
         // width: size.width,
         height: size.height * 0.25,

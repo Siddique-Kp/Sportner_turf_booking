@@ -25,7 +25,7 @@ class HomeScreenView extends StatelessWidget {
               child: const HomeHeaderSection(),
             ),
             const HomeNearestTurfWidget(),
-            MySize.kHeight20,
+            AppSizes.kHeight20,
             const TurfWithOfferWidget()
           ],
         ),

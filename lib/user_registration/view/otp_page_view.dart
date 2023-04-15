@@ -47,7 +47,7 @@ class OtpVerificationPage extends StatelessWidget {
                     // mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      MySize.kHeight30,
+                      AppSizes.kHeight30,
                       Text(
                         "OTP Verification",
                         style: AppTextStyles.loginHeading,
@@ -66,9 +66,9 @@ class OtpVerificationPage extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      MySize.kHeight30,
+                      AppSizes.kHeight30,
                       const OtpTextfieldWidget(),
-                      MySize.kHeight30,
+                      AppSizes.kHeight30,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -123,7 +123,7 @@ class OtpVerificationPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      MySize.kHeight40,
+                      AppSizes.kHeight40,
                       SizedBox(
                         width: double.infinity,
                         height: 45,

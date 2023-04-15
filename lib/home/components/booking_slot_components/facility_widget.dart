@@ -13,7 +13,7 @@ class FacilityWidget extends StatelessWidget {
       height: 50,
       child: Row(
         children: [
-          Text("Facility", style: AppTextStyles.mediumTexth2),
+          Text("Facility", style: AppTextStyles.textH2),
           ListView.builder(
             itemCount: 3,
             scrollDirection: Axis.horizontal,

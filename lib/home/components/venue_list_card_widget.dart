@@ -17,7 +17,7 @@ class VenueListCardWidget extends StatelessWidget {
         Row(
           children: [
             _imageContianer(),
-            MySize.kWidth10,
+            AppSizes.kWidth10,
             _turfDetailsContainer(size)
           ],
         ),

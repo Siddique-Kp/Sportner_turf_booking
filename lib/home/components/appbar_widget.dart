@@ -36,7 +36,7 @@ class AppBarWidget extends StatelessWidget {
                 Icons.arrow_back,
                 color: MyColors.black,
               ))
-          : MySize.kHeight10,
+          : AppSizes.kHeight10,
       title: isHomeAppBar
           ? Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -46,7 +46,7 @@ class AppBarWidget extends StatelessWidget {
                   Icons.location_on,
                   color: MyColors.black
                 ),
-                MySize.kWidth10,
+                AppSizes.kWidth10,
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: const [
@@ -72,7 +72,7 @@ class AppBarWidget extends StatelessWidget {
               ? Text("Profile", style: AppTextStyles.appbarTitle)
               : isNormalAppbar
                   ? Text(title, style: AppTextStyles.appbarTitle)
-                  : MySize.kHeight10,
+                  : AppSizes.kHeight10,
       actions: isVenueScreen
           ? [
               IconButton(

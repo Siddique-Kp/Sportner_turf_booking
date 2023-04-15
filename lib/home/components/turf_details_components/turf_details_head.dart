@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sporter_turf_booking/utils/textstyles.dart';
 
 import '../../../utils/global_colors.dart';
 import '../../../utils/global_values.dart';
@@ -17,26 +18,13 @@ class TurfDetailsHeader extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            Text(
-              "Liverpool soccer",
-              style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 20,
-                  color: MyColors.black),
-            ),
-            MySize.kHeight5,
-            Text(
-              "Near Hilite mall, calicut, kerala",
-              style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 13,
-                  color: MyColors.grey),
-            ),
-            MySize.kHeight10,
-            RatingStarWidget(
-              value: 3,
-            )
+          children: [
+            Text("Liverpool soccer", style: AppTextStyles.textH1),
+            AppSizes.kHeight5,
+            Text("Near Hilite mall, calicut, kerala",
+                style: AppTextStyles.textH5light),
+            AppSizes.kHeight10,
+            const RatingStarWidget(value: 3)
           ],
         ),
         Column(
@@ -44,7 +32,7 @@ class TurfDetailsHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: const [
             Icon(Icons.bookmark_outline),
-            MySize.kHeight10,
+            AppSizes.kHeight10,
             Text(
               "₹1200",
               style: TextStyle(

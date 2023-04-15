@@ -50,7 +50,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    MySize.kHeight20,
+                    AppSizes.kHeight20,
                     Text("Welcome Back", style: AppTextStyles.loginHeading),
                     const Text(
                       "Sign to continue",
@@ -58,7 +58,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                         color: MyColors.grey,
                       ),
                     ),
-                    MySize.kHeight10,
+                    AppSizes.kHeight10,
                     SizedBox(
                       height: size.height * 0.2,
                       width: size.width * 0.5,
@@ -69,7 +69,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                         color: Colors.green,
                       ),
                     ),
-                    MySize.kHeight10,
+                    AppSizes.kHeight10,
                     Consumer<UserLoginViewModel>(
                       builder: (context, userLoginViewModel, child) {
                         return TextFormWidget(
@@ -91,7 +91,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                         keyType: TextInputType.text,
                       );
                     }),
-                    MySize.kHeight10,
+                    AppSizes.kHeight10,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -112,7 +112,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                         ),
                       ],
                     ),
-                    MySize.kHeight30,
+                    AppSizes.kHeight30,
                     LoginButtonWidget(
                       isLogin: true,
                       onPressed: () async {
@@ -124,7 +124,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                       },
                       title: "LOGIN",
                     ),
-                    MySize.kHeight20,
+                    AppSizes.kHeight20,
                     Row(
                       children: const [
                         Expanded(
@@ -139,7 +139,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                         ),
                       ],
                     ),
-                    MySize.kHeight10,
+                    AppSizes.kHeight10,
                     InkWell(
                       onTap: () async {
                         await firebaseAuthViewModel.firebaseGoogleAuth(context);
@@ -161,7 +161,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: Image.asset("assets/google-logo.png"),
                             ),
-                            MySize.kWidth20,
+                            AppSizes.kWidth20,
                             const Text(
                               "Continue with google",
                               style: TextStyle(
@@ -169,12 +169,12 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                                 fontSize: 18,
                               ),
                             ),
-                            MySize.kWidth30,
+                            AppSizes.kWidth30,
                           ],
                         ),
                       ),
                     ),
-                    MySize.kHeight30,
+                    AppSizes.kHeight30,
                     RegisteringText(
                       onTap: () {
                         // Navigator.pushNamed(

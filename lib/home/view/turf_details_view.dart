@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 import 'package:sporter_turf_booking/utils/routes/navigations.dart';
+import 'package:sporter_turf_booking/utils/textstyles.dart';
 import '../components/turf_details_components/available_sport_widget.dart';
 import '../components/turf_details_components/contact_info_widget.dart';
 import '../components/turf_details_components/turf_details_head.dart';
@@ -64,25 +65,21 @@ class TurfDetailsView extends StatelessWidget {
                 children: [
                   /// Here is heder section --------
                   const TurfDetailsHeader(),
-                  MySize.kHeight20,
+                  AppSizes.kHeight20,
 
                   /// here is the avalable sports section ------
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children:  [
                       Text(
                         "Available Sports",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          color: MyColors.black,
-                        ),
+                        style:AppTextStyles.textH3,
                       ),
-                      MySize.kHeight20,
-                      AvailableSportsWidget(),
+                      AppSizes.kHeight20,
+                      const AvailableSportsWidget(),
                     ],
                   ),
-                  MySize.kHeight10,
+                  AppSizes.kHeight10,
                   SizedBox(
                     width: double.infinity,
                     height: 50,
@@ -97,7 +94,7 @@ class TurfDetailsView extends StatelessWidget {
                           style: TextStyle(fontSize: 19),
                         )),
                   ),
-                  MySize.kHeight20,
+                  AppSizes.kHeight20,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
@@ -109,14 +106,14 @@ class TurfDetailsView extends StatelessWidget {
                           color: MyColors.black,
                         ),
                       ),
-                      MySize.kHeight10,
+                      AppSizes.kHeight10,
                       Text(
                           "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
                     ],
                   ),
-                  MySize.kHeight30,
+                  AppSizes.kHeight30,
                   const TurfDetailsContactInfo(),
-                  MySize.kHeight50,
+                  AppSizes.kHeight50,
                 ],
               ),
             ),

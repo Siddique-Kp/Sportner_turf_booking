@@ -27,7 +27,7 @@ class VenueCardWidget extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            MySize.kHeight10,
+            AppSizes.kHeight10,
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Column(
@@ -49,7 +49,7 @@ class VenueCardWidget extends StatelessWidget {
                       color: MyColors.grey,
                     ),
                   ),
-                  MySize.kHeight5,
+                  AppSizes.kHeight5,
                   Row(
                     children: const [
                       Icon(
@@ -62,7 +62,7 @@ class VenueCardWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  MySize.kHeight5,
+                  AppSizes.kHeight5,
                   isOffer
                       ? Row(
                           children: const [
@@ -77,7 +77,7 @@ class VenueCardWidget extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            MySize.kWidth5,
+                            AppSizes.kWidth5,
                             Text(
                               "20% OFF",
                               style: TextStyle(

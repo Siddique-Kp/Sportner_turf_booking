@@ -22,9 +22,9 @@ class TimeManageWidget extends StatelessWidget {
           children: [
             Text(
               "From",
-              style: AppTextStyles.mediumTexth2,
+              style: AppTextStyles.textH2,
             ),
-            MySize.kHeight20,
+            AppSizes.kHeight20,
             _timeContainer(context, isFrom: true),
           ],
         ),
@@ -37,9 +37,9 @@ class TimeManageWidget extends StatelessWidget {
           children: [
             Text(
               "To",
-              style: AppTextStyles.mediumTexth2,
+              style: AppTextStyles.textH2,
             ),
-            MySize.kHeight20,
+            AppSizes.kHeight20,
             _timeContainer(context, isFrom: false)
           ],
         )
@@ -86,7 +86,7 @@ class TimeManageWidget extends StatelessWidget {
         height: 45,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
-          color: const Color.fromARGB(151, 213, 213, 213),
+          color: MyColors.lightGrey
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -95,8 +95,8 @@ class TimeManageWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(chosenTime,
-                    style: AppTextStyles.mediumTexth1),
-                MySize.kWidth5,
+                    style: AppTextStyles.textH4),
+                AppSizes.kWidth5,
                 const Icon(
                   Icons.arrow_drop_down_circle_outlined,
                   size: 15,

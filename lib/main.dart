@@ -59,9 +59,9 @@ class MyApp extends StatelessWidget {
           );
         },
         theme: ThemeData(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            hoverColor: Colors.transparent,
+            // splashColor: Colors.transparent,
+            // highlightColor: Colors.transparent,
+            // hoverColor: Colors.transparent,
             scaffoldBackgroundColor: MyColors.scaffoldColor,
             // primarySwatch: PrimaryColor.appColor,
             primaryColor: MyColors.appColor,

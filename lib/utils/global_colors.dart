@@ -9,7 +9,8 @@ class MyColors {
   static const black = Colors.black;
   static const lightBlack = Colors.black54;
   static const grey = Colors.grey;
-  static const kOfferColor = Color.fromARGB(255,2,184,165);
+  static const kOfferColor = Color.fromARGB(255, 2, 184, 165);
+  static const lightGrey = Color.fromARGB(60, 158, 158, 158);
 }
 
 class PrimaryColor {
@@ -30,9 +31,9 @@ class PrimaryColor {
   );
 }
 
-class SportsColor{
+class SportsColor {
   static const cFootball = Color(0xFFD2F1D2);
-  static const cCricket =  Color.fromARGB(255, 251, 204, 195);
+  static const cCricket = Color.fromARGB(255, 251, 204, 195);
   static const cBasketBall = Color.fromARGB(255, 221, 181, 131);
   static const cBadminton = Color.fromARGB(255, 96, 221, 96);
   static const cVolleyBall = Color.fromARGB(255, 107, 188, 238);

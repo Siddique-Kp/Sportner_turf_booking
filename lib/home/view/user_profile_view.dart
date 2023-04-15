@@ -28,7 +28,7 @@ class UserProfileView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _userProfile(),
-                MySize.kHeight20,
+                AppSizes.kHeight20,
                 Column(
                   children: [
                     ProfileSettings(
@@ -123,8 +123,8 @@ class UserProfileView extends StatelessWidget {
               ),
             ],
           ),
-          MySize.kWidth25,
-          MySize.kWidth25,
+          AppSizes.kWidth25,
+          AppSizes.kWidth25,
         ],
       ),
     );

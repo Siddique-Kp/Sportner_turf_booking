@@ -30,12 +30,12 @@ class ForgetPasswordScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ListView(
               children: [
-                MySize.kHeight50,
+                AppSizes.kHeight50,
                 Text(
                   "Forgot Password ?",
                   style: AppTextStyles.loginHeading,
                 ),
-                MySize.kHeight10,
+                AppSizes.kHeight10,
                 const Text(
                   "Enter the registered mobile number here.",
                   style: TextStyle(
@@ -43,7 +43,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                MySize.kHeight30,
+                AppSizes.kHeight30,
                 Form(
                   key: _forgetKey,
                   child: TextFormWidget(
@@ -54,7 +54,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                     isLoginPhone: true,
                   ),
                 ),
-                MySize.kHeight30,
+                AppSizes.kHeight30,
                 SizedBox(
                   width: double.infinity,
                   height: 45,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sporter_turf_booking/home/view/payment_page_view.dart';
 import 'package:sporter_turf_booking/home/view/booking_slot_view.dart';
 import 'package:sporter_turf_booking/user_registration/view/change_pass_view.dart';
 
@@ -20,6 +21,7 @@ class NavigatorClass {
   static const splashScreen = "/splashScreen";
   static const mainScreen = "/bottomBarView";
   static const bookingSlotScreen = "/bookingSlotScreen";
+  static const paymentScreen = "/paymentScreen";
 
   static Map<String, Widget Function(BuildContext)> routes() {
     Map<String, Widget Function(BuildContext)> routes = {
@@ -32,6 +34,7 @@ class NavigatorClass {
       "/changeforgetPass": (context) =>  ChangePassView(),
       "/bottomBarView": (context) =>  BottomBarView(),
       "/bookingSlotScreen": (context) =>  const BookingSlotView(),
+      "/paymentScreen": (context) =>  const PaymentPageView(),
     };
 
     return routes;

@@ -37,7 +37,7 @@ class ChangePassView extends StatelessWidget {
                       color: MyColors.black,
                     ),
                   ),
-                  MySize.kHeight50,
+                  AppSizes.kHeight50,
                   TextFormWidget(
                       isPassword: true,
                       controller: forgetPassViewModel.newpasswordController,
@@ -53,7 +53,7 @@ class ChangePassView extends StatelessWidget {
                       keyType: TextInputType.text,
                       isForgetPass: true,
                       ),
-                  MySize.kHeight30,
+                  AppSizes.kHeight30,
                   SizedBox(
                     height: 45,
                     child: ElevatedButton(

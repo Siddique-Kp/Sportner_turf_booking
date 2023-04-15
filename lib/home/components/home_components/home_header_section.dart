@@ -18,7 +18,7 @@ class HomeHeaderSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
-              MySize.kHeight20,
+              AppSizes.kHeight20,
               Text(
                 "Hello Siddique",
                 style: TextStyle(
@@ -26,7 +26,7 @@ class HomeHeaderSection extends StatelessWidget {
                     fontSize: 15,
                     fontWeight: FontWeight.w500),
               ),
-              MySize.kHeight10,
+              AppSizes.kHeight10,
               Text(
                 "Find your arena",
                 style: TextStyle(
@@ -38,7 +38,7 @@ class HomeHeaderSection extends StatelessWidget {
             ],
           ),
         ),
-        MySize.kHeight20,
+        AppSizes.kHeight20,
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Padding(

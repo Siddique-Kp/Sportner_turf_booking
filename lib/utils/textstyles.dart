@@ -9,8 +9,14 @@ class AppTextStyles {
 
   static TextStyle appbarTitle =
       const TextStyle(color: MyColors.black, fontWeight: FontWeight.w600);
-  static TextStyle mediumTexth1 = const TextStyle(
+  static TextStyle textH4 = const TextStyle(
       color: MyColors.black, fontWeight: FontWeight.w500, fontSize: 14);
-  static TextStyle mediumTexth2 =
+  static TextStyle textH3 = const TextStyle(
+      color: MyColors.black, fontWeight: FontWeight.w600, fontSize: 14);
+  static TextStyle textH2 =
       const TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
+  static TextStyle textH1 = const TextStyle(
+      fontWeight: FontWeight.w700, fontSize: 20, color: MyColors.black);
+  static TextStyle textH5light = const TextStyle(
+      fontWeight: FontWeight.w400, fontSize: 13, color: Colors.black);
 }
