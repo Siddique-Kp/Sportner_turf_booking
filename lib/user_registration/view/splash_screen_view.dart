@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,7 +20,6 @@ class SplashScreen extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          log(snapshot.data.toString());
           return AnimatedSplashScreen(
             splashIconSize: double.infinity,
             splash: Padding(
@@ -47,9 +45,6 @@ Future<Widget> loginStatus() async {
   final userSignedIn = status.getBool(GlobalKeys.userSignedUp) ?? false;
   final userSignedWithGoogle =
       status.getBool(GlobalKeys.userLoggedWithGoogle) ?? false;
-  log(userLoggedIn.toString());
-  log(userSignedIn.toString());
-  log(userSignedWithGoogle.toString());
   if (userLoggedIn == false &&
       userSignedIn == false &&
       userSignedWithGoogle == false) {

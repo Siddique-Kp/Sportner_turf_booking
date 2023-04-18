@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view_model/bottom_nav_view_model.dart';
+import 'package:sporter_turf_booking/home/view_model/venue_list_view_model.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/forget_password_view_model.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => BookingSlotViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => VenueListViewModel(),
         ),
       ],
       child: GetMaterialApp(

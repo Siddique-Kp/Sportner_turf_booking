@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../view_model/venue_list_view_model.dart';
 import 'home_components.dart';
 import '../venue_card_widget.dart';
 
@@ -12,6 +14,7 @@ class TurfWithOfferWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final venueDataList = context.watch<VenueListViewModel>().venuDataList;
 
     return Column(children: [
       HomeComponents.viewAllText(
@@ -24,19 +27,16 @@ class TurfWithOfferWidget extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: GridView.builder(
-                itemCount: 4,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1,
-                  mainAxisExtent: 165,
-                ),
+              child: ListView.builder(
+                itemCount: venueDataList.length,
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return const Padding(
-                    padding: EdgeInsets.only(left: 15),
+                  return  Padding(
+                    padding: const EdgeInsets.only(left: 15),
                     child: VenueCardWidget(
-                      isOffer: true,
+                      isOffer: venueDataList[index]!.discountPercentage! > 0 ? true:false,
+                      index: index,
                     ),
                   );
                 },

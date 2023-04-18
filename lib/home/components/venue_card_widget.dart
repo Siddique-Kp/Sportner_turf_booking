@@ -1,32 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view/turf_details_view.dart';
+import 'package:sporter_turf_booking/home/view_model/venue_list_view_model.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/global_values.dart';
 import 'home_components/home_components.dart';
 
 class VenueCardWidget extends StatelessWidget {
   final bool isOffer;
+  final int index;
   const VenueCardWidget({
     super.key,
     this.isOffer = false,
+    required this.index,
   });
 
   @override
   Widget build(BuildContext context) {
+    final venueDataList = context.watch<VenueListViewModel>().venuDataList;
     return InkWell(
       onTap: () {
         Get.to(() => const TurfDetailsView());
       },
       child: SizedBox(
+        height: 50,
+        width: 150,
         child: Card(
           child: Column(
             children: [
-              ClipRRect(
-                child: Image.asset(
-                  "assets/turf_image.png",
-                  fit: BoxFit.cover,
-                ),
+              Container(
+                width: double.infinity,
+                height: 80,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    image: DecorationImage(
+                      image: NetworkImage(venueDataList[index]!.image!),
+                      fit: BoxFit.cover,
+                    )),
               ),
               AppSizes.kHeight10,
               Padding(
@@ -34,11 +45,11 @@ class VenueCardWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "The Java Stadium ",
+                     Text(
+                      venueDataList[index]!.venueName!,
                       overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: TextStyle(
+                      maxLines: 1,
+                      style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: 14,
                       ),
@@ -66,8 +77,8 @@ class VenueCardWidget extends StatelessWidget {
                     AppSizes.kHeight5,
                     isOffer
                         ? Row(
-                            children: const [
-                              CircleAvatar(
+                            children:  [
+                              const CircleAvatar(
                                 backgroundColor: MyColors.kOfferColor,
                                 radius: 10,
                                 child: Text(
@@ -80,8 +91,8 @@ class VenueCardWidget extends StatelessWidget {
                               ),
                               AppSizes.kWidth5,
                               Text(
-                                "20% OFF",
-                                style: TextStyle(
+                                "${venueDataList[index]!.discountPercentage}% OFF",
+                                style: const TextStyle(
                                   color: MyColors.kOfferColor,
                                 ),
                               )

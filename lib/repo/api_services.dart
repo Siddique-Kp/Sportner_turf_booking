@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
+import 'package:sporter_turf_booking/home/model/venue_data_model.dart';
 import 'api_status.dart';
 import 'service_exeptions.dart';
 
@@ -28,15 +30,15 @@ class ApiServices {
     }
   }
 
-  static Future<Object> getMethod({required String url, Function? jsonDecod}) async {
+  static Future<Object> getMethod({required String url,Function? jsonDecod}) async {
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200 || response.statusCode == 201) {
         log(response.body.toString());
 
-        return Success(response: jsonDecod == null? null: jsonDecod(response.body));
+        return Success(response: jsonDecod == null? null:jsonDecod(response.body));
       }
-      log(response.body.toString());
+      // log(response.body.toString());
 
       return Failure(
           code: response.statusCode, errorResponse: "Invalid Response");
@@ -44,4 +46,5 @@ class ApiServices {
       return ServiceExeptions.cases(e);
     }
   }
+
 }

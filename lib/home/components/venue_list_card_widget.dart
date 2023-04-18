@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/home/view_model/venue_list_view_model.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/global_values.dart';
 import 'home_components/home_components.dart';
@@ -6,36 +8,39 @@ import 'home_components/home_components.dart';
 class VenueListCardWidget extends StatelessWidget {
   const VenueListCardWidget({
     super.key,
+    required this.index,
   });
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
+    final venueDataList = context.watch<VenueListViewModel>().venuDataList;
     return Row(
       children: [
         Row(
           children: [
-            _imageContianer(),
+            _imageContianer(venueDataList[index]!.image!),
             AppSizes.kWidth10,
-            _turfDetailsContainer(size)
+            _turfDetailsContainer(size,venueDataList[index]!.venueName!)
           ],
         ),
         const Spacer(),
-        _turfPriceContainer()
+        _turfPriceContainer(venueDataList[index]!.actualPrice!)
       ],
     );
   }
 
-  Column _turfPriceContainer() {
+  Column _turfPriceContainer(int amount) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: const [
-            Text(
+          children:  [
+            const Text(
               "Starting from",
               style: TextStyle(
                   fontWeight: FontWeight.w500,
@@ -43,8 +48,8 @@ class VenueListCardWidget extends StatelessWidget {
                   color: MyColors.grey),
             ),
             Text(
-              "₹ 1000",
-              style: TextStyle(
+              "₹ $amount",
+              style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
                   color: MyColors.black),
@@ -57,9 +62,7 @@ class VenueListCardWidget extends StatelessWidget {
             height: 30,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(elevation: 0),
-              onPressed: () {
-               
-              },
+              onPressed: () {},
               child: const Text("View"),
             ),
           ),
@@ -68,18 +71,18 @@ class VenueListCardWidget extends StatelessWidget {
     );
   }
 
-  Column _turfDetailsContainer(Size size) {
+  Column _turfDetailsContainer(Size size, String venueName) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(
           width: size.width * 0.30,
-          child: const Text(
-            "Hennur turf park",
+          child:  Text(
+            venueName,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontWeight: FontWeight.w700),
+            style:const TextStyle(fontWeight: FontWeight.w700),
           ),
         ),
         Row(
@@ -99,13 +102,14 @@ class VenueListCardWidget extends StatelessWidget {
     );
   }
 
-  Container _imageContianer() {
+  Container _imageContianer(String imageUrl) {
     return Container(
       height: 80,
       width: 80,
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6),
         image: DecorationImage(
-          image: AssetImage("assets/turf_1.png"),
+          image: NetworkImage(imageUrl),
           fit: BoxFit.cover,
         ),
       ),

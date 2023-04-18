@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view_model/bottom_nav_view_model.dart';
 
 import '../../../utils/global_values.dart';
+import '../../view_model/venue_list_view_model.dart';
 import 'home_components.dart';
 import '../venue_card_widget.dart';
 
@@ -13,6 +14,8 @@ class HomeNearestTurfWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final venueDataList = context.watch<VenueListViewModel>().venuDataList;
+
     final size = MediaQuery.of(context).size;
     return Column(children: [
       HomeComponents.viewAllText(
@@ -28,18 +31,14 @@ class HomeNearestTurfWidget extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              child: GridView.builder(
-                itemCount: 4,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1,
-                  mainAxisExtent: 165,
-                ),
+              child: ListView.builder(
+                itemCount:venueDataList.length ,
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return const Padding(
-                    padding: EdgeInsets.only(left: 15),
-                    child: VenueCardWidget(),
+                  return  Padding(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: VenueCardWidget(index: index),
                   );
                 },
               ),
