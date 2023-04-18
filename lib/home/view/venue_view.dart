@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sporter_turf_booking/home/components/appbar_widget.dart';
+import 'package:sporter_turf_booking/home/components/appbar_location.dart';
+import 'package:sporter_turf_booking/utils/global_colors.dart';
 import '../../utils/global_values.dart';
 import '../components/venue_list_card_widget.dart';
 
@@ -10,14 +11,27 @@ class VenueScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(size.height * 0.08),
-        child: AppBarWidget(
-          isVenueScreen: true,
-          isHomeAppBar: true,
-          filterPressed: () {},
-          searchPressed: () {},
-        ),
+      appBar: AppBar(
+        backgroundColor: MyColors.white,
+        title: const AppBarLocation(),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            splashColor: Colors.transparent,
+            icon: const Icon(
+              Icons.search,
+              color: MyColors.black,
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            splashColor: Colors.transparent,
+            icon: const Icon(
+              Icons.tune,
+              color: MyColors.black,
+            ),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -36,5 +50,3 @@ class VenueScreenView extends StatelessWidget {
     );
   }
 }
-
-

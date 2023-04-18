@@ -73,11 +73,12 @@ class MyApp extends StatelessWidget {
             ),
             brightness: Brightness.light,
             appBarTheme: const AppBarTheme(
-              // iconTheme: IconThemeData(color: MyColors.black),
+              iconTheme: IconThemeData(color: MyColors.black),
+              // backgroundColor: MyColors.white,
                 titleTextStyle: TextStyle(
                   color: MyColors.black,
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 21,
+                  fontWeight: FontWeight.w600,
                 ),
                 elevation: 0)),
         routes: NavigatorClass.routes(),

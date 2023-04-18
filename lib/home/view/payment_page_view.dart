@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sporter_turf_booking/home/components/appbar_widget.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 import 'package:sporter_turf_booking/utils/textstyles.dart';
@@ -10,11 +9,10 @@ class PaymentPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(60),
-        child: AppBarWidget(
-          isNormalAppbar: true,
-          title: "Payment",
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: const Text(
+          "Payment",
         ),
       ),
       body: Padding(
@@ -44,8 +42,7 @@ class PaymentPageView extends StatelessWidget {
                     _turfDetails(
                         icon: Icons.access_time_rounded,
                         text: "05:00 PM - 06:00 PM"),
-                    _turfDetails(
-                        icon: Icons.payments_outlined, text: "INR .1600"),
+                    _turfDetails(icon: Icons.payments_outlined, text: "₹1600"),
                   ],
                 ),
               ),
@@ -54,34 +51,38 @@ class PaymentPageView extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Court Price :", style: AppTextStyles.textH4),
-                Text("INR 1600", style: AppTextStyles.textH4)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                     Text("Court Price :", style: AppTextStyles.textH4),
+                     AppSizes.kHeight5,
+                     Text("Offer Discount :", style: AppTextStyles.textH4),
+                      AppSizes.kHeight5,
+                     Text("Payable Amount :", style: AppTextStyles.textH4),
+                      AppSizes.kHeight5,
+                     AppSizes.kHeight20,
+                     Text("Total Amount :", style: AppTextStyles.textH1),
+                  ],
+                ),
+                SizedBox(
+                  width: 70,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                       Text("₹ 1600", style: AppTextStyles.textH4),
+                        AppSizes.kHeight5,
+                       Text("₹ 300", style: AppTextStyles.textH4),
+                        AppSizes.kHeight5,
+                        Text("₹ 1300", style: AppTextStyles.textH4),
+                           AppSizes.kHeight20,
+                         Text("₹ 1300", style: AppTextStyles.textH1),
+                
+                    ],
+                  ),
+                ),
               ],
             ),
-            AppSizes.kHeight5,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Offer Discount :", style: AppTextStyles.textH4),
-                Text("INR 300", style: AppTextStyles.textH4)
-              ],
-            ),
-            AppSizes.kHeight5,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Payable Amount :", style: AppTextStyles.textH4),
-                Text("INR 1300", style: AppTextStyles.textH4)
-              ],
-            ),
-            AppSizes.kHeight20,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Total Amount :", style: AppTextStyles.textH2),
-                Text("INR 1300", style: AppTextStyles.textH2)
-              ],
-            ),
+           
             AppSizes.kHeight10,
             Theme(
               data:
@@ -97,7 +98,10 @@ class PaymentPageView extends StatelessWidget {
                         "Booking Policies",
                         style: AppTextStyles.textH3,
                       ),
-                      const Divider(thickness: 1.5,color: Colors.black,)
+                      const Divider(
+                        thickness: 1.5,
+                        color: Colors.black,
+                      )
                     ],
                   ),
                 ),
@@ -123,7 +127,7 @@ class PaymentPageView extends StatelessWidget {
                         "Cancel policy",
                         style: AppTextStyles.textH3,
                       ),
-                       AppSizes.kHeight5,
+                      AppSizes.kHeight5,
                       const Text(
                           '''0-2 hrs prior to slot: Cancellations not allowed.>2 hrs prior to slot: 15.0% of Gross Amount will be deducted as cancellation fee.'''),
                     ],
@@ -139,8 +143,7 @@ class PaymentPageView extends StatelessWidget {
         width: double.infinity,
         margin: const EdgeInsets.all(20),
         child: ElevatedButton(
-          onPressed: () {
-          },
+          onPressed: () {},
           child: const Text("Proceed to pay"),
         ),
       ),

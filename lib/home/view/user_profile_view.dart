@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sporter_turf_booking/home/components/appbar_widget.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 import '../../user_registration/view_model/firebase_auth_view_model.dart';
+import '../../utils/textstyles.dart';
 import '../components/profile_components/profile_settings_list_tile.dart';
 
 class UserProfileView extends StatelessWidget {
@@ -13,11 +13,9 @@ class UserProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(size.height * 0.07),
-        child: const AppBarWidget(
-          isProfileScreen: true,
-        ),
+      appBar: AppBar(
+        backgroundColor: MyColors.white,
+        title: Text("Profile", style: AppTextStyles.appbarTitle),
       ),
       body: Padding(
         padding: const EdgeInsets.all(15),

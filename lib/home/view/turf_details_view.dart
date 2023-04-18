@@ -113,7 +113,7 @@ class TurfDetailsView extends StatelessWidget {
                   ),
                   AppSizes.kHeight30,
                   const TurfDetailsContactInfo(),
-                  AppSizes.kHeight50,
+                  AppSizes.kHeight40,
                 ],
               ),
             ),
