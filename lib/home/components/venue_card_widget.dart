@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:sporter_turf_booking/home/view/turf_details_view.dart';
+import 'package:sporter_turf_booking/home/view_model/venue_details_view_model.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_list_view_model.dart';
+import 'package:sporter_turf_booking/utils/routes/navigations.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/global_values.dart';
 import 'home_components/home_components.dart';
@@ -20,8 +20,11 @@ class VenueCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final venueDataList = context.watch<VenueListViewModel>().venuDataList;
     return InkWell(
-      onTap: () {
-        Get.to(() => const TurfDetailsView());
+      onTap: () async {
+        await context
+            .read<VenueDetailsViewModel>()
+            .getSingleVenue(venueDataList[index].sId!);
+        await Navigator.pushNamed(context, NavigatorClass.venueDetailsScreen);
       },
       child: SizedBox(
         height: 50,
@@ -35,7 +38,7 @@ class VenueCardWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
                     image: DecorationImage(
-                      image: NetworkImage(venueDataList[index]!.image!),
+                      image: NetworkImage(venueDataList[index].image!),
                       fit: BoxFit.cover,
                     )),
               ),
@@ -45,8 +48,8 @@ class VenueCardWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                     Text(
-                      venueDataList[index]!.venueName!,
+                    Text(
+                      venueDataList[index].venueName!,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style: const TextStyle(
@@ -77,7 +80,7 @@ class VenueCardWidget extends StatelessWidget {
                     AppSizes.kHeight5,
                     isOffer
                         ? Row(
-                            children:  [
+                            children: [
                               const CircleAvatar(
                                 backgroundColor: MyColors.kOfferColor,
                                 radius: 10,
@@ -91,7 +94,7 @@ class VenueCardWidget extends StatelessWidget {
                               ),
                               AppSizes.kWidth5,
                               Text(
-                                "${venueDataList[index]!.discountPercentage}% OFF",
+                                "${venueDataList[index].discountPercentage}% OFF",
                                 style: const TextStyle(
                                   color: MyColors.kOfferColor,
                                 ),

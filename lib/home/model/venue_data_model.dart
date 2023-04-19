@@ -1,12 +1,11 @@
-
-
 import 'dart:convert';
 
 List<VenueDataModel> venueDataModelListFromJson(String str) =>
     List<VenueDataModel>.from(
         json.decode(str).map((x) => VenueDataModel.fromJson(x)));
 
-
+VenueDataModel venueDataModelFromJson(String str) =>
+    VenueDataModel.fromJson(json.decode(str));
 
 class VenueDataModel {
   String? sId;
@@ -69,13 +68,13 @@ class VenueDataModel {
     if (json['slots'] != null) {
       slots = <Slots>[];
       json['slots'].forEach((v) {
-        slots!.add( Slots.fromJson(v));
+        slots!.add(Slots.fromJson(v));
       });
     }
     if (json['sportFacility'] != null) {
       sportFacility = <SportFacility>[];
       json['sportFacility'].forEach((v) {
-        sportFacility!.add( SportFacility.fromJson(v));
+        sportFacility!.add(SportFacility.fromJson(v));
       });
     }
     lat = json['lat'];
@@ -89,7 +88,7 @@ class VenueDataModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  {};
+    final Map<String, dynamic> data = {};
     data['_id'] = sId;
     data['vmId'] = vmId;
     data['venueName'] = venueName;
@@ -105,8 +104,7 @@ class VenueDataModel {
       data['slots'] = slots!.map((v) => v.toJson()).toList();
     }
     if (sportFacility != null) {
-      data['sportFacility'] =
-          sportFacility!.map((v) => v.toJson()).toList();
+      data['sportFacility'] = sportFacility!.map((v) => v.toJson()).toList();
     }
     data['lat'] = lat;
     data['lng'] = lng;

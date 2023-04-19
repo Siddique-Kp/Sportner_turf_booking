@@ -35,7 +35,7 @@ class TurfWithOfferWidget extends StatelessWidget {
                   return  Padding(
                     padding: const EdgeInsets.only(left: 15),
                     child: VenueCardWidget(
-                      isOffer: venueDataList[index]!.discountPercentage! > 0 ? true:false,
+                      isOffer: venueDataList[index].discountPercentage! > 0 ? true:false,
                       index: index,
                     ),
                   );

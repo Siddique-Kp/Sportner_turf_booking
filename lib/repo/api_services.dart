@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 import 'package:http/http.dart' as http;
-import 'package:sporter_turf_booking/home/model/venue_data_model.dart';
 import 'api_status.dart';
 import 'service_exeptions.dart';
 

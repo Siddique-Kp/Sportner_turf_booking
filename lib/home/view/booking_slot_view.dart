@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:sporter_turf_booking/home/components/appbar_location.dart';
 import 'package:sporter_turf_booking/home/components/turf_details_components/available_sport_widget.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';

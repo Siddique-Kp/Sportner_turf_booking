@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/home/view_model/venue_details_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 import 'package:sporter_turf_booking/utils/routes/navigations.dart';
@@ -9,8 +10,8 @@ import '../components/turf_details_components/available_sport_widget.dart';
 import '../components/turf_details_components/contact_info_widget.dart';
 import '../components/turf_details_components/turf_details_head.dart';
 
-class TurfDetailsView extends StatelessWidget {
-  const TurfDetailsView({super.key});
+class VenueDetailsView extends StatelessWidget {
+  const VenueDetailsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +20,8 @@ class TurfDetailsView extends StatelessWidget {
       statusBarIconBrightness: Brightness.light,
     ));
     final size = MediaQuery.of(context).size;
+    final venueData = context.watch<VenueDetailsViewModel>().venueData;
+    final venueViewModel = context.watch<VenueDetailsViewModel>();
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: CustomScrollView(
@@ -28,11 +31,13 @@ class TurfDetailsView extends StatelessWidget {
             backgroundColor: MyColors.white,
             expandedHeight: size.height * 0.30,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.network(
-                'https://cricketgraph.com/wp-content/gallery/enc-sports-turf/ENC-Sports-Turf-Thane-West-8.jpg',
-                width: double.maxFinite,
-                fit: BoxFit.cover,
-              ),
+              background: venueViewModel.isLoading
+                  ? const CircularProgressIndicator()
+                  : Image.network(
+                      venueData.image!,
+                      width: double.maxFinite,
+                      fit: BoxFit.cover,
+                    ),
             ),
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(0),
@@ -70,10 +75,10 @@ class TurfDetailsView extends StatelessWidget {
                   /// here is the avalable sports section ------
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children:  [
+                    children: [
                       Text(
                         "Available Sports",
-                        style:AppTextStyles.textH3,
+                        style: AppTextStyles.textH3,
                       ),
                       AppSizes.kHeight20,
                       const AvailableSportsWidget(),
@@ -84,21 +89,22 @@ class TurfDetailsView extends StatelessWidget {
                     width: double.infinity,
                     height: 50,
                     child: OutlinedButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.location_on,
-                          size: 28,
-                        ),
-                        label: const Text(
-                          "Get location",
-                          style: TextStyle(fontSize: 19),
-                        )),
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.location_on,
+                        size: 28,
+                      ),
+                      label: const Text(
+                        "Get location",
+                        style: TextStyle(fontSize: 19),
+                      ),
+                    ),
                   ),
                   AppSizes.kHeight20,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         "Description",
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
@@ -107,8 +113,7 @@ class TurfDetailsView extends StatelessWidget {
                         ),
                       ),
                       AppSizes.kHeight10,
-                      Text(
-                          "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+                      Text(venueData.description!)
                     ],
                   ),
                   AppSizes.kHeight30,

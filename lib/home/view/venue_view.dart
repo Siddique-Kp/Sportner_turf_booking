@@ -16,7 +16,7 @@ class VenueScreenView extends StatefulWidget {
 class _VenueScreenViewState extends State<VenueScreenView> {
   @override
   void initState() {
-    context.read<VenueListViewModel>().getVenueDatas();
+    context.read<VenueListViewModel>().getVenueListDatas();
     super.initState();
   }
 

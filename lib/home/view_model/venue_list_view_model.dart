@@ -6,39 +6,42 @@ import 'package:sporter_turf_booking/repo/api_status.dart';
 import 'package:sporter_turf_booking/utils/constants.dart';
 
 class VenueListViewModel with ChangeNotifier {
-  List<VenueDataModel?> _venueDataList = [];
-  bool _isLoading = false;
+  List<VenueDataModel> _venueDataList = [];
+  bool _isVenueListLoading = false;
 
-  List<VenueDataModel?> get venuDataList => _venueDataList;
-  bool get isLoading => _isLoading;
+  List<VenueDataModel> get venuDataList => _venueDataList;
+  bool get isVenueListLoading => _isVenueListLoading;
 
-  getVenueDatas() async {
-    setLoading(true);
+  getVenueListDatas() async {
+    setVenueListLoading(true);
     log("111111");
-
-    final response = await ApiServices.getMethod(url: Urls.kGETALLVENUE,jsonDecod: venueDataModelListFromJson);
+    final response = await ApiServices.getMethod(
+      url: Urls.kGETALLVENUE,
+      jsonDecod: venueDataModelListFromJson,
+    );
     if (response is Success) {
-      
       if (response.response != null) {
         log(response.response.toString());
         log("22222222");
-        await setVenueData(response.response as List<VenueDataModel?>);
+        await setVenueListData(response.response as List<VenueDataModel>);
         log("33333333");
       }
-      notifyListeners();
+      setVenueListLoading(false);
     }
     if (response is Failure) {
       log("Error");
+      setVenueListLoading(false);
     }
+    setVenueListLoading(false);
   }
 
-  setVenueData(List<VenueDataModel?> venueDataList) async {
+  setVenueListData(List<VenueDataModel> venueDataList) async {
     _venueDataList = venueDataList;
     notifyListeners();
   }
 
-  setLoading(bool loading) {
-    _isLoading = loading;
+  setVenueListLoading(bool loading) {
+    _isVenueListLoading = loading;
     // notifyListeners();
   }
 }

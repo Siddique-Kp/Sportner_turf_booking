@@ -21,13 +21,13 @@ class VenueListCardWidget extends StatelessWidget {
       children: [
         Row(
           children: [
-            _imageContianer(venueDataList[index]!.image!),
+            _imageContianer(venueDataList[index].image!),
             AppSizes.kWidth10,
-            _turfDetailsContainer(size,venueDataList[index]!.venueName!)
+            _turfDetailsContainer(size,venueDataList[index].venueName!)
           ],
         ),
         const Spacer(),
-        _turfPriceContainer(venueDataList[index]!.actualPrice!)
+        _turfPriceContainer(venueDataList[index].actualPrice!)
       ],
     );
   }

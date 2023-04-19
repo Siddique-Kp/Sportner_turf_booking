@@ -13,6 +13,7 @@ import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_m
 import 'package:sporter_turf_booking/utils/routes/navigations.dart';
 
 import 'home/view_model/booking_slot_view_model.dart';
+import 'home/view_model/venue_details_view_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,6 +52,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => VenueListViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => VenueDetailsViewModel(),
         ),
       ],
       child: GetMaterialApp(

@@ -5,6 +5,7 @@ class Urls {
   static const String kFORGOTPASSmob = "$kBASEURL/forgotPwd/mobileExist?mobile=";
   static const String kFORGOTPASS = "$kBASEURL/forgotPwd";
   static const String kGETALLVENUE = "$kBASEURL/venues";
+  static const String kGETSINGLEVENUE = "$kBASEURL/venue/";
 }
 
 class InvalidRespons {
