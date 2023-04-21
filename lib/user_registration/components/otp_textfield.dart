@@ -17,9 +17,9 @@ class OtpTextfieldWidget extends StatelessWidget {
       numberOfFields: 6,
       clearText: firebaseAuthViewModel.clearOtp,
       fieldWidth: 45,
-      borderColor: MyColors.kButtonColor,
-      focusedBorderColor: MyColors.kButtonColor,
-      cursorColor: MyColors.black,
+      borderColor: AppColors.kButtonColor,
+      focusedBorderColor: AppColors.kButtonColor,
+      cursorColor: AppColors.black,
       onCodeChanged: (String code) {
         Provider.of<FirebaseAuthViewModel>(context, listen: false).setOtp(code);
       },

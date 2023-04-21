@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // colors
-class MyColors {
+class AppColors {
   static const scaffoldColor = Colors.white;
   static const kButtonColor = Color(0xFF00B562);
   static const appColor = Color.fromARGB(255, 0, 181, 98);

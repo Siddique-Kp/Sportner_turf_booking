@@ -22,7 +22,7 @@ class HomeHeaderSection extends StatelessWidget {
               Text(
                 "Hello Siddique",
                 style: TextStyle(
-                    color: MyColors.black,
+                    color: AppColors.black,
                     fontSize: 15,
                     fontWeight: FontWeight.w500),
               ),
@@ -30,7 +30,7 @@ class HomeHeaderSection extends StatelessWidget {
               Text(
                 "Find your arena",
                 style: TextStyle(
-                  color: MyColors.black,
+                  color: AppColors.black,
                   fontWeight: FontWeight.bold,
                   fontSize: 19,
                 ),

@@ -24,7 +24,7 @@ class RegisteringText extends StatelessWidget {
           style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: MyColors.black),
+              color: AppColors.black),
         ),
         GestureDetector(
           onTap: onTap,
@@ -35,7 +35,7 @@ class RegisteringText extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
-                color: MyColors.kButtonColor,
+                color: AppColors.kButtonColor,
               ),
             ),
           ),

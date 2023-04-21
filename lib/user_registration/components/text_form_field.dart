@@ -89,7 +89,7 @@ class TextFormWidget extends StatelessWidget {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(5),
           ),
-          prefixIconColor: MyColors.black,
+          prefixIconColor: AppColors.black,
           prefixIcon:
               //  isPhone
               //     ? Padding(
@@ -105,7 +105,7 @@ class TextFormWidget extends StatelessWidget {
               //       )
               //     :
               Icon(textFieldIcon, size: 25),
-          suffixIconColor: MyColors.black,
+          suffixIconColor: AppColors.black,
           suffixIcon: isPassword && passController.text.isNotEmpty
               ? Consumer<SignUpViewModel>(
                   builder: (context, signUpViewModel, child) {
@@ -141,7 +141,7 @@ class TextFormWidget extends StatelessWidget {
                       : AppSizes.kHeight10,
           labelText: labelText,
           labelStyle: const TextStyle(
-            color: MyColors.black,
+            color: AppColors.black,
           ),
         ),
       ),

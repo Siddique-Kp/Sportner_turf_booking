@@ -22,7 +22,7 @@ class VenueDetailsViewModel with ChangeNotifier {
 
     if (response is Success) {
       log("response success");
-      setVenueData(response.response as VenueDataModel);
+      await setVenueData(response.response as VenueDataModel);
       log("Got data");
       setLoading(false);
     }
@@ -34,7 +34,7 @@ class VenueDetailsViewModel with ChangeNotifier {
     setLoading(false);
   }
 
-  setVenueData(VenueDataModel venueData) {
+  setVenueData(VenueDataModel venueData)async {
     _venueData = venueData;
     notifyListeners();
   }

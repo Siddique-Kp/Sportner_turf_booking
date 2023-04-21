@@ -15,7 +15,7 @@ class RatingStarWidget extends StatelessWidget {
         (index) {
           return index < value
               ?  Icon(Icons.star, color: Colors.amber, size: size)
-              :  Icon(Icons.star, color: MyColors.grey, size: size);
+              :  Icon(Icons.star, color: AppColors.grey, size: size);
         },
       ),
     );

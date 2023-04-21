@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GetLocationViewModel with ChangeNotifier {
   String? _currentAddress;
@@ -81,5 +84,18 @@ class GetLocationViewModel with ChangeNotifier {
   setCurrentAdress(String address) {
     _currentAddress = address;
     notifyListeners();
+  }
+
+  openMap(double latitude, double longitude) async {
+    String googleUrl =
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+
+    try {
+      await canLaunchUrl(Uri.parse(googleUrl));
+      await launchUrl(Uri.parse(googleUrl));
+    } catch (e) {
+      log(e.toString());
+      throw "cannot launch";
+    }
   }
 }

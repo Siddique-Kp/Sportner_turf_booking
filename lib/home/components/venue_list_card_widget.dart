@@ -49,14 +49,14 @@ class VenueListCardWidget extends StatelessWidget {
               style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 12,
-                  color: MyColors.grey),
+                  color: AppColors.grey),
             ),
             Text(
               "₹ $amount",
               style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
-                  color: MyColors.black),
+                  color: AppColors.black),
             ),
           ],
         ),
@@ -95,8 +95,12 @@ class VenueListCardWidget extends StatelessWidget {
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             itemBuilder: (BuildContext context, int index) {
-              return Sports.spots(
-                  sport: venueData.sportFacility![index].sport.toString());
+              return Icon(
+                Sports.spots(
+                  sport: venueData.sportFacility![index].sport.toString(),
+                ),
+                size: 15,
+              );
             },
           ),
         ),

@@ -14,7 +14,7 @@ class UserProfileView extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: MyColors.white,
+        backgroundColor: AppColors.white,
         title: Text("Profile", style: AppTextStyles.appbarTitle),
       ),
       body: Padding(
@@ -74,7 +74,7 @@ class UserProfileView extends StatelessWidget {
             const Text(
               "Version 1.0.0",
               style: TextStyle(
-                  color: MyColors.grey,
+                  color: AppColors.grey,
                   fontWeight: FontWeight.w500,
                   fontSize: 13),
             )
@@ -89,13 +89,13 @@ class UserProfileView extends StatelessWidget {
       height: 70,
       width: double.infinity,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6), color: MyColors.appColor),
+          borderRadius: BorderRadius.circular(6), color: AppColors.appColor),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           const CircleAvatar(
             radius: 28,
-            backgroundColor: MyColors.white,
+            backgroundColor: AppColors.white,
             child: CircleAvatar(
               radius: 25,
               backgroundImage: AssetImage("assets/no_user.png"),
@@ -108,14 +108,14 @@ class UserProfileView extends StatelessWidget {
               Text(
                 "Siddique",
                 style: TextStyle(
-                    color: MyColors.white,
+                    color: AppColors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 16),
               ),
               Text(
                 "+91987654321",
                 style: TextStyle(
-                    color: MyColors.white,
+                    color: AppColors.white,
                     fontWeight: FontWeight.w600,
                     fontSize: 15),
               ),

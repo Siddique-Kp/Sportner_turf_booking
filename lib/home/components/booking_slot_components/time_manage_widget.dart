@@ -28,7 +28,7 @@ class TimeManageWidget extends StatelessWidget {
         Container(
           height: 90,
           width: 1.5,
-          color: MyColors.black,
+          color: AppColors.black,
         ),
         Column(
           children: [
@@ -55,12 +55,12 @@ class TimeManageWidget extends StatelessWidget {
           builder: (context, child) {
             return Theme(
               data: ThemeData.light().copyWith(
-                primaryColor: MyColors.appColor,
+                primaryColor: AppColors.appColor,
                 buttonTheme: const ButtonThemeData(
                     textTheme: ButtonTextTheme.primary,
-                    buttonColor: MyColors.appColor),
-                colorScheme: const ColorScheme.light(primary: MyColors.appColor)
-                    .copyWith(secondary: MyColors.appColor),
+                    buttonColor: AppColors.appColor),
+                colorScheme: const ColorScheme.light(primary: AppColors.appColor)
+                    .copyWith(secondary: AppColors.appColor),
               ),
               child: child!,
             );
@@ -83,7 +83,7 @@ class TimeManageWidget extends StatelessWidget {
         height: 45,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
-          color: MyColors.lightGrey
+          color: AppColors.lightGrey
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4),

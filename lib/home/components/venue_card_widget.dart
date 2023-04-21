@@ -64,10 +64,7 @@ class VenueCardWidget extends StatelessWidget {
           ),
           const Text(
             "1.2 KM away",
-            style: TextStyle(
-              fontSize: 11,
-              color: MyColors.grey
-            ),
+            style: TextStyle(fontSize: 11, color: AppColors.grey),
           ),
           AppSizes.kHeight5,
           SizedBox(
@@ -77,8 +74,11 @@ class VenueCardWidget extends StatelessWidget {
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               itemBuilder: (BuildContext context, int index) {
-                return Sports.spots(
-                  sport: venueData.sportFacility![index].sport.toString(),
+                return Icon(
+                  Sports.spots(
+                    sport: venueData.sportFacility![index].sport.toString(),
+                  ),
+                  size: 18,
                 );
               },
             ),
@@ -96,12 +96,12 @@ class VenueCardWidget extends StatelessWidget {
     return Row(
       children: [
         const CircleAvatar(
-          backgroundColor: MyColors.kOfferColor,
+          backgroundColor: AppColors.kOfferColor,
           radius: 10,
           child: Text(
             "%",
             style: TextStyle(
-              color: MyColors.white,
+              color: AppColors.white,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -110,7 +110,7 @@ class VenueCardWidget extends StatelessWidget {
         Text(
           "${venueDataList[index].discountPercentage}% OFF",
           style: const TextStyle(
-            color: MyColors.kOfferColor,
+            color: AppColors.kOfferColor,
           ),
         )
       ],

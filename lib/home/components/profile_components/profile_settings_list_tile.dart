@@ -23,7 +23,7 @@ class ProfileSettings extends StatelessWidget {
         radius: 17,
         child: Icon(
           icon,
-          color: MyColors.appColor,
+          color: AppColors.appColor,
           size: 20,
         ),
       ),

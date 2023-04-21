@@ -52,7 +52,7 @@ class ForgetPassViewModel with ChangeNotifier {
       Get.snackbar("Password changed successfully", "Please login again",
           icon: const Icon(
             Icons.info,
-            color: MyColors.kButtonColor,
+            color: AppColors.kButtonColor,
           ),
           snackPosition: SnackPosition.TOP);
       await Future.delayed(const Duration(seconds: 2));

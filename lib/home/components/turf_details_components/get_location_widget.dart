@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/home/model/venue_data_model.dart';
+import 'package:sporter_turf_booking/home/view_model/get_location_view_model.dart';
 
 class GetLocationWidget extends StatelessWidget {
+  final VenueDataModel venueData;
   const GetLocationWidget({
     super.key,
+    required this.venueData,
   });
 
   @override
@@ -11,7 +16,11 @@ class GetLocationWidget extends StatelessWidget {
       width: double.infinity,
       height: 50,
       child: OutlinedButton.icon(
-        onPressed: () {},
+        onPressed: () {
+          context
+              .read<GetLocationViewModel>()
+              .openMap(venueData.lat!, venueData.lng!);
+        },
         icon: const Icon(
           Icons.location_on,
           size: 28,

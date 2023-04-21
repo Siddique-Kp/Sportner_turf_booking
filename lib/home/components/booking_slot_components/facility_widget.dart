@@ -36,7 +36,7 @@ class FacilityWidget extends StatelessWidget {
         Radio(
           value: values[index],
           groupValue: bookingSlotViewModel.selectedRadioButton,
-          activeColor: MyColors.appColor,
+          activeColor: AppColors.appColor,
           onChanged: (value) {
             bookingSlotViewModel.setRadioButton(value.toString());
           },

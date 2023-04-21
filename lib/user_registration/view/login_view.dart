@@ -55,7 +55,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                     const Text(
                       "Sign to continue",
                       style: TextStyle(
-                        color: MyColors.grey,
+                        color: AppColors.grey,
                       ),
                     ),
                     AppSizes.kHeight10,
@@ -106,7 +106,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                             style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
-                              color: MyColors.kButtonColor,
+                              color: AppColors.kButtonColor,
                             ),
                           ),
                         ),
@@ -165,7 +165,7 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                             const Text(
                               "Continue with google",
                               style: TextStyle(
-                                color: MyColors.grey,
+                                color: AppColors.grey,
                                 fontSize: 18,
                               ),
                             ),

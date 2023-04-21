@@ -28,18 +28,18 @@ class _VenueScreenViewState extends State<VenueScreenView> {
     final venueDataList = context.watch<VenueListViewModel>().venuDataList;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: MyColors.white,
+        backgroundColor: AppColors.white,
         title: const AppBarLocation(),
         actions: [
           IconButton(
             onPressed: () {},
             splashColor: Colors.transparent,
-            icon: const Icon(Icons.search, color: MyColors.black),
+            icon: const Icon(Icons.search, color: AppColors.black),
           ),
           IconButton(
             onPressed: () {},
             splashColor: Colors.transparent,
-            icon: const Icon(Icons.tune, color: MyColors.black),
+            icon: const Icon(Icons.tune, color: AppColors.black),
           ),
         ],
       ),

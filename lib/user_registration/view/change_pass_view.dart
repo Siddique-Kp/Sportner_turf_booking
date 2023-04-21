@@ -34,7 +34,7 @@ class ChangePassView extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 19,
-                      color: MyColors.black,
+                      color: AppColors.black,
                     ),
                   ),
                   AppSizes.kHeight50,
@@ -65,7 +65,7 @@ class ChangePassView extends StatelessWidget {
                       style: ElevatedButton.styleFrom(elevation: 0),
                       child: forgetPassViewModel.isLoading
                           ? const CircularProgressIndicator(
-                              color: MyColors.white,
+                              color: AppColors.white,
                               strokeWidth: 3,
                             )
                           : const Text("SUBMIT"),

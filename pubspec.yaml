@@ -44,6 +44,7 @@ dependencies:
   url_launcher: ^6.1.10
   geolocator: ^9.0.2
   geocoding: ^2.1.0
+  flutter_inappwebview: ^5.7.2+3
 
 
 

@@ -43,13 +43,13 @@ class DateContainerWidget extends StatelessWidget {
                   builder: (context, child) {
                     return Theme(
                       data: ThemeData.light().copyWith(
-                        primaryColor: MyColors.appColor,
+                        primaryColor: AppColors.appColor,
                         buttonTheme: const ButtonThemeData(
                             textTheme: ButtonTextTheme.primary,
-                            buttonColor: MyColors.appColor),
+                            buttonColor: AppColors.appColor),
                         colorScheme:
-                            const ColorScheme.light(primary: MyColors.appColor)
-                                .copyWith(secondary: MyColors.appColor),
+                            const ColorScheme.light(primary: AppColors.appColor)
+                                .copyWith(secondary: AppColors.appColor),
                       ),
                       child: child!,
                     );
@@ -74,7 +74,7 @@ class DateContainerWidget extends StatelessWidget {
     final dates = bookingSlotViewModelWatch.dates;
     final dateStyle = TextStyle(
         color: bookingSlotViewModelWatch.selectedDate == dates[index]
-            ? MyColors.white
+            ? AppColors.white
             : Colors.black,
         fontWeight: FontWeight.w500,
         fontSize: 14);
@@ -87,15 +87,15 @@ class DateContainerWidget extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(
             color: bookingSlotViewModelWatch.selectedDate == dates[index]
-                ? MyColors.appColor
-                : MyColors.black,
+                ? AppColors.appColor
+                : AppColors.black,
             width: bookingSlotViewModelWatch.selectedDate == dates[index]
                 ? 2
                 : 1,
           ),
           borderRadius: BorderRadius.circular(6),
           color: bookingSlotViewModelWatch.selectedDate == dates[index]
-              ? MyColors.appColor
+              ? AppColors.appColor
               : Colors.white,
         ),
         child: Padding(

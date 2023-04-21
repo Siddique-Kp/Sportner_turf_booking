@@ -33,7 +33,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-       const SystemUiOverlayStyle(statusBarColor: MyColors.appColor));
+       const SystemUiOverlayStyle(statusBarColor: AppColors.appColor));
     final size = MediaQuery.of(context).size;
     final signUpProvider = context.watch<SignUpViewModel>();
     TextEditingController userNameController =
@@ -49,7 +49,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
           Container(
             width: size.width,
             height: size.height,
-            color: MyColors.white,
+            color: AppColors.white,
             child: CustomPaint(
               painter: CurvePainter(),
             ),
@@ -77,7 +77,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                         const Text(
                           "Let,s have some Fun",
                           style: TextStyle(
-                              // color: MyColors.kGreyColor,
+                              // color: AppColors.kGreyColor,
                               ),
                         ),
                         AppSizes.kHeight50,

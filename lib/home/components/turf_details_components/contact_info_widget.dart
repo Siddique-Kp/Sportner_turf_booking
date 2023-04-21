@@ -23,7 +23,7 @@ class TurfDetailsContactInfo extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 14,
-                color: MyColors.black,
+                color: AppColors.black,
               ),
             ),
             Text(

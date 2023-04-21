@@ -28,7 +28,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     final venueDataList = context.read<VenueListViewModel>().venuDataList;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: MyColors.white,
+        backgroundColor: AppColors.white,
         title: const AppBarLocation(),
       ),
       body: SingleChildScrollView(

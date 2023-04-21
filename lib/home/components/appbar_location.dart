@@ -28,13 +28,13 @@ class _AppBarLocationState extends State<AppBarLocation> {
         return Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const Icon(Icons.location_on, color: MyColors.black),
+            const Icon(Icons.location_on, color: AppColors.black),
             AppSizes.kWidth10,
             value.currentAddress == null
                 ? const Text(
                     "No location picked",
                     style: TextStyle(
-                        color: MyColors.black,
+                        color: AppColors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.w500),
                   )
@@ -44,14 +44,14 @@ class _AppBarLocationState extends State<AppBarLocation> {
                       Text(
                         locatioViewModel.currentAddress!.split(",").first,
                         style: const TextStyle(
-                            color: MyColors.black,
+                            color: AppColors.black,
                             fontSize: 19,
                             fontWeight: FontWeight.w500),
                       ),
                       Text(
                         "${locatioViewModel.currentAddress?.split(",")[1]}, ${locatioViewModel.currentAddress?.split(",").last}",
                         style: const TextStyle(
-                          color: MyColors.black,
+                          color: AppColors.black,
                           fontSize: 12,
                         ),
                       ),

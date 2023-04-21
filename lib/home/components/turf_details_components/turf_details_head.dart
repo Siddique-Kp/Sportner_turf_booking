@@ -41,7 +41,7 @@ class TurfDetailsHeader extends StatelessWidget {
               style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
-                  color: MyColors.black),
+                  color: AppColors.black),
             )
           ],
         )

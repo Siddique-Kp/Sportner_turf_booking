@@ -25,7 +25,7 @@ class PaymentPageView extends StatelessWidget {
               height: 150,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(7),
-                  color: MyColors.lightGrey),
+                  color: AppColors.lightGrey),
               child: Padding(
                 padding: const EdgeInsets.all(15),
                 child: Column(
@@ -88,7 +88,7 @@ class PaymentPageView extends StatelessWidget {
               data:
                   Theme.of(context).copyWith(dividerColor: Colors.transparent),
               child: ExpansionTile(
-                collapsedIconColor: MyColors.black,
+                collapsedIconColor: AppColors.black,
                 title: SizedBox(
                   width: double.infinity,
                   child: Column(

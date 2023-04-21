@@ -74,21 +74,21 @@ class MyApp extends StatelessWidget {
             // splashColor: Colors.transparent,
             // highlightColor: Colors.transparent,
             // hoverColor: Colors.transparent,
-            scaffoldBackgroundColor: MyColors.scaffoldColor,
+            scaffoldBackgroundColor: AppColors.scaffoldColor,
             // primarySwatch: PrimaryColor.appColor,
-            primaryColor: MyColors.appColor,
+            primaryColor: AppColors.appColor,
             elevatedButtonTheme: const ElevatedButtonThemeData(
               style: ButtonStyle(
                 backgroundColor:
-                    MaterialStatePropertyAll(MyColors.kButtonColor),
+                    MaterialStatePropertyAll(AppColors.kButtonColor),
               ),
             ),
             brightness: Brightness.light,
             appBarTheme: const AppBarTheme(
-              iconTheme: IconThemeData(color: MyColors.black),
-              // backgroundColor: MyColors.white,
+              iconTheme: IconThemeData(color: AppColors.black),
+              // backgroundColor: AppColors.white,
                 titleTextStyle: TextStyle(
-                  color: MyColors.black,
+                  color: AppColors.black,
                   fontSize: 21,
                   fontWeight: FontWeight.w600,
                 ),
