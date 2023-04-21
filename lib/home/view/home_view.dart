@@ -40,10 +40,9 @@ class _HomeScreenViewState extends State<HomeScreenView> {
               height: size.height * 0.20,
               child: const HomeHeaderSection(),
             ),
-            venueDataList.isEmpty?const CircularProgressIndicator():
+            
             const HomeNearestTurfWidget(),
             AppSizes.kHeight20,
-             venueDataList.isEmpty?const CircularProgressIndicator():
             const TurfWithOfferWidget()
           ],
         ),

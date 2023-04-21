@@ -32,7 +32,7 @@ class ApiServices {
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200 || response.statusCode == 201) {
-        log(response.body.toString());
+        // log(response.body.toString());
 
         return Success(response: jsonDecod == null? null:jsonDecod(response.body));
       }

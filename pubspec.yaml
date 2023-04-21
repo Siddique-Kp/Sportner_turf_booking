@@ -42,6 +42,8 @@ dependencies:
   get: ^4.6.5
   intl: ^0.17.0
   url_launcher: ^6.1.10
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
 
 
 

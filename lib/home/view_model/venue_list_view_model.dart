@@ -21,7 +21,6 @@ class VenueListViewModel with ChangeNotifier {
     );
     if (response is Success) {
       if (response.response != null) {
-        log(response.response.toString());
         log("22222222");
         await setVenueListData(response.response as List<VenueDataModel>);
         log("33333333");

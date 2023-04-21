@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view_model/booking_slot_view_model.dart';
 import '../../../utils/global_colors.dart';
 import '../../../utils/global_values.dart';
+import '../../../utils/textstyles.dart';
 
 class AvailableSportsWidget extends StatelessWidget {
   const AvailableSportsWidget({
@@ -11,22 +12,32 @@ class AvailableSportsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 60,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ListView.separated(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemCount: 3,
-            separatorBuilder: (context, index) => AppSizes.kWidth10,
-            itemBuilder: (BuildContext context, int index) {
-              return _soprtContainer(index, context);
-            },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Available Sports",
+          style: AppTextStyles.textH3,
+        ),
+        AppSizes.kHeight20,
+        SizedBox(
+          height: 60,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ListView.separated(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: 3,
+                separatorBuilder: (context, index) => AppSizes.kWidth10,
+                itemBuilder: (BuildContext context, int index) {
+                  return _soprtContainer(index, context);
+                },
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

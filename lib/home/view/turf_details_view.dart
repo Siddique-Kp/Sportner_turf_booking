@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/home/model/venue_data_model.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_details_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
@@ -8,6 +9,8 @@ import 'package:sporter_turf_booking/utils/routes/navigations.dart';
 import 'package:sporter_turf_booking/utils/textstyles.dart';
 import '../components/turf_details_components/available_sport_widget.dart';
 import '../components/turf_details_components/contact_info_widget.dart';
+import '../components/turf_details_components/description_text.dart';
+import '../components/turf_details_components/get_location_widget.dart';
 import '../components/turf_details_components/turf_details_head.dart';
 
 class VenueDetailsView extends StatelessWidget {
@@ -28,8 +31,23 @@ class VenueDetailsView extends StatelessWidget {
         physics: const ScrollPhysics(),
         slivers: [
           SliverAppBar(
+            pinned: true,
             backgroundColor: MyColors.white,
             expandedHeight: size.height * 0.30,
+            automaticallyImplyLeading: false,
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Container(
+                decoration: BoxDecoration(
+                    color: MyColors.white.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(10)),
+                child: const Center(
+                  child: Icon(Icons.arrow_back),
+                ),
+              ),
+            ),
             flexibleSpace: FlexibleSpaceBar(
               background: venueViewModel.isLoading
                   ? const CircularProgressIndicator()
@@ -67,55 +85,15 @@ class VenueDetailsView extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  /// Here is heder section --------
                   const TurfDetailsHeader(),
                   AppSizes.kHeight20,
-
-                  /// here is the avalable sports section ------
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Available Sports",
-                        style: AppTextStyles.textH3,
-                      ),
-                      AppSizes.kHeight20,
-                      const AvailableSportsWidget(),
-                    ],
-                  ),
+                  const AvailableSportsWidget(),
                   AppSizes.kHeight10,
-                  SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: OutlinedButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.location_on,
-                        size: 28,
-                      ),
-                      label: const Text(
-                        "Get location",
-                        style: TextStyle(fontSize: 19),
-                      ),
-                    ),
-                  ),
+                  const GetLocationWidget(),
                   AppSizes.kHeight20,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Description",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          color: MyColors.black,
-                        ),
-                      ),
-                      AppSizes.kHeight10,
-                      Text(venueData.description!)
-                    ],
-                  ),
+                  DescriptionText(venueData: venueData),
                   AppSizes.kHeight30,
                   const TurfDetailsContactInfo(),
                   AppSizes.kHeight40,
@@ -139,3 +117,7 @@ class VenueDetailsView extends StatelessWidget {
     );
   }
 }
+
+
+
+

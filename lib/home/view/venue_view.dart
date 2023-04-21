@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/components/appbar_location.dart';
+import 'package:sporter_turf_booking/home/view_model/venue_details_view_model.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_list_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
+import 'package:sporter_turf_booking/utils/routes/navigations.dart';
 import '../../utils/global_values.dart';
 import '../components/venue_list_card_widget.dart';
 
@@ -32,18 +34,12 @@ class _VenueScreenViewState extends State<VenueScreenView> {
           IconButton(
             onPressed: () {},
             splashColor: Colors.transparent,
-            icon: const Icon(
-              Icons.search,
-              color: MyColors.black,
-            ),
+            icon: const Icon(Icons.search, color: MyColors.black),
           ),
           IconButton(
             onPressed: () {},
             splashColor: Colors.transparent,
-            icon: const Icon(
-              Icons.tune,
-              color: MyColors.black,
-            ),
+            icon: const Icon(Icons.tune, color: MyColors.black),
           ),
         ],
       ),
@@ -56,8 +52,17 @@ class _VenueScreenViewState extends State<VenueScreenView> {
             return SizedBox(
               width: double.infinity,
               height: 80,
-              child: VenueListCardWidget(
-                index: index,
+              child: InkWell(
+                onTap: () {
+                  context
+                      .read<VenueDetailsViewModel>()
+                      .getSingleVenue(venueDataList[index].sId!);
+                  Navigator.pushNamed(
+                      context, NavigatorClass.venueDetailsScreen);
+                },
+                child: VenueListCardWidget(
+                  index: index,
+                ),
               ),
             );
           },

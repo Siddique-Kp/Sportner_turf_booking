@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_list_view_model.dart';
+import 'package:sporter_turf_booking/home/components/sports_icon.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/global_values.dart';
+import '../model/venue_data_model.dart';
 import 'home_components/home_components.dart';
 
 class VenueListCardWidget extends StatelessWidget {
@@ -23,7 +27,7 @@ class VenueListCardWidget extends StatelessWidget {
           children: [
             _imageContianer(venueDataList[index].image!),
             AppSizes.kWidth10,
-            _turfDetailsContainer(size,venueDataList[index].venueName!)
+            _turfDetailsContainer(size, venueDataList[index])
           ],
         ),
         const Spacer(),
@@ -39,7 +43,7 @@ class VenueListCardWidget extends StatelessWidget {
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
-          children:  [
+          children: [
             const Text(
               "Starting from",
               style: TextStyle(
@@ -71,31 +75,36 @@ class VenueListCardWidget extends StatelessWidget {
     );
   }
 
-  Column _turfDetailsContainer(Size size, String venueName) {
+  Column _turfDetailsContainer(Size size, VenueDataModel venueData) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(
           width: size.width * 0.30,
-          child:  Text(
-            venueName,
+          child: Text(
+            venueData.venueName!,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style:const TextStyle(fontWeight: FontWeight.w700),
+            style: const TextStyle(fontWeight: FontWeight.w700),
           ),
         ),
-        Row(
-          children: const [
-            Icon(Icons.sports_soccer, size: 17),
-            Icon(Icons.sports_cricket, size: 18),
-          ],
+        Expanded(
+          child: ListView.builder(
+            itemCount: venueData.sportFacility!.length,
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (BuildContext context, int index) {
+              return Sports.spots(
+                  sport: venueData.sportFacility![index].sport.toString());
+            },
+          ),
         ),
         const RatingStarWidget(size: 13, value: 3),
         Row(
-          children: const [
-            Icon(Icons.location_on, size: 17),
-            Text("Banglore"),
+          children: [
+            const Icon(Icons.location_on, size: 17),
+            Text(venueData.district!),
           ],
         )
       ],
