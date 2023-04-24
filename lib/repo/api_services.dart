@@ -15,7 +15,8 @@ class ApiServices {
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         log("Success");
-        return Success(response:jsonDecode == null ? null: jsonDecode(response.body));
+        return Success(
+            response: jsonDecode == null ? null : jsonDecode(response.body));
       }
       log(response.body.toLowerCase());
       log(response.statusCode.toString());
@@ -28,13 +29,17 @@ class ApiServices {
     }
   }
 
-  static Future<Object> getMethod({required String url,Function? jsonDecod}) async {
+  static Future<Object> getMethod(
+      {required String url,
+      Function? jsonDecod,
+      Map<String, String>? headers}) async {
     try {
-      final response = await http.get(Uri.parse(url));
+      final response = await http.get(Uri.parse(url), headers: headers);
       if (response.statusCode == 200 || response.statusCode == 201) {
         // log(response.body.toString());
 
-        return Success(response: jsonDecod == null? null:jsonDecod(response.body));
+        return Success(
+            response: jsonDecod == null ? null : jsonDecod(response.body));
       }
       // log(response.body.toString());
 
@@ -44,5 +49,4 @@ class ApiServices {
       return ServiceExeptions.cases(e);
     }
   }
-
 }

@@ -1,10 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/home/components/profile_components/user_profile_container.dart';
+import 'package:sporter_turf_booking/home/model/user_profile_data_modle.dart';
+import 'package:sporter_turf_booking/home/view_model/user_profile_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
-import '../../user_registration/view_model/firebase_auth_view_model.dart';
 import '../../utils/textstyles.dart';
-import '../components/profile_components/profile_settings_list_tile.dart';
+import '../components/profile_components/settings_list_tiles.dart';
 
 class UserProfileView extends StatelessWidget {
   const UserProfileView({super.key});
@@ -12,6 +16,10 @@ class UserProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<UserProfileViewModel>().getUserProfileData();
+    });
+    log("Buildeingggggg");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.white,
@@ -22,55 +30,25 @@ class UserProfileView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _userProfile(),
-                AppSizes.kHeight20,
-                Column(
-                  children: [
-                    ProfileSettings(
-                      title: "My Bookings",
-                      subtitle: "View all your bookings",
-                      icon: Icons.calendar_month,
-                      onTap: () {},
-                    ),
-                    ProfileSettings(
-                      title: "Help & Support",
-                      subtitle: "Contact us on whatsapp",
-                      icon: Icons.help,
-                      onTap: () {},
-                    ),
-                    ProfileSettings(
-                      title: "Invite a friend",
-                      subtitle: "Share the sportner App",
-                      icon: Icons.share,
-                      onTap: () {},
-                    ),
-                    ProfileSettings(
-                      title: "Rate us",
-                      subtitle: "Rate the Sportner App",
-                      icon: Icons.star,
-                      onTap: () {},
-                    ),
-                    ProfileSettings(
-                      title: "Logout",
-                      icon: Icons.logout,
-                      onTap: () {
-                        context
-                            .read<FirebaseAuthViewModel>()
-                            .userLoginStatus(context);
-                      },
-                    ),
-                    ProfileSettings(
-                      title: "Delete My Account",
-                      icon: Icons.delete_forever,
-                      onTap: () {},
-                    ),
-                  ],
-                )
-              ],
-            ),
+            FutureBuilder<UserProfileDataModle>(
+                future:
+                    context.read<UserProfileViewModel>().getUserProfileData(),
+                builder: (context, snapshot) {
+                  if (snapshot.data == null) {
+                    log(snapshot.data.toString());
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      UserProfileContainer(
+                        userData: snapshot.data!,
+                      ),
+                      AppSizes.kHeight20,
+                       SettingsListTile(userData:snapshot.data!)
+                    ],
+                  );
+                }),
             const Text(
               "Version 1.0.0",
               style: TextStyle(
@@ -80,50 +58,6 @@ class UserProfileView extends StatelessWidget {
             )
           ],
         ),
-      ),
-    );
-  }
-
-  Container _userProfile() {
-    return Container(
-      height: 70,
-      width: double.infinity,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6), color: AppColors.appColor),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          const CircleAvatar(
-            radius: 28,
-            backgroundColor: AppColors.white,
-            child: CircleAvatar(
-              radius: 25,
-              backgroundImage: AssetImage("assets/no_user.png"),
-            ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              Text(
-                "Siddique",
-                style: TextStyle(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16),
-              ),
-              Text(
-                "+91987654321",
-                style: TextStyle(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15),
-              ),
-            ],
-          ),
-          AppSizes.kWidth25,
-          AppSizes.kWidth25,
-        ],
       ),
     );
   }

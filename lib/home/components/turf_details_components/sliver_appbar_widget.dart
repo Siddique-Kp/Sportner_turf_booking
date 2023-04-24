@@ -19,7 +19,7 @@ class SliverAppBarWidget extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return SliverAppBar(
       pinned: true,
-      backgroundColor: MyColors.white,
+      backgroundColor: AppColors.white,
       expandedHeight: size.height * 0.30,
       automaticallyImplyLeading: false,
       leading: IconButton(
@@ -28,7 +28,7 @@ class SliverAppBarWidget extends StatelessWidget {
         },
         icon: Container(
           decoration: BoxDecoration(
-              color: MyColors.white.withOpacity(0.5),
+              color: AppColors.white.withOpacity(0.5),
               borderRadius: BorderRadius.circular(10)),
           child: const Center(
             child: Icon(Icons.arrow_back),
@@ -50,7 +50,7 @@ class SliverAppBarWidget extends StatelessWidget {
           width: double.infinity,
           height: 20,
           decoration: const BoxDecoration(
-            color: MyColors.white,
+            color: AppColors.white,
             borderRadius: BorderRadius.only(
               topRight: Radius.circular(15),
               topLeft: Radius.circular(15),
