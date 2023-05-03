@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/model/venue_data_model.dart';
@@ -6,6 +8,7 @@ import 'package:sporter_turf_booking/home/view_model/venue_list_view_model.dart'
 import 'package:sporter_turf_booking/utils/routes/navigations.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/global_values.dart';
+import '../view_model/get_location_view_model.dart';
 import 'home_components/home_components.dart';
 import 'sports_icon.dart';
 
@@ -21,7 +24,15 @@ class VenueCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final venueDataList = context.watch<VenueListViewModel>().venuDataList;
+    // final venueViewModel = context.watch<VenueListViewModel>();
+    final locationViewModel = context.watch<GetLocationViewModel>();
     final venueData = venueDataList[index];
+    if (locationViewModel.currentPosition != null) {
+      context
+          .watch<GetLocationViewModel>()
+          .getDistance(venueData.lat!, venueData.lng!);
+    }
+
     return InkWell(
       onTap: () async {
         await context
@@ -38,7 +49,7 @@ class VenueCardWidget extends StatelessWidget {
             children: [
               _imageContainer(venueData),
               AppSizes.kHeight10,
-              _venueDetails(venueData, venueDataList)
+              _venueDetails(venueData, venueDataList, context)
             ],
           ),
         ),
@@ -46,8 +57,10 @@ class VenueCardWidget extends StatelessWidget {
     );
   }
 
-  Padding _venueDetails(
-      VenueDataModel venueData, List<VenueDataModel> venueDataList) {
+  Widget _venueDetails(VenueDataModel venueData,
+      List<VenueDataModel> venueDataList, BuildContext context) {
+    final distance = context.watch<GetLocationViewModel>().getDistanceInKm;
+    log(distance.toString());
     return Padding(
       padding: const EdgeInsets.only(left: 10),
       child: Column(
@@ -62,10 +75,16 @@ class VenueCardWidget extends StatelessWidget {
               fontSize: 14,
             ),
           ),
-          const Text(
-            "1.2 KM away",
-            style: TextStyle(fontSize: 11, color: AppColors.grey),
-          ),
+          distance != null
+              ? Text(
+                  "${distance.toStringAsFixed(1)} KM away",
+                  style: const TextStyle(
+                    fontSize: 11,
+                    color: AppColors.grey,
+                    fontWeight: FontWeight.w500,
+                  ),
+                )
+              : AppSizes.kHeight5,
           AppSizes.kHeight5,
           SizedBox(
             height: 30,
@@ -84,7 +103,7 @@ class VenueCardWidget extends StatelessWidget {
             ),
           ),
           AppSizes.kHeight5,
-          isOffer
+          isOffer 
               ? _offerWidget(venueDataList)
               : const RatingStarWidget(value: 3)
         ],
@@ -123,6 +142,7 @@ class VenueCardWidget extends StatelessWidget {
       height: 80,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
+        color: AppColors.lightGrey,
         image: DecorationImage(
           image: NetworkImage(venueData.image!),
           fit: BoxFit.cover,

@@ -11,6 +11,7 @@ class ApiServices {
     Function? jsonDecode,
   ) async {
     try {
+      log("send reqiust");
       final response = await http.post(Uri.parse(url), body: body);
 
       if (response.statusCode == 201 || response.statusCode == 200) {
@@ -18,6 +19,7 @@ class ApiServices {
         return Success(
             response: jsonDecode == null ? null : jsonDecode(response.body));
       }
+      log("got response");
       log(response.body.toLowerCase());
       log(response.statusCode.toString());
       return Failure(

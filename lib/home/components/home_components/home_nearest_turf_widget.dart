@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view_model/bottom_nav_view_model.dart';
 
 import '../../../utils/global_values.dart';
+import '../../view_model/get_location_view_model.dart';
 import '../../view_model/venue_list_view_model.dart';
 import 'home_components.dart';
 import '../venue_card_widget.dart';

@@ -1,12 +1,12 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_list_view_model.dart';
 import 'package:sporter_turf_booking/home/components/sports_icon.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/global_values.dart';
+import '../../utils/routes/navigations.dart';
 import '../model/venue_data_model.dart';
+import '../view_model/venue_details_view_model.dart';
 import 'home_components/home_components.dart';
 
 class VenueListCardWidget extends StatelessWidget {
@@ -21,18 +21,26 @@ class VenueListCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final venueDataList = context.watch<VenueListViewModel>().venuDataList;
-    return Row(
-      children: [
-        Row(
-          children: [
-            _imageContianer(venueDataList[index].image!),
-            AppSizes.kWidth10,
-            _turfDetailsContainer(size, venueDataList[index])
-          ],
-        ),
-        const Spacer(),
-        _turfPriceContainer(venueDataList[index].actualPrice!)
-      ],
+    return InkWell(
+      onTap: () async{
+       await context
+            .read<VenueDetailsViewModel>()
+            .getSingleVenue(venueDataList[index].sId!);
+        Navigator.pushNamed(context, NavigatorClass.venueDetailsScreen);
+      },
+      child: Row(
+        children: [
+          Row(
+            children: [
+              _imageContianer(venueDataList[index].image!),
+              AppSizes.kWidth10,
+              _turfDetailsContainer(size, venueDataList[index])
+            ],
+          ),
+          const Spacer(),
+          _turfPriceContainer(venueDataList[index].actualPrice!)
+        ],
+      ),
     );
   }
 
@@ -121,6 +129,7 @@ class VenueListCardWidget extends StatelessWidget {
       width: 80,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(6),
+        color: AppColors.lightGrey,
         image: DecorationImage(
           image: NetworkImage(imageUrl),
           fit: BoxFit.cover,

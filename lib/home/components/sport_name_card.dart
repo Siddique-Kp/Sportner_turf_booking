@@ -54,7 +54,7 @@ class SportNameCard {
     final size = MediaQuery.of(context).size;
     return List.generate(sports.length, (index) {
       final sportItems = sports[index];
-      return Padding(
+      return Padding( 
         padding: const EdgeInsets.only(left: 5),
         child: Card(
           child: InkWell(

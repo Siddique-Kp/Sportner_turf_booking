@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/home/view_model/user_profile_view_model.dart';
 import '../../../utils/global_colors.dart';
 import '../../../utils/global_values.dart';
 import '../sport_name_card.dart';
@@ -10,6 +12,7 @@ class HomeHeaderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userData = context.watch<UserProfileViewModel>().userProfileData;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -17,17 +20,17 @@ class HomeHeaderSection extends StatelessWidget {
           padding: const EdgeInsets.only(left: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children:  [
               AppSizes.kHeight20,
               Text(
-                "Hello Siddique",
-                style: TextStyle(
+                "Hello ${userData?.name??""}",
+                style: const TextStyle(
                     color: AppColors.black,
                     fontSize: 15,
                     fontWeight: FontWeight.w500),
               ),
               AppSizes.kHeight10,
-              Text(
+              const Text(
                 "Find your arena",
                 style: TextStyle(
                   color: AppColors.black,
