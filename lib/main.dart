@@ -3,19 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:sporter_turf_booking/home/view_model/bottom_nav_view_model.dart';
-import 'package:sporter_turf_booking/home/view_model/user_profile_view_model.dart';
-import 'package:sporter_turf_booking/home/view_model/venue_list_view_model.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/forget_password_view_model.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
+import 'package:sporter_turf_booking/utils/providers/provider_classes.dart';
 import 'package:sporter_turf_booking/utils/routes/navigations.dart';
-
-import 'home/view_model/booking_slot_view_model.dart';
-import 'home/view_model/get_location_view_model.dart';
-import 'home/view_model/venue_details_view_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,38 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => SignUpViewModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => UserLoginViewModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => FirebaseAuthViewModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => BottomNavViewModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => ForgetPassViewModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => BookingSlotViewModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => VenueListViewModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => VenueDetailsViewModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => GetLocationViewModel(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => UserProfileViewModel(),
-        ),
-      ],
+      providers: ProviderClass.provider,
       child: GetMaterialApp(
         title: 'sportner turf booking app',
         debugShowCheckedModeBanner: false,
@@ -75,28 +34,23 @@ class MyApp extends StatelessWidget {
           );
         },
         theme: ThemeData(
-            // splashColor: Colors.transparent,
-            // highlightColor: Colors.transparent,
-            // hoverColor: Colors.transparent,
-            scaffoldBackgroundColor: AppColors.scaffoldColor,
-            // primarySwatch: PrimaryColor.appColor,
-            primaryColor: AppColors.appColor,
-            elevatedButtonTheme: const ElevatedButtonThemeData(
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStatePropertyAll(AppColors.kButtonColor),
-              ),
+          scaffoldBackgroundColor: AppColors.scaffoldColor,
+          elevatedButtonTheme: const ElevatedButtonThemeData(
+            style: ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(AppColors.kButtonColor),
             ),
-            brightness: Brightness.light,
-            appBarTheme: const AppBarTheme(
-              iconTheme: IconThemeData(color: AppColors.black),
-              // backgroundColor: AppColors.white,
-                titleTextStyle: TextStyle(
-                  color: AppColors.black,
-                  fontSize: 21,
-                  fontWeight: FontWeight.w600,
-                ),
-                elevation: 0)),
+          ),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: AppColors.white,
+            iconTheme: IconThemeData(color: AppColors.black),
+            titleTextStyle: TextStyle(
+              color: AppColors.black,
+              fontSize: 21,
+              fontWeight: FontWeight.w600,
+            ),
+            elevation: 0,
+          ),
+        ),
         routes: NavigatorClass.routes(),
         initialRoute: NavigatorClass.splashScreen,
       ),

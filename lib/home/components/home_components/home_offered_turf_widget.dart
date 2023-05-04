@@ -14,7 +14,7 @@ class TurfWithOfferWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final venueDataList = context.watch<VenueListViewModel>().venuDataList;
+    final venueViewModel = context.watch<VenueListViewModel>();
 
     return Column(children: [
       HomeComponents.viewAllText(
@@ -23,20 +23,20 @@ class TurfWithOfferWidget extends StatelessWidget {
       ),
       SizedBox(
         width: size.width,
-        height: 190,
+        height: size.height * 0.25,
         child: Row(
           children: [
             Expanded(
               child: ListView.builder(
-                itemCount: venueDataList.length,
+                itemCount: venueViewModel.offeredVenues.length,
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return  Padding(
                     padding: const EdgeInsets.only(left: 15),
                     child: VenueCardWidget(
-                      isOffer: venueDataList[index].discountPercentage! > 0 ? true:false,
-                      index: index,
+                      isOffer: true,
+                      venueDataList:venueViewModel.offeredVenues[index] ,
                     ),
                   );
                 },

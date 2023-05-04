@@ -2,18 +2,16 @@ import 'package:flutter/material.dart';
 
 class Sports {
   static IconData spots({required String sport, double size = 15}) {
-    switch (sport) {
+    switch (sport.toLowerCase()) {
       case "football":
         return Icons.sports_soccer;
-      case "Cricket":
+      case "cricket":
         return Icons.sports_cricket;
-      case "Football":
-        return Icons.sports_soccer;
-      case "Volley ball":
+      case "volley ball":
         return Icons.sports_volleyball;
-      case "Basket ball":
+      case "basket ball":
         return Icons.sports_basketball;
-      case "Badminton":
+      case "badminton":
         return Icons.sports_soccer;
       default:
         return Icons.sports_soccer;

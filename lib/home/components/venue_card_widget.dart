@@ -1,10 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/model/venue_data_model.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_details_view_model.dart';
-import 'package:sporter_turf_booking/home/view_model/venue_list_view_model.dart';
 import 'package:sporter_turf_booking/utils/routes/navigations.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/global_values.dart';
@@ -14,19 +11,17 @@ import 'sports_icon.dart';
 
 class VenueCardWidget extends StatelessWidget {
   final bool isOffer;
-  final int index;
+  final VenueDataModel venueDataList;
   const VenueCardWidget({
     super.key,
     this.isOffer = false,
-    required this.index,
+    required this.venueDataList
   });
 
   @override
   Widget build(BuildContext context) {
-    final venueDataList = context.watch<VenueListViewModel>().venuDataList;
-    // final venueViewModel = context.watch<VenueListViewModel>();
     final locationViewModel = context.watch<GetLocationViewModel>();
-    final venueData = venueDataList[index];
+    final venueData = venueDataList;
     if (locationViewModel.currentPosition != null) {
       context
           .watch<GetLocationViewModel>()
@@ -41,7 +36,6 @@ class VenueCardWidget extends StatelessWidget {
         await Navigator.pushNamed(context, NavigatorClass.venueDetailsScreen);
       },
       child: SizedBox(
-        height: 50,
         width: 150,
         child: Card(
           child: Column(
@@ -49,7 +43,7 @@ class VenueCardWidget extends StatelessWidget {
             children: [
               _imageContainer(venueData),
               AppSizes.kHeight10,
-              _venueDetails(venueData, venueDataList, context)
+              _venueDetails(venueData, context)
             ],
           ),
         ),
@@ -58,9 +52,8 @@ class VenueCardWidget extends StatelessWidget {
   }
 
   Widget _venueDetails(VenueDataModel venueData,
-      List<VenueDataModel> venueDataList, BuildContext context) {
+      BuildContext context) {
     final distance = context.watch<GetLocationViewModel>().getDistanceInKm;
-    log(distance.toString());
     return Padding(
       padding: const EdgeInsets.only(left: 10),
       child: Column(
@@ -92,7 +85,7 @@ class VenueCardWidget extends StatelessWidget {
               itemCount: venueData.sportFacility!.length,
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int index) {
+              itemBuilder: (context, index) {
                 return Icon(
                   Sports.spots(
                     sport: venueData.sportFacility![index].sport.toString(),
@@ -103,15 +96,15 @@ class VenueCardWidget extends StatelessWidget {
             ),
           ),
           AppSizes.kHeight5,
-          isOffer 
-              ? _offerWidget(venueDataList)
+          isOffer
+              ? _offerWidget(venueData)
               : const RatingStarWidget(value: 3)
         ],
       ),
     );
   }
 
-  Row _offerWidget(List<VenueDataModel> venueDataList) {
+  Row _offerWidget(VenueDataModel venueData) {
     return Row(
       children: [
         const CircleAvatar(
@@ -127,7 +120,7 @@ class VenueCardWidget extends StatelessWidget {
         ),
         AppSizes.kWidth5,
         Text(
-          "${venueDataList[index].discountPercentage}% OFF",
+          "${venueData.discountPercentage}% OFF",
           style: const TextStyle(
             color: AppColors.kOfferColor,
           ),

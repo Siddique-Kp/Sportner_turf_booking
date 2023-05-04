@@ -11,10 +11,12 @@ class VenueListViewModel with ChangeNotifier {
     getVenueListDatas();
   }
   List<VenueDataModel> _venueDataList = [];
+  List<VenueDataModel> _offeredVenues = [];
   Position? _currentPosition;
   bool _isVenueListLoading = false;
 
   List<VenueDataModel> get venuDataList => _venueDataList;
+  List<VenueDataModel> get offeredVenues => _offeredVenues;
   Position? get currentPosition => _currentPosition;
   bool get isVenueListLoading => _isVenueListLoading;
 
@@ -39,6 +41,7 @@ class VenueListViewModel with ChangeNotifier {
 
   setVenueListData(List<VenueDataModel> venueDataList) async {
     _venueDataList = venueDataList;
+    getOfferedVenues();
     notifyListeners();
   }
 
@@ -46,4 +49,13 @@ class VenueListViewModel with ChangeNotifier {
     _isVenueListLoading = loading;
   }
 
+  getOfferedVenues() {
+    for (var offered in _venueDataList) {
+      final offerPercent = offered.discountPercentage;
+
+      if (offerPercent! > 0) {
+        _offeredVenues.add(offered);
+      }
+    }
+  }
 }

@@ -4,6 +4,7 @@ import 'package:sporter_turf_booking/home/components/appbar_location.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_list_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import '../../utils/global_values.dart';
+import '../components/sports_icon.dart';
 import '../components/venue_list_card_widget.dart';
 
 class VenueScreenView extends StatelessWidget {
@@ -38,11 +39,30 @@ class VenueScreenView extends StatelessWidget {
           itemCount: venueDataList.length,
           separatorBuilder: (context, index) => AppSizes.kHeight20,
           itemBuilder: (context, index) {
+            final venueData = venueDataList[index];
             return SizedBox(
               width: double.infinity,
               height: 80,
               child: VenueListCardWidget(
-                index: index,
+                venueName: venueData.venueName!,
+                imageUrl: venueData.image!,
+                sportFacilityLendth: venueData.sportFacility!.length,
+                venuePrice: venueData.actualPrice.toString(),
+                district: venueData.district!,
+                venueID: venueData.sId!,
+                sportIconWidget: ListView.builder(
+                  itemCount: venueData.sportFacility!.length,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Icon(
+                      Sports.spots(
+                        sport: venueData.sportFacility![index].sport!,
+                      ),
+                      size: 15,
+                    );
+                  },
+                ),
               ),
             );
           },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/components/sports_icon.dart';
 import 'package:sporter_turf_booking/home/model/venue_data_model.dart';
@@ -72,7 +73,7 @@ class AvailableSportsWidget extends StatelessWidget {
             ),
             AppSizes.kHeight10,
             Text(
-              "Football",
+              venueData.sportFacility![index].sport!.capitalize.toString(),
               style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 11,
