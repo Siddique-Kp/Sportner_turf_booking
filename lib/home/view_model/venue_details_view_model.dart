@@ -8,9 +8,11 @@ import '../model/venue_data_model.dart';
 class VenueDetailsViewModel with ChangeNotifier {
   late VenueDataModel _venueData;
   bool _isLoading = false;
+  int _dayIndex = -1;
 
   VenueDataModel get venueData => _venueData;
   bool get isLoading => _isLoading;
+  int get dayIndex => _dayIndex;
 
   getSingleVenue(String id) async {
     setLoading(true);
@@ -34,13 +36,21 @@ class VenueDetailsViewModel with ChangeNotifier {
     setLoading(false);
   }
 
-  setVenueData(VenueDataModel venueData)async {
+  setVenueData(VenueDataModel venueData) async {
     _venueData = venueData;
     notifyListeners();
   }
 
   setLoading(bool loading) {
     _isLoading = loading;
-    // notifyListeners();
+  }
+
+  getDayIndex(String dayName) {
+    log(dayName);
+    if (_venueData.slots!
+        .any((venue) => venue.day!.toLowerCase() == dayName.toLowerCase())) {
+      _dayIndex = _venueData.slots!.indexWhere(
+          (venue) => venue.day!.toLowerCase() == dayName.toLowerCase());
+    }
   }
 }

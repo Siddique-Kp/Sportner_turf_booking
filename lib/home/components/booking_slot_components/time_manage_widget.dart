@@ -1,9 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view_model/booking_slot_view_model.dart';
+import 'package:sporter_turf_booking/home/view_model/venue_details_view_model.dart';
 import '../../../utils/global_colors.dart';
 import '../../../utils/global_values.dart';
 import '../../../utils/textstyles.dart';
+import '../../model/venue_data_model.dart';
 
 class TimeManageWidget extends StatelessWidget {
   const TimeManageWidget({
@@ -12,17 +17,22 @@ class TimeManageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bookingViewModel = context.watch<BookingSlotViewModel>();
+    // final venueViewModel = context.watch<VenueDetailsViewModel>();
+    String chosenTime = bookingViewModel.selectedTime;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
           children: [
-            Text(
-              "From",
-              style: AppTextStyles.textH2,
-            ),
+            Text("From", style: AppTextStyles.textH2),
             AppSizes.kHeight20,
-            _timeContainer(context, isFrom: true),
+            _timeContainer(
+              context,
+              isFromSlot: true,
+              choosenTime: bookingViewModel
+                  .convertTo12HourFormat(chosenTime.split("-").first),
+            ),
           ],
         ),
         Container(
@@ -32,50 +42,31 @@ class TimeManageWidget extends StatelessWidget {
         ),
         Column(
           children: [
-            Text(
-              "To",
-              style: AppTextStyles.textH2,
-            ),
+            Text("To", style: AppTextStyles.textH2),
             AppSizes.kHeight20,
-            _timeContainer(context, isFrom: false)
+            _timeContainer(
+              context,
+              isFromSlot: false,
+              choosenTime: bookingViewModel
+                  .convertTo12HourFormat(chosenTime.split("-").last),
+            )
           ],
         )
       ],
     );
   }
 
-  Widget _timeContainer(BuildContext context, {required bool isFrom}) {
-    final bookingSlotViewModel = context.watch<BookingSlotViewModel>();
-    String chosenTime = isFrom
-        ? bookingSlotViewModel.selectedTimeFrom
-        : bookingSlotViewModel.selectedTimeTo;
+  Widget _timeContainer(
+    BuildContext context, {
+    required String choosenTime,
+    required bool isFromSlot,
+  }) {
     return GestureDetector(
       onTap: () async {
-        final selectedTime = await showTimePicker(
-          builder: (context, child) {
-            return Theme(
-              data: ThemeData.light().copyWith(
-                primaryColor: AppColors.appColor,
-                buttonTheme: const ButtonThemeData(
-                    textTheme: ButtonTextTheme.primary,
-                    buttonColor: AppColors.appColor),
-                colorScheme: const ColorScheme.light(primary: AppColors.appColor)
-                    .copyWith(secondary: AppColors.appColor),
-              ),
-              child: child!,
-            );
-          },
-          context: context,
-          initialTime: TimeOfDay.now(),
-        );
-        if (selectedTime != null) {
-          if (isFrom) {
-            bookingSlotViewModel
-                .setSelectedTimeFrom(selectedTime.format(context).toString());
-          } else {
-            bookingSlotViewModel
-                .setSelectedTimeTo(selectedTime.format(context).toString());
-          }
+        if (isFromSlot) {
+          _showSlotsBottomSheet(context, true);
+        } else if (!isFromSlot) {
+          _showSlotsBottomSheet(context, false);
         }
       },
       child: Container(
@@ -83,7 +74,7 @@ class TimeManageWidget extends StatelessWidget {
         height: 45,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
-          color: AppColors.lightGrey
+          color: AppColors.lightGrey,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4),
@@ -91,8 +82,7 @@ class TimeManageWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(chosenTime,
-                    style: AppTextStyles.textH4),
+                Text(choosenTime, style: AppTextStyles.textH4),
                 AppSizes.kWidth5,
                 const Icon(
                   Icons.arrow_drop_down_circle_outlined,
@@ -103,6 +93,128 @@ class TimeManageWidget extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  _showSlotsBottomSheet(BuildContext context, bool isFromSlot) {
+    final venueViewModel = context.read<VenueDetailsViewModel>();
+    final bookingViewModel = context.read<BookingSlotViewModel>();
+
+    return showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        List<Slots> venueDataSlot = venueViewModel.venueData.slots!;
+        int fromTimeSlotIndex = -1;
+        return Container(
+          margin: const EdgeInsets.all(20),
+          child: venueDataSlot[venueViewModel.dayIndex].slots!.isEmpty
+              ? Wrap(
+                  children: [
+                    Center(
+                      child: Text("No Slots", style: AppTextStyles.textH4),
+                    ),
+                  ],
+                )
+              : GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    mainAxisExtent: 45,
+                  ),
+                  shrinkWrap: true,
+                  itemCount:
+                      venueDataSlot[venueViewModel.dayIndex].slots!.length,
+                  itemBuilder: (BuildContext context, int slotIndex) {
+                    final timeSlotText = isFromSlot == true
+                        ? venueDataSlot[venueViewModel.dayIndex]
+                            .slots![slotIndex]
+                            .split("-")
+                            .first
+                        : venueDataSlot[venueViewModel.dayIndex]
+                            .slots![slotIndex]
+                            .split("-")
+                            .last;
+
+                    if (isFromSlot == false &&
+                        bookingViewModel.selectedTime.isNotEmpty &&
+                        bookingViewModel.selectedTime.contains(
+                          bookingViewModel.selectedTime.split("-").last,
+                        )) {
+                      fromTimeSlotIndex = venueDataSlot[venueViewModel.dayIndex]
+                          .slots!
+                          .indexWhere(
+                            (element) =>
+                                element.split("-").last ==
+                                bookingViewModel.selectedTime.split("-").last,
+                          );
+                    }
+
+                    
+                    final now = DateTime.now();
+                    final parsedTimeOnly =
+                        DateFormat('HH:mm').parse(timeSlotText);
+                    final parsedDateTime = DateTime(now.year, now.month,
+                        now.day, parsedTimeOnly.hour, parsedTimeOnly.minute);
+
+                    log(parsedDateTime.toString());
+                    log(now.isBefore(parsedDateTime).toString());
+                    log(now.toString());
+
+                    return InkWell(
+                      onTap: !isFromSlot && fromTimeSlotIndex == slotIndex
+                          ? () {
+                              bookingViewModel.setSelectedTime(
+                                venueDataSlot[venueViewModel.dayIndex]
+                                    .slots![slotIndex],
+                              );
+                              Navigator.pop(context);
+                            }
+                          : isFromSlot
+                              ? () {
+                                  bookingViewModel.setSelectedTime(
+                                    venueDataSlot[venueViewModel.dayIndex]
+                                        .slots![slotIndex],
+                                  );
+                                  Navigator.pop(context);
+                                }
+                              : null,
+                      child: Material(
+                        elevation: 1,
+                        borderRadius: BorderRadius.circular(7),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(7),
+                            color: !isFromSlot && fromTimeSlotIndex == slotIndex
+                                ? AppColors.lightGrey
+                                : isFromSlot
+                                    ? AppColors.lightGrey
+                                    : AppColors.lightGrey,
+                          ),
+                          child: Center(
+                            child: Text(
+                              bookingViewModel
+                                  .convertTo12HourFormat(timeSlotText),
+                              style: TextStyle(
+                                color:
+                                 !isFromSlot &&
+                                        fromTimeSlotIndex == slotIndex
+                                    ? AppColors.black
+                                    : isFromSlot
+                                        ? AppColors.black
+                                        : AppColors.lightGrey,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+        );
+      },
     );
   }
 }

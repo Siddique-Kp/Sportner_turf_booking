@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/components/turf_details_components/available_sport_widget.dart';
+import 'package:sporter_turf_booking/home/view_model/booking_slot_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 import 'package:sporter_turf_booking/utils/routes/navigations.dart';
@@ -18,11 +19,16 @@ class BookingSlotView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final venueData = context.watch<VenueDetailsViewModel>().venueData;
-    final venueViewModel = context.watch<VenueDetailsViewModel>();
-    log("Rebuildeed");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+            context.read<BookingSlotViewModel>().setSelectedSport(-1, "");
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
         title: const Text(
           "Booking",
         ),
@@ -33,16 +39,13 @@ class BookingSlotView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-               AvailableSportsWidget(venueData: venueData,),
+              AvailableSportsWidget(venueData: venueData),
               AppSizes.kHeight20,
               const Divider(thickness: 2, color: AppColors.black),
               AppSizes.kHeight20,
               const FacilityWidget(),
               AppSizes.kHeight20,
-              Text(
-                "Select Date",
-                style: AppTextStyles.textH2,
-              ),
+              Text("Select Date", style: AppTextStyles.textH2),
               AppSizes.kHeight20,
               const DateContainerWidget(),
               AppSizes.kHeight30,
@@ -67,9 +70,13 @@ class BookingSlotBottomBar extends StatelessWidget {
       width: double.infinity,
       height: 70,
       decoration: const BoxDecoration(
-          border: Border(
-              top: BorderSide(
-                  width: 1, color: Color.fromARGB(67, 158, 158, 158)))),
+        border: Border(
+          top: BorderSide(
+            width: 1,
+            color: Color.fromARGB(67, 158, 158, 158),
+          ),
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Row(

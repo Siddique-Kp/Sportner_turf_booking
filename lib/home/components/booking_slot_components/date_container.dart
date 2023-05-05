@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view_model/booking_slot_view_model.dart';
+import 'package:sporter_turf_booking/home/view_model/venue_details_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
-
 
 class DateContainerWidget extends StatelessWidget {
   const DateContainerWidget({
@@ -14,8 +14,12 @@ class DateContainerWidget extends StatelessWidget {
   // @override
   @override
   Widget build(BuildContext context) {
-    final bookingSlotViewModel = context.read<BookingSlotViewModel>();
-    final bookingSlotViewModelWatch = context.watch<BookingSlotViewModel>();
+    final bookingViewModel = context.watch<BookingSlotViewModel>();
+    final venueViewModel = context.watch<VenueDetailsViewModel>();
+    venueViewModel.getDayIndex(DateFormat('EEEE')
+        .format(bookingViewModel.selectedDate ?? DateTime.now()));
+    // bookingViewModel.clearSelectedTime();
+
     final size = MediaQuery.of(context).size;
     return SizedBox(
       height: size.height * 0.075,
@@ -36,10 +40,9 @@ class DateContainerWidget extends StatelessWidget {
               onPressed: () {
                 showDatePicker(
                   context: context,
-                  initialDate: bookingSlotViewModelWatch.selectedDate ??
-                      DateTime.now(),
+                  initialDate: bookingViewModel.selectedDate ?? DateTime.now(),
                   firstDate: DateTime.now(),
-                  lastDate: DateTime.now().add(const Duration(days: 30)),
+                  lastDate: DateTime.now().add(const Duration(days: 15)),
                   builder: (context, child) {
                     return Theme(
                       data: ThemeData.light().copyWith(
@@ -56,7 +59,7 @@ class DateContainerWidget extends StatelessWidget {
                   },
                 ).then((selectedDate) {
                   if (selectedDate != null) {
-                    bookingSlotViewModel.setDate(selectedDate);
+                    bookingViewModel.setDate(selectedDate);
                   }
                 });
               },
@@ -69,32 +72,40 @@ class DateContainerWidget extends StatelessWidget {
   }
 
   Widget _dateContainer(index, BuildContext context, Size size) {
-    final bookingSlotViewModel = context.read<BookingSlotViewModel>();
-    final bookingSlotViewModelWatch = context.watch<BookingSlotViewModel>();
-    final dates = bookingSlotViewModelWatch.dates;
+    final bookingSlotViewModel = context.watch<BookingSlotViewModel>();
+    final dates = bookingSlotViewModel.dates;
+    final lastLimitDate = DateTime.now().add(const Duration(days: 15));
+    bool isDateEnabled = true;
+    if (dates[index].isAfter(lastLimitDate)) {
+      isDateEnabled = false;
+    }
     final dateStyle = TextStyle(
-        color: bookingSlotViewModelWatch.selectedDate == dates[index]
-            ? AppColors.white
-            : Colors.black,
-        fontWeight: FontWeight.w500,
-        fontSize: 14);
+      color: !isDateEnabled
+          ? AppColors.grey
+          : bookingSlotViewModel.selectedDate == dates[index]
+              ? AppColors.white
+              : Colors.black,
+      fontWeight: FontWeight.w500,
+      fontSize: 14,
+    );
     return GestureDetector(
-      onTap: () {
-        bookingSlotViewModel.setSelectedDate(dates[index]);
-      },
+      onTap: isDateEnabled
+          ? () {
+              bookingSlotViewModel.setSelectedDate(dates[index]);
+            }
+          : null,
       child: Container(
         width: size.width * 0.15,
         decoration: BoxDecoration(
           border: Border.all(
-            color: bookingSlotViewModelWatch.selectedDate == dates[index]
-                ? AppColors.appColor
-                : AppColors.black,
-            width: bookingSlotViewModelWatch.selectedDate == dates[index]
-                ? 2
-                : 1,
+            color: !isDateEnabled
+                ? AppColors.lightGrey
+                : bookingSlotViewModel.selectedDate == dates[index]
+                    ? AppColors.appColor
+                    : AppColors.black,
           ),
           borderRadius: BorderRadius.circular(6),
-          color: bookingSlotViewModelWatch.selectedDate == dates[index]
+          color: bookingSlotViewModel.selectedDate == dates[index]
               ? AppColors.appColor
               : Colors.white,
         ),

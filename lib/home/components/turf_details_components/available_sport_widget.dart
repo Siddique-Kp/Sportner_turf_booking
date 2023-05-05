@@ -55,32 +55,36 @@ class AvailableSportsWidget extends StatelessWidget {
     bool isSelected = index == bookingSlotViewModel.selectedSport;
     final icons = Sports.spots(sport: venueData.sportFacility![index].sport!);
     return InkWell(
-      onTap: () {
-        bookingSlotViewModel.setSelectedSport(index);
+      onTap: () { 
+        bookingSlotViewModel.setSelectedSport(index,venueData.sportFacility![index].facility!);
       },
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6),
-          color: isSelected ? AppColors.appColor : AppColors.lightGrey,
-        ),
-        width: 70.0,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icons,
-              color: isSelected ? AppColors.white : AppColors.black,
-            ),
-            AppSizes.kHeight10,
-            Text(
-              venueData.sportFacility![index].sport!.capitalize.toString(),
-              style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 11,
+      child: Material(
+        elevation: 1,
+        borderRadius: BorderRadius.circular(6),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            color: isSelected ? AppColors.appColor : AppColors.lightGrey,
+          ),
+          width: 70.0,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icons,
                 color: isSelected ? AppColors.white : AppColors.black,
               ),
-            )
-          ],
+              AppSizes.kHeight10,
+              Text(
+                venueData.sportFacility![index].sport!.capitalize.toString(),
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 11,
+                  color: isSelected ? AppColors.white : AppColors.black,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

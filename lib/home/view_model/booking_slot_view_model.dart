@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:sporter_turf_booking/home/view_model/venue_details_view_model.dart';
 
 class BookingSlotViewModel with ChangeNotifier {
   BookingSlotViewModel() {
@@ -9,24 +11,27 @@ class BookingSlotViewModel with ChangeNotifier {
     _selectedDate = now;
   }
 
-  int _selectedSport =  -1;
+  final venueViewMode = VenueDetailsViewModel();
+
+  int _selectedSport = -1;
   DateTime? _selectedDate;
   final List<DateTime> _dates = [];
   String _selectedRadioButton = "";
-  String _selectedTimeFrom = "HH:MM";
-  String _selectedTimeTo = "HH:MM";
+  String _facility = "";
+  String _selectedTime = "HH:MM";
 
   int get selectedSport => _selectedSport;
   DateTime? get selectedDate => _selectedDate;
   List<DateTime> get dates => _dates;
   String get selectedRadioButton => _selectedRadioButton;
-  String get selectedTimeFrom => _selectedTimeFrom;
-  String get selectedTimeTo => _selectedTimeTo;
+  String get facility => _facility;
+  String get selectedTime => _selectedTime;
 
   // Selected sport controller ---------
 
-  setSelectedSport(int index) {
+  setSelectedSport(int index, String facility) {
     _selectedSport = index;
+    _facility = facility;
     notifyListeners();
   }
 
@@ -41,6 +46,7 @@ class BookingSlotViewModel with ChangeNotifier {
 
   setSelectedDate(DateTime? selectedDate) {
     _selectedDate = selectedDate;
+    clearSelectedTime();
     notifyListeners();
   }
 
@@ -55,13 +61,24 @@ class BookingSlotViewModel with ChangeNotifier {
 
   // Time slot controller ----------------
 
-  setSelectedTimeFrom(String selectedTime) {
-    _selectedTimeFrom = selectedTime;
+  setSelectedTime(String selectedTime) {
+    _selectedTime = selectedTime;
     notifyListeners();
   }
 
-  setSelectedTimeTo(String selectedTime) {
-    _selectedTimeTo = selectedTime;
-    notifyListeners();
+  clearSelectedTime() {
+    _selectedTime = "HH:MM";
+  }
+
+  // Convert to 12 hours
+  String convertTo12HourFormat(String time24) {
+    if (time24 == "HH:MM") {
+      return time24;
+    }
+    DateTime time = DateFormat('HH:mm').parse(time24);
+
+    String time12 = DateFormat('h:mm a').format(time);
+
+    return time12;
   }
 }
