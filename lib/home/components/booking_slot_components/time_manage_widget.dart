@@ -150,7 +150,6 @@ class TimeManageWidget extends StatelessWidget {
                           );
                     }
 
-                    
                     final now = DateTime.now();
                     final parsedTimeOnly =
                         DateFormat('HH:mm').parse(timeSlotText);
@@ -196,8 +195,7 @@ class TimeManageWidget extends StatelessWidget {
                               bookingViewModel
                                   .convertTo12HourFormat(timeSlotText),
                               style: TextStyle(
-                                color:
-                                 !isFromSlot &&
+                                color: !isFromSlot &&
                                         fromTimeSlotIndex == slotIndex
                                     ? AppColors.black
                                     : isFromSlot

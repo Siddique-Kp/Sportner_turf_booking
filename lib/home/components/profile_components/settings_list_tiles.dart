@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view_model/bottom_nav_view_model.dart';
+import 'package:sporter_turf_booking/utils/routes/navigations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../user_registration/view_model/firebase_auth_view_model.dart';
 import '../../model/user_profile_data_modle.dart';
@@ -21,7 +23,9 @@ class SettingsListTile extends StatelessWidget {
           title: "My Bookings",
           subtitle: "View all your bookings",
           icon: Icons.calendar_month,
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, NavigatorClass.myBookingsView);
+          },
         ),
         ProfileSettings(
           title: "My Wallet",
@@ -62,5 +66,12 @@ class SettingsListTile extends StatelessWidget {
         // ),
       ],
     );
+  }
+
+  void openWhatsappChat(String phoneNumber) async {
+    String whatsappUrl = "whatsapp://send?phone=$phoneNumber";
+    await canLaunchUrl(Uri.parse(whatsappUrl))
+        ? launchUrl(Uri.parse(whatsappUrl))
+        : print("Cannot open WhatsApp chat with $phoneNumber");
   }
 }

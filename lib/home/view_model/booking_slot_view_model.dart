@@ -32,6 +32,7 @@ class BookingSlotViewModel with ChangeNotifier {
   setSelectedSport(int index, String facility) {
     _selectedSport = index;
     _facility = facility;
+    clearRadioValue();
     notifyListeners();
   }
 
@@ -40,6 +41,10 @@ class BookingSlotViewModel with ChangeNotifier {
   setRadioButton(String selectedButton) {
     _selectedRadioButton = selectedButton;
     notifyListeners();
+  }
+
+  clearRadioValue() {
+    _selectedRadioButton = "";
   }
 
   // Date format controller ---------------
@@ -68,6 +73,20 @@ class BookingSlotViewModel with ChangeNotifier {
 
   clearSelectedTime() {
     _selectedTime = "HH:MM";
+  }
+
+  // CHECK SELECTED ALL FACILITY NEEDED
+
+  checkBookingSelection() {
+    if (_selectedDate == null ||
+        _facility == "" ||
+        _selectedRadioButton == "" ||
+        _selectedSport == -1 ||
+        _selectedTime == "HH:MM") {
+      return false;
+    }
+
+    return true;
   }
 
   // Convert to 12 hours
