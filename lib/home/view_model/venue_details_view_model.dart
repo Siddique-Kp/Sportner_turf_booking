@@ -45,12 +45,13 @@ class VenueDetailsViewModel with ChangeNotifier {
     _isLoading = loading;
   }
 
-  getDayIndex(String dayName) {
+  void getDayIndex(String dayName) {
     log(dayName);
     if (_venueData.slots!
         .any((venue) => venue.day!.toLowerCase() == dayName.toLowerCase())) {
       _dayIndex = _venueData.slots!.indexWhere(
           (venue) => venue.day!.toLowerCase() == dayName.toLowerCase());
+      notifyListeners();
     }
   }
 }

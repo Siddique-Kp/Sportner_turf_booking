@@ -43,8 +43,10 @@ class ForgetPassViewModel with ChangeNotifier {
   setNewPassword(context) async {
     setLoading(true);
 
-    final response =
-        await ApiServices.postMethod(Urls.kFORGOTPASS, newPassBody(), null);
+    final response = await ApiServices.postMethod(
+      url: Urls.kFORGOTPASS,
+      body: newPassBody(),
+    );
 
     if (response is Success) {
       setLoading(false);

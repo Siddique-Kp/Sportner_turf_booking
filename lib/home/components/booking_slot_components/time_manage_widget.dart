@@ -130,8 +130,14 @@ class TimeManageWidget extends StatelessWidget {
                       slotIndex: slotIndex,
                       context: context,
                     );
+
+                    final isBookedSlot = bookingViewModel.slotAvailability.any(
+                        (element) =>
+                            element.slotTime ==
+                            venueDataSlot[venueViewModel.dayIndex]
+                                .slots![slotIndex]);
                     return InkWell(
-                      onTap: canSelectTimeslot
+                      onTap: canSelectTimeslot && !isBookedSlot
                           ? () {
                               bookingViewModel.setSelectedTime(
                                 venueDataSlot[venueViewModel.dayIndex]
@@ -141,21 +147,25 @@ class TimeManageWidget extends StatelessWidget {
                             }
                           : null,
                       child: Material(
-                        elevation: 1,
+                        elevation:isBookedSlot?0: 1,
                         borderRadius: BorderRadius.circular(7),
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(7),
-                            color: AppColors.lightGrey,
+                            color: isBookedSlot
+                                ? AppColors.red
+                                : AppColors.lightGrey,
                           ),
                           child: Center(
                             child: Text(
                               bookingViewModel.convertTo12HourFormat(
                                   bookingViewModel.timeSlotText),
                               style: TextStyle(
-                                color: canSelectTimeslot
-                                    ? AppColors.black
-                                    : AppColors.lightGrey,
+                                color: isBookedSlot
+                                    ? AppColors.grey
+                                    : canSelectTimeslot
+                                        ? AppColors.black
+                                        : AppColors.lightGrey,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 12,
                               ),

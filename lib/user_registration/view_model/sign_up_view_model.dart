@@ -69,9 +69,9 @@ class SignUpViewModel with ChangeNotifier {
     final navigator = Navigator.of(context);
     setLoading(true);
     final response = await ApiServices.postMethod(
-      Urls.kBASEURL + Urls.kUSERSIGNUP,
-      userDatabody(),
-      userSignupModelFromJson,
+      url: Urls.kBASEURL + Urls.kUSERSIGNUP,
+      body: userDatabody(),
+      jsonDecode: userSignupModelFromJson,
     );
     if (response is Success) {
       log("success");
@@ -88,7 +88,7 @@ class SignUpViewModel with ChangeNotifier {
         code: response.code,
         message: response.errorResponse,
       );
-      setLoginError(signUpError,context);
+      setLoginError(signUpError, context);
       clearPassword();
     }
     setLoading(false);
@@ -117,7 +117,8 @@ class SignUpViewModel with ChangeNotifier {
   errorResonses(ErrorResponseModel signUperror, BuildContext context) {
     final statusCode = signUperror.code;
     if (statusCode == 409) {
-      return SnackBarWidget.snackBar(context, "User with this mobile number already exists");
+      return SnackBarWidget.snackBar(
+          context, "User with this mobile number already exists");
     }
     return SnackBarWidget.snackBar(context, signUperror.message.toString());
   }

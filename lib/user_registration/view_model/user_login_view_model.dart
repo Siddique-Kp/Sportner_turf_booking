@@ -48,9 +48,9 @@ class UserLoginViewModel with ChangeNotifier {
     final navigator = Navigator.of(context);
     setLoading(true);
     final response = await ApiServices.postMethod(
-      Urls.kUSERSIGNIN,
-        userDataBody(),
-        userLoginModelFromJson);
+        url: Urls.kUSERSIGNIN,
+        body: userDataBody(),
+        jsonDecode: userLoginModelFromJson);
 
     if (response is Success) {
       final data = await setUserData(response.response as UserLoginModel);

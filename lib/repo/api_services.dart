@@ -5,11 +5,11 @@ import 'api_status.dart';
 import 'service_exeptions.dart';
 
 class ApiServices {
-  static Future<Object> postMethod(
-    String url,
-    Map body,
+  static Future<Object> postMethod({
+    required String url,
+    required Map body,
     Function? jsonDecode,
-  ) async {
+  }) async {
     try {
       log("send reqiust");
       final response = await http.post(Uri.parse(url), body: body);

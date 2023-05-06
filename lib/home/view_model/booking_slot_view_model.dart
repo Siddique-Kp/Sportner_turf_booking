@@ -1,8 +1,12 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_details_view_model.dart';
-
+import '../../repo/api_services.dart';
+import '../../repo/api_status.dart';
+import '../../utils/constants.dart';
+import '../model/slot_availability_model.dart';
 import '../model/venue_data_model.dart';
 
 class BookingSlotViewModel with ChangeNotifier {
@@ -14,8 +18,7 @@ class BookingSlotViewModel with ChangeNotifier {
     _selectedDate = now;
   }
 
-  final venueViewMode = VenueDetailsViewModel();
-
+  List<SlotAvailabilityModel> _slotAvailability = [];
   int _selectedSport = -1;
   DateTime? _selectedDate;
   final List<DateTime> _dates = [];
@@ -26,12 +29,46 @@ class BookingSlotViewModel with ChangeNotifier {
   int fromTimeSlotIndex = -1;
   String timeSlotText = "";
 
+  List<SlotAvailabilityModel> get slotAvailability => _slotAvailability;
   int get selectedSport => _selectedSport;
   DateTime? get selectedDate => _selectedDate;
   List<DateTime> get dates => _dates;
   String get selectedRadioButton => _selectedRadioButton;
   String get facility => _facility;
   String get selectedTime => _selectedTime;
+
+  getSlotAvailability({
+    required String venueId,
+  }) async {
+    final date = DateFormat('d,MMM,y').format(
+      DateTime.parse('$_selectedDate'),
+    );
+    log(date);
+    final response = await ApiServices.postMethod(
+      url: Urls.kGETSLOTAVAILABILITY,
+      body: {
+        "turfId": venueId,
+        "slotDate": date,
+      },
+      jsonDecode: slotAvailabilityModelFromJson,
+    );
+    if (response is Success) {
+      if (response.response != null) {
+        await setSlotAvailability(
+            response.response as List<SlotAvailabilityModel>);
+      }
+      log("Success");
+      log(response.response.toString());
+    }
+    if (response is Failure) {
+      log("Error");
+    }
+  }
+
+  setSlotAvailability(List<SlotAvailabilityModel> slotAvailability) async {
+    _slotAvailability = slotAvailability;
+    notifyListeners();
+  }
 
   // Selected sport controller ---------
 
@@ -55,18 +92,21 @@ class BookingSlotViewModel with ChangeNotifier {
 
   // Date format controller ---------------
 
-  setSelectedDate(DateTime? selectedDate) {
+  setSelectedDate(DateTime? selectedDate, String venueId) {
     _selectedDate = selectedDate;
+    getSlotAvailability(venueId: venueId);
     clearSelectedTime();
     notifyListeners();
   }
 
-  setDate(DateTime selectedDate) {
+  setDate(DateTime selectedDate, venueId) {
     _selectedDate = selectedDate;
     _dates.clear();
     for (int i = 0; i < 5; i++) {
       _dates.add(selectedDate.add(Duration(days: i)));
     }
+    getSlotAvailability(venueId: venueId);
+    clearSelectedTime();
     notifyListeners();
   }
 
@@ -113,7 +153,7 @@ class BookingSlotViewModel with ChangeNotifier {
       required BuildContext context}) {
     final venueViewModel = context.watch<VenueDetailsViewModel>();
     venueDataSlot = venueViewModel.venueData.slots!;
-     timeSlotText = isFromSlot == true
+    timeSlotText = isFromSlot == true
         ? venueDataSlot[venueViewModel.dayIndex]
             .slots![slotIndex]
             .split("-")

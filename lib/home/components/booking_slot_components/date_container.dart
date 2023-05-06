@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -14,10 +16,16 @@ class DateContainerWidget extends StatelessWidget {
   // @override
   @override
   Widget build(BuildContext context) {
-    final bookingViewModel = context.watch<BookingSlotViewModel>();
-    final venueViewModel = context.watch<VenueDetailsViewModel>();
-    venueViewModel.getDayIndex(DateFormat('EEEE')
-        .format(bookingViewModel.selectedDate ?? DateTime.now()));
+    final bookingViewModel = context.read<BookingSlotViewModel>();
+    final venueViewModel = context.read<VenueDetailsViewModel>();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      venueViewModel.getDayIndex(
+        DateFormat('EEEE').format(bookingViewModel.selectedDate!),
+      );
+    });
+
+    bookingViewModel.getSlotAvailability(
+        venueId: venueViewModel.venueData.sId!);
 
     final size = MediaQuery.of(context).size;
     return SizedBox(
@@ -58,7 +66,12 @@ class DateContainerWidget extends StatelessWidget {
                   },
                 ).then((selectedDate) {
                   if (selectedDate != null) {
-                    bookingViewModel.setDate(selectedDate);
+                    bookingViewModel.setDate(
+                      selectedDate,
+                      venueViewModel.venueData.sId,
+                    );
+                    venueViewModel.getDayIndex(DateFormat('EEEE')
+                        .format(bookingViewModel.selectedDate!));
                   }
                 });
               },
@@ -71,8 +84,9 @@ class DateContainerWidget extends StatelessWidget {
   }
 
   Widget _dateContainer(index, BuildContext context, Size size) {
-    final bookingSlotViewModel = context.watch<BookingSlotViewModel>();
-    final dates = bookingSlotViewModel.dates;
+    final bookingViewModel = context.watch<BookingSlotViewModel>();
+    final venueViewModel = context.watch<VenueDetailsViewModel>();
+    final dates = bookingViewModel.dates;
     final lastLimitDate = DateTime.now().add(const Duration(days: 15));
     bool isDateEnabled = true;
     if (dates[index].isAfter(lastLimitDate)) {
@@ -81,7 +95,7 @@ class DateContainerWidget extends StatelessWidget {
     final dateStyle = TextStyle(
       color: !isDateEnabled
           ? AppColors.grey
-          : bookingSlotViewModel.selectedDate == dates[index]
+          : bookingViewModel.selectedDate == dates[index]
               ? AppColors.white
               : Colors.black,
       fontWeight: FontWeight.w500,
@@ -90,7 +104,12 @@ class DateContainerWidget extends StatelessWidget {
     return GestureDetector(
       onTap: isDateEnabled
           ? () {
-              bookingSlotViewModel.setSelectedDate(dates[index]);
+              bookingViewModel.setSelectedDate(
+                dates[index],
+                venueViewModel.venueData.sId.toString(),
+              );
+              venueViewModel.getDayIndex(
+                  DateFormat('EEEE').format(bookingViewModel.selectedDate!));
             }
           : null,
       child: Container(
@@ -99,12 +118,12 @@ class DateContainerWidget extends StatelessWidget {
           border: Border.all(
             color: !isDateEnabled
                 ? AppColors.lightGrey
-                : bookingSlotViewModel.selectedDate == dates[index]
+                : bookingViewModel.selectedDate == dates[index]
                     ? AppColors.appColor
                     : AppColors.black,
           ),
           borderRadius: BorderRadius.circular(6),
-          color: bookingSlotViewModel.selectedDate == dates[index]
+          color: bookingViewModel.selectedDate == dates[index]
               ? AppColors.appColor
               : Colors.white,
         ),
