@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_details_view_model.dart';
+
+import '../model/venue_data_model.dart';
 
 class BookingSlotViewModel with ChangeNotifier {
   BookingSlotViewModel() {
@@ -19,6 +22,9 @@ class BookingSlotViewModel with ChangeNotifier {
   String _selectedRadioButton = "";
   String _facility = "";
   String _selectedTime = "HH:MM";
+  List<Slots> venueDataSlot = [];
+  int fromTimeSlotIndex = -1;
+  String timeSlotText = "";
 
   int get selectedSport => _selectedSport;
   DateTime? get selectedDate => _selectedDate;
@@ -99,5 +105,50 @@ class BookingSlotViewModel with ChangeNotifier {
     String time12 = DateFormat('h:mm a').format(time);
 
     return time12;
+  }
+
+  bool canSelectTimeSlot(
+      {required bool isFromSlot,
+      required int slotIndex,
+      required BuildContext context}) {
+    final venueViewModel = context.watch<VenueDetailsViewModel>();
+    venueDataSlot = venueViewModel.venueData.slots!;
+     timeSlotText = isFromSlot == true
+        ? venueDataSlot[venueViewModel.dayIndex]
+            .slots![slotIndex]
+            .split("-")
+            .first
+        : venueDataSlot[venueViewModel.dayIndex]
+            .slots![slotIndex]
+            .split("-")
+            .last;
+    if (isFromSlot == false &&
+        _selectedTime.isNotEmpty &&
+        _selectedTime.contains(
+          _selectedTime.split("-").last,
+        )) {
+      fromTimeSlotIndex =
+          venueDataSlot[venueViewModel.dayIndex].slots!.indexWhere(
+                (element) =>
+                    element.split("-").last == _selectedTime.split("-").last,
+              );
+    }
+
+    final parsedTimeOnly = DateFormat('HH:mm').parse(timeSlotText);
+    final now = DateTime.now();
+    final parsedDateTime = DateTime(
+      _selectedDate?.year ?? now.year,
+      _selectedDate?.month ?? now.month,
+      _selectedDate?.day ?? now.day,
+      parsedTimeOnly.hour,
+      parsedTimeOnly.minute,
+    );
+
+    if (!isFromSlot && fromTimeSlotIndex == slotIndex ||
+        isFromSlot && parsedDateTime.isAfter(now)) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

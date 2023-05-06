@@ -104,15 +104,13 @@ class TimeManageWidget extends StatelessWidget {
       context: context,
       builder: (context) {
         List<Slots> venueDataSlot = venueViewModel.venueData.slots!;
-        int fromTimeSlotIndex = -1;
         return Container(
           margin: const EdgeInsets.all(20),
           child: venueDataSlot[venueViewModel.dayIndex].slots!.isEmpty
               ? Wrap(
                   children: [
                     Center(
-                      child: Text("No Slots", style: AppTextStyles.textH4),
-                    ),
+                        child: Text("No Slots", style: AppTextStyles.textH4)),
                   ],
                 )
               : GridView.builder(
@@ -126,42 +124,14 @@ class TimeManageWidget extends StatelessWidget {
                   itemCount:
                       venueDataSlot[venueViewModel.dayIndex].slots!.length,
                   itemBuilder: (BuildContext context, int slotIndex) {
-                    final timeSlotText = isFromSlot == true
-                        ? venueDataSlot[venueViewModel.dayIndex]
-                            .slots![slotIndex]
-                            .split("-")
-                            .first
-                        : venueDataSlot[venueViewModel.dayIndex]
-                            .slots![slotIndex]
-                            .split("-")
-                            .last;
-
-                    if (isFromSlot == false &&
-                        bookingViewModel.selectedTime.isNotEmpty &&
-                        bookingViewModel.selectedTime.contains(
-                          bookingViewModel.selectedTime.split("-").last,
-                        )) {
-                      fromTimeSlotIndex = venueDataSlot[venueViewModel.dayIndex]
-                          .slots!
-                          .indexWhere(
-                            (element) =>
-                                element.split("-").last ==
-                                bookingViewModel.selectedTime.split("-").last,
-                          );
-                    }
-
-                    final now = DateTime.now();
-                    final parsedTimeOnly =
-                        DateFormat('HH:mm').parse(timeSlotText);
-                    final parsedDateTime = DateTime(now.year, now.month,
-                        now.day, parsedTimeOnly.hour, parsedTimeOnly.minute);
-
-                    log(parsedDateTime.toString());
-                    log(now.isBefore(parsedDateTime).toString());
-                    log(now.toString());
-
+                    final canSelectTimeslot =
+                        bookingViewModel.canSelectTimeSlot(
+                      isFromSlot: isFromSlot,
+                      slotIndex: slotIndex,
+                      context: context,
+                    );
                     return InkWell(
-                      onTap: !isFromSlot && fromTimeSlotIndex == slotIndex
+                      onTap: canSelectTimeslot
                           ? () {
                               bookingViewModel.setSelectedTime(
                                 venueDataSlot[venueViewModel.dayIndex]
@@ -169,38 +139,23 @@ class TimeManageWidget extends StatelessWidget {
                               );
                               Navigator.pop(context);
                             }
-                          : isFromSlot
-                              ? () {
-                                  bookingViewModel.setSelectedTime(
-                                    venueDataSlot[venueViewModel.dayIndex]
-                                        .slots![slotIndex],
-                                  );
-                                  Navigator.pop(context);
-                                }
-                              : null,
+                          : null,
                       child: Material(
                         elevation: 1,
                         borderRadius: BorderRadius.circular(7),
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(7),
-                            color: !isFromSlot && fromTimeSlotIndex == slotIndex
-                                ? AppColors.lightGrey
-                                : isFromSlot
-                                    ? AppColors.lightGrey
-                                    : AppColors.lightGrey,
+                            color: AppColors.lightGrey,
                           ),
                           child: Center(
                             child: Text(
-                              bookingViewModel
-                                  .convertTo12HourFormat(timeSlotText),
+                              bookingViewModel.convertTo12HourFormat(
+                                  bookingViewModel.timeSlotText),
                               style: TextStyle(
-                                color: !isFromSlot &&
-                                        fromTimeSlotIndex == slotIndex
+                                color: canSelectTimeslot
                                     ? AppColors.black
-                                    : isFromSlot
-                                        ? AppColors.black
-                                        : AppColors.lightGrey,
+                                    : AppColors.lightGrey,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 12,
                               ),

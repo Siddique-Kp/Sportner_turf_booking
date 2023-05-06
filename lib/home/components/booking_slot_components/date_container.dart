@@ -18,7 +18,6 @@ class DateContainerWidget extends StatelessWidget {
     final venueViewModel = context.watch<VenueDetailsViewModel>();
     venueViewModel.getDayIndex(DateFormat('EEEE')
         .format(bookingViewModel.selectedDate ?? DateTime.now()));
-    // bookingViewModel.clearSelectedTime();
 
     final size = MediaQuery.of(context).size;
     return SizedBox(

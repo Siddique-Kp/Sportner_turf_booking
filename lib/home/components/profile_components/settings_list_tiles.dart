@@ -1,9 +1,10 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view_model/bottom_nav_view_model.dart';
 import 'package:sporter_turf_booking/utils/routes/navigations.dart';
+import 'package:sporter_turf_booking/utils/secrets.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../../user_registration/view_model/firebase_auth_view_model.dart';
 import '../../model/user_profile_data_modle.dart';
 import 'profile_settings_list_tile.dart';
@@ -37,7 +38,9 @@ class SettingsListTile extends StatelessWidget {
           title: "Help & Support",
           subtitle: "Contact us on whatsapp",
           icon: Icons.help,
-          onTap: () {},
+          onTap: () {
+            openWhatsappChat(myMobile);
+          },
         ),
         ProfileSettings(
           title: "Invite a friend",
@@ -69,9 +72,13 @@ class SettingsListTile extends StatelessWidget {
   }
 
   void openWhatsappChat(String phoneNumber) async {
-    String whatsappUrl = "whatsapp://send?phone=$phoneNumber";
-    await canLaunchUrl(Uri.parse(whatsappUrl))
-        ? launchUrl(Uri.parse(whatsappUrl))
-        : print("Cannot open WhatsApp chat with $phoneNumber");
+    String whatsappUrl = 'https://wa.me/$phoneNumber';
+    try {
+      if (await canLaunchUrl(Uri.parse(whatsappUrl))) {
+        await launchUrl(Uri.parse(whatsappUrl),mode: LaunchMode.externalApplication);
+      }
+    } catch (e) {
+      log(e.toString());
+    }
   }
 }

@@ -1,12 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sporter_turf_booking/home/model/venue_data_model.dart';
-import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
-import 'package:sporter_turf_booking/utils/textstyles.dart';
-
 import '../components/payment_page_component/booking_details_container.dart';
 import '../components/payment_page_component/booking_policy.dart';
 import '../components/payment_page_component/payment_details_container.dart';
