@@ -23,7 +23,7 @@ class BookingSlotView extends StatelessWidget {
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
-            context.read<BookingSlotViewModel>().setSelectedSport(-1, "");
+            context.read<BookingSlotViewModel>().setSelectedSport(-1, "","");
           },
           icon: const Icon(Icons.arrow_back),
         ),

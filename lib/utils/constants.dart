@@ -9,6 +9,7 @@ class Urls {
   static const String kGETSINGLEVENUE = "$kBASEURL/venue/";
   static const String kGETUSERPROFILE = "$kBASEURL/profile";
   static const String kGETSLOTAVAILABILITY= "$kBASEURL/bookedSlot";
+  static const String kGETORDERID= "$kBASEURL/book";
 }
 
 class InvalidRespons {

@@ -25,7 +25,7 @@ class PaymentDetailsContainer extends StatelessWidget {
           children: [
             Text("Court Price :", style: AppTextStyles.textH4),
             AppSizes.kHeight5,
-            Text("Offer Discount :", style: AppTextStyles.textH4),
+            Text("Offer Discount :", style: AppTextStyles.textH4Green),
             AppSizes.kHeight5,
             Text("Payable Amount :", style: AppTextStyles.textH4),
             AppSizes.kHeight5,
@@ -40,7 +40,7 @@ class PaymentDetailsContainer extends StatelessWidget {
             children: [
               Text("₹ ${venueData.actualPrice}", style: AppTextStyles.textH4),
               AppSizes.kHeight5,
-              Text("₹ $discountPrice", style: AppTextStyles.textH4),
+              Text("₹ $discountPrice", style: AppTextStyles.textH4Green),
               AppSizes.kHeight5,
               Text("₹ $payableAmount", style: AppTextStyles.textH4),
               AppSizes.kHeight20,

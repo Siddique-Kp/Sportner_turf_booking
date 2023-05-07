@@ -17,6 +17,7 @@ class VenueScreenView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.white,
+        automaticallyImplyLeading: false,
         title: const AppBarLocation(),
         actions: [
           IconButton(

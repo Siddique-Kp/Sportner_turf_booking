@@ -55,8 +55,12 @@ class AvailableSportsWidget extends StatelessWidget {
     bool isSelected = index == bookingSlotViewModel.selectedSport;
     final icons = Sports.spots(sport: venueData.sportFacility![index].sport!);
     return InkWell(
-      onTap: () { 
-        bookingSlotViewModel.setSelectedSport(index,venueData.sportFacility![index].facility!);
+      onTap: () {
+        bookingSlotViewModel.setSelectedSport(
+          index,
+          venueData.sportFacility![index].facility!,
+          venueData.sportFacility![index].sport!,
+        );
       },
       child: Material(
         elevation: 1,

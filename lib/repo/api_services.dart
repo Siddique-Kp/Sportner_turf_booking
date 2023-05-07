@@ -9,10 +9,11 @@ class ApiServices {
     required String url,
     required Map body,
     Function? jsonDecode,
+    Map<String, String>? headers,
   }) async {
     try {
       log("send reqiust");
-      final response = await http.post(Uri.parse(url), body: body);
+      final response = await http.post(Uri.parse(url), body: body,headers: headers);
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         log("Success");

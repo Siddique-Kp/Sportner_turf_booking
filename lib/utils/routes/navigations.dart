@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sporter_turf_booking/home/view/payment_page_view.dart';
 import 'package:sporter_turf_booking/home/view/booking_slot_view.dart';
+import 'package:sporter_turf_booking/home/view/payment_success_view.dart';
 import 'package:sporter_turf_booking/home/view/turf_details_view.dart';
 import 'package:sporter_turf_booking/user_registration/view/change_pass_view.dart';
-
 import '../../home/view/bottom_navbar.dart';
 import '../../home/view/home_view.dart';
 import '../../home/view/my_bookings_view.dart';
@@ -26,6 +26,7 @@ class NavigatorClass {
   static const paymentScreen = "/paymentScreen";
   static const venueDetailsScreen = "/VenueDetailsScreen";
   static const myBookingsView = "/MyBookingView";
+  static const paymentSuccessView = "/PaymentSuccessView";
 
   static Map<String, Widget Function(BuildContext)> routes() {
     Map<String, Widget Function(BuildContext)> routes = {
@@ -41,6 +42,7 @@ class NavigatorClass {
       "/paymentScreen": (context) =>  const PaymentPageView(),
       "/VenueDetailsScreen": (context) =>  const VenueDetailsView(),
       "/MyBookingView": (context) =>  const MyBookingsView(),
+      "/PaymentSuccessView": (context) =>  const PaymentSuccessView(),
     };
 
     return routes;

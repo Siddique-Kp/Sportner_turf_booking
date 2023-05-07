@@ -15,6 +15,7 @@ class HomeScreenView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.white,
+        automaticallyImplyLeading: false,
         title: const AppBarLocation(),
       ),
       body: SingleChildScrollView(

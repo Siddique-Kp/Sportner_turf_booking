@@ -5,7 +5,11 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/providers/provider_classes.dart';
+import 'package:sporter_turf_booking/utils/routes/get_it_locator.dart';
+import 'package:sporter_turf_booking/utils/routes/navigation_services.dart';
 import 'package:sporter_turf_booking/utils/routes/navigations.dart';
+
+import 'utils/routes/route_genarator.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +18,7 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]).then((value) => runApp(const MyApp()));
+  setUpLocator();
   runApp(const MyApp());
 }
 
@@ -52,7 +57,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
         routes: NavigatorClass.routes(),
+        onGenerateRoute: RoutGenerator.generateRout,
         initialRoute: NavigatorClass.splashScreen,
+        navigatorKey: locator<NavigationServices>().navigatorKey,
       ),
     );
   }

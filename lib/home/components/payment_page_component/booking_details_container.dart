@@ -1,5 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/home/components/sports_icon.dart';
+import 'package:sporter_turf_booking/home/view_model/booking_slot_view_model.dart';
 
 import '../../../utils/global_colors.dart';
 import '../../../utils/global_values.dart';
@@ -12,6 +17,17 @@ class BookingDetailsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final venueData = context.watch<VenueDetailsViewModel>().venueData;
+    final bookingData = context.watch<BookingSlotViewModel>();
+
+    log(bookingData.selectedTime.toString());
+
+    final bookedDate =
+        DateFormat('E, d\'th\' MMMM').format(bookingData.selectedDate!);
+
+    final bookedTime1 = bookingData
+        .convertTo12HourFormat(bookingData.selectedTime.split("-").first);
+    final bookedTime2 = bookingData
+        .convertTo12HourFormat(bookingData.selectedTime.split("-").last);
 
     return Container(
       width: double.infinity,
@@ -25,11 +41,13 @@ class BookingDetailsContainer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(venueData.venueName!, style: AppTextStyles.textH1),
-            _turfDetails(icon: Icons.location_on, text: venueData.place!),
             _turfDetails(
-                icon: Icons.calendar_today_outlined, text: "Sun, 30th March"),
+                icon: Sports.spots(sport: bookingData.selectedSportName),
+                text: bookingData.selectedSportName),
+            _turfDetails(icon: Icons.calendar_today_outlined, text: bookedDate),
             _turfDetails(
-                icon: Icons.access_time_rounded, text: "05:00 PM - 06:00 PM"),
+                icon: Icons.access_time_rounded,
+                text: "$bookedTime1 - $bookedTime2"),
             _turfDetails(
                 icon: Icons.payments_outlined,
                 text: "₹${venueData.actualPrice}"),

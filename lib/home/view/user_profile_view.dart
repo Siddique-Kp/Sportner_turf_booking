@@ -16,6 +16,7 @@ class UserProfileView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.white,
+        automaticallyImplyLeading: false,
         title: Text("Profile", style: AppTextStyles.appbarTitle),
       ),
       body: userDataViewModel.errorResponse?.code == 101
