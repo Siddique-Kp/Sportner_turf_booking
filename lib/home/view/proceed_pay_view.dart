@@ -7,8 +7,8 @@ import '../components/payment_page_component/booking_policy.dart';
 import '../components/payment_page_component/payment_details_container.dart';
 import '../view_model/venue_details_view_model.dart';
 
-class PaymentPageView extends StatelessWidget {
-  const PaymentPageView({super.key});
+class ProceedPayView extends StatelessWidget {
+  const ProceedPayView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class PaymentPageView extends StatelessWidget {
         margin: const EdgeInsets.all(20),
         child: ElevatedButton(
           onPressed: () {
-            bookingViewModel.getOrderId(venueId: venueData.sId!);
+            bookingViewModel.getOrderModel(venueId: venueData.sId!);
           },
           child: const Text("Proceed to pay"),
         ),

@@ -20,8 +20,8 @@ class DateContainerWidget extends StatelessWidget {
     final venueViewModel = context.read<VenueDetailsViewModel>();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       venueViewModel.getDayIndex(
-        DateFormat('EEEE').format(bookingViewModel.selectedDate!),
-      );
+          DateFormat('EEEE').format(bookingViewModel.selectedDate!)
+          );
     });
 
     bookingViewModel.getSlotAvailability(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sporter_turf_booking/home/view/payment_page_view.dart';
+import 'package:sporter_turf_booking/home/view/proceed_pay_view.dart';
 import 'package:sporter_turf_booking/home/view/booking_slot_view.dart';
 import 'package:sporter_turf_booking/home/view/payment_success_view.dart';
 import 'package:sporter_turf_booking/home/view/turf_details_view.dart';
@@ -39,7 +39,7 @@ class NavigatorClass {
       "/changeforgetPass": (context) =>  ChangePassView(),
       "/bottomBarView": (context) =>  BottomBarView(),
       "/bookingSlotScreen": (context) =>  const BookingSlotView(),
-      "/paymentScreen": (context) =>  const PaymentPageView(),
+      "/paymentScreen": (context) =>  const ProceedPayView(),
       "/VenueDetailsScreen": (context) =>  const VenueDetailsView(),
       "/MyBookingView": (context) =>  const MyBookingsView(),
       "/PaymentSuccessView": (context) =>  const PaymentSuccessView(),

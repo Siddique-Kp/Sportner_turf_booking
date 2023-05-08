@@ -13,7 +13,7 @@ class ProceedPaymentModel {
     String? facility;
     String? slotDate;
     String? slotTime;
-    int? price;
+    String? price;
 
     ProceedPaymentModel({
         this.razorpayPaymentId,

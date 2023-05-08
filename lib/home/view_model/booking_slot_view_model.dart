@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sporter_turf_booking/home/model/payment_model.dart';
+import 'package:sporter_turf_booking/home/model/proceed_payment_model.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_details_view_model.dart';
 import 'package:sporter_turf_booking/utils/routes/get_it_locator.dart';
 import 'package:sporter_turf_booking/utils/routes/navigation_services.dart';
@@ -54,21 +56,25 @@ class BookingSlotViewModel with ChangeNotifier {
   String? paymentId;
   String? orderId;
   String? signature;
+  VenueDataModel? _venuData;
+
+  getVenueData(VenueDataModel venueData) {
+    _venuData = venueData;
+    notifyListeners();
+  }
 
   openPayment({required RazorPayModel razorPayModel}) {
-    log("payment opened");
     log(razorPayModel.order!.toJson().toString());
-    var options = {
+    final options = {
       'key': 'rzp_test_byX4xjQdkJOyzX',
-      'amount':
-          razorPayModel.order!.amount, //in the smallest currency sub-unit.
+      'amount': razorPayModel.order!.amount,
       'name': 'Sportner App',
-      'order_id': razorPayModel.order!.id, // Generate order_id using Orders API
-      'description': 'Fine T-Shirt',
-      'timeout': 60, // in seconds
+      'order_id': razorPayModel.order!.id,
+      'description': 'Turf booking',
+      'timeout': 60,
       'prefill': {
         'contact': '9123456789',
-        'email': 'gaurav.kumar@example.com',
+        'email': 'sportner@turf.com',
       }
     };
     try {
@@ -89,7 +95,7 @@ class BookingSlotViewModel with ChangeNotifier {
     paymentId = response.paymentId;
     orderId = response.orderId;
     signature = response.signature;
-    _navigationServices.pushAndRemoveUntilTo(NavigatorClass.paymentSuccessView);
+    getProceedPayment();
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -100,19 +106,74 @@ class BookingSlotViewModel with ChangeNotifier {
     // Do something when an external wallet is selected
   }
 
+  /// PROCEED PAYMENT AND COMPLETE
+
+  Map<String, dynamic> proceedPaymentBody() {
+    final slotData = DateFormat('d,MMM,y').format(
+      DateTime.parse('$_selectedDate'),
+    );
+    final body = ProceedPaymentModel(
+      razorpayOrderId: orderId,
+      razorpayPaymentId: paymentId,
+      razorpaySignature: signature,
+      turfId: _venuData!.sId,
+      facility: _selectedRadioButton,
+      slotDate: slotData,
+      price: _venuData!.actualPrice.toString(),
+      slotTime: _selectedTime,
+      sport: _selectedSportName,
+    );
+    log(body.toJson().toString());
+    return body.toJson();
+  }
+
+  getProceedPayment() async {
+    final accessToken = await getAccessToken();
+    final response = await ApiServices.postMethod(
+        url: Urls.kGETPROCEEDPAYMENT,
+        body: proceedPaymentBody(),
+        headers: {"Authorization": accessToken!});
+    if (response is Success) {
+      _navigationServices
+          .pushAndRemoveUntilTo(NavigatorClass.paymentSuccessView);
+      log("Success");
+      log(response.response.toString());
+    }
+    if (response is Failure) {
+      log("Error");
+    }
+  }
+
   /// GER ORDER RESPONSE TO PAY THROUGH THE RAZORPAY
-  getOrderId({
+
+  Map<String, dynamic> paymentModelBody(String venueId, String method) {
+    final slotData = DateFormat('d,MMM,y').format(
+      DateTime.parse('$_selectedDate'),
+    );
+    final body = PaymentModel(
+      turf: venueId,
+      method: method,
+      sport: _selectedSportName,
+      slotTime: _selectedTime,
+      facility: _selectedRadioButton,
+      slotDate: slotData,
+    );
+    log(body.toJson().toString());
+    return body.toJson();
+  }
+
+  getOrderModel({
     required String venueId,
   }) async {
     final accessToken = await getAccessToken();
     final response = await ApiServices.postMethod(
         url: Urls.kGETORDERID,
-        body: {"turf": venueId, "method": "online"},
+        body: paymentModelBody(venueId, "online"),
         jsonDecode: razorPayModelFromJson,
         headers: {"Authorization": accessToken!});
     if (response is Success) {
       if (response.response != null) {
-        await setOrderIdResponse(response.response as RazorPayModel);
+        await setOrderModelResponse(response.response as RazorPayModel);
       }
       log("Success");
       log(response.response.toString());
@@ -122,7 +183,7 @@ class BookingSlotViewModel with ChangeNotifier {
     }
   }
 
-  setOrderIdResponse(RazorPayModel orderModel) async {
+  setOrderModelResponse(RazorPayModel orderModel) async {
     razorPayOrderModel = orderModel;
     if (razorPayOrderModel != null) {
       openPayment(razorPayModel: razorPayOrderModel!);
