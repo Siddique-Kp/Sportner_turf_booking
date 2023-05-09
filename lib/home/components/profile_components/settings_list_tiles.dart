@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/home/components/normal_alert_box.dart';
 import 'package:sporter_turf_booking/home/view_model/bottom_nav_view_model.dart';
 import 'package:sporter_turf_booking/utils/routes/navigations.dart';
 import 'package:sporter_turf_booking/utils/secrets.dart';
@@ -58,8 +59,16 @@ class SettingsListTile extends StatelessWidget {
           title: "Logout",
           icon: Icons.logout,
           onTap: () {
-            context.read<FirebaseAuthViewModel>().userLoginStatus(context);
-            context.read<BottomNavViewModel>().changeBottomNavindex(0);
+            NormalAlertBox.alertBox(
+                context: context,
+                title: "Log out!",
+                content: "Are you sure you want to log out?",
+                onPressed: () {
+                  context
+                      .read<FirebaseAuthViewModel>()
+                      .userLoginStatus(context);
+                  context.read<BottomNavViewModel>().changeBottomNavindex(0);
+                });
           },
         ),
         // ProfileSettings(
@@ -75,7 +84,8 @@ class SettingsListTile extends StatelessWidget {
     String whatsappUrl = 'https://wa.me/$phoneNumber';
     try {
       if (await canLaunchUrl(Uri.parse(whatsappUrl))) {
-        await launchUrl(Uri.parse(whatsappUrl),mode: LaunchMode.externalApplication);
+        await launchUrl(Uri.parse(whatsappUrl),
+            mode: LaunchMode.externalApplication);
       }
     } catch (e) {
       log(e.toString());

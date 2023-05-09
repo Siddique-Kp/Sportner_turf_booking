@@ -71,4 +71,9 @@ class AppTextStyles {
     fontSize: 13,
     color: Colors.black,
   );
+  static TextStyle textH5grey = const TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 13,
+    color: AppColors.grey,
+  );
 }

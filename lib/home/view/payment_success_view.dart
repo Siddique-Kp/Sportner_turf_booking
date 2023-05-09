@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/home/view_model/my_bookings_view_model.dart';
 import 'package:sporter_turf_booking/home/view_model/proceed_payment_view_model.dart';
 import 'package:sporter_turf_booking/utils/routes/navigations.dart';
 import '../../utils/global_colors.dart';
@@ -20,8 +21,8 @@ class PaymentSuccessView extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children:  [
-             const Icon(
+            children: [
+              const Icon(
                 Icons.check_circle_outline_rounded,
                 size: 80,
                 color: AppColors.appColor,
@@ -58,6 +59,7 @@ class PaymentSuccessView extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushReplacementNamed(
                           context, NavigatorClass.mainScreen);
+                      context.read<MyBookingsViewModel>().getMyBookingsDatas();
                     },
                     style: ElevatedButton.styleFrom(elevation: 0),
                     child: const Text("Go to Home"),

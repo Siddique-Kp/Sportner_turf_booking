@@ -6,7 +6,6 @@ import 'package:sporter_turf_booking/utils/routes/navigations.dart';
 import '../../utils/global_colors.dart';
 import '../../utils/global_values.dart';
 import '../view_model/get_location_view_model.dart';
-import 'home_components/home_components.dart';
 import 'sports_icon.dart';
 
 class VenueCardWidget extends StatelessWidget {
@@ -15,7 +14,7 @@ class VenueCardWidget extends StatelessWidget {
   const VenueCardWidget({
     super.key,
     this.isOffer = false,
-    required this.venueDataList
+    required this.venueDataList,
   });
 
   @override
@@ -51,8 +50,10 @@ class VenueCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _venueDetails(VenueDataModel venueData,
-      BuildContext context) {
+  Widget _venueDetails(
+    VenueDataModel venueData,
+    BuildContext context,
+  ) {
     final distance = context.watch<GetLocationViewModel>().getDistanceInKm;
     return Padding(
       padding: const EdgeInsets.only(left: 10),
@@ -96,9 +97,7 @@ class VenueCardWidget extends StatelessWidget {
             ),
           ),
           AppSizes.kHeight5,
-          isOffer
-              ? _offerWidget(venueData)
-              : const RatingStarWidget(value: 3)
+          isOffer ? _offerWidget(venueData) : AppSizes.kWidth10
         ],
       ),
     );

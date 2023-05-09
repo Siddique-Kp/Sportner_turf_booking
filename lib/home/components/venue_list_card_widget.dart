@@ -4,7 +4,6 @@ import '../../utils/global_colors.dart';
 import '../../utils/global_values.dart';
 import '../../utils/routes/navigations.dart';
 import '../view_model/venue_details_view_model.dart';
-import 'home_components/home_components.dart';
 
 class VenueListCardWidget extends StatelessWidget {
   const VenueListCardWidget({
@@ -96,29 +95,41 @@ class VenueListCardWidget extends StatelessWidget {
     );
   }
 
-  Column _turfDetailsContainer(Size size) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: size.width * 0.30,
-          child: Text(
-            venueName,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontWeight: FontWeight.w700),
+  Widget _turfDetailsContainer(Size size) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: size.width * 0.30,
+            child: Text(
+              venueName,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontWeight: FontWeight.w700),
+            ),
           ),
-        ),
-        Expanded(child: sportIconWidget),
-        const RatingStarWidget(size: 13, value: 3),
-        Row(
-          children: [
-            const Icon(Icons.location_on, size: 17),
-            Text(district),
-          ],
-        )
-      ],
+          Expanded(child: sportIconWidget),
+          Row(
+            children: [
+              const Icon(
+                Icons.location_on,
+                size: 17,
+                color: AppColors.green,
+              ),
+              Text(
+                district,
+                style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.grey),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 

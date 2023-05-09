@@ -11,6 +11,7 @@ class Urls {
   static const String kGETSLOTAVAILABILITY= "$kBASEURL/bookedSlot";
   static const String kGETORDERID= "$kBASEURL/book";
   static const String kGETPROCEEDPAYMENT= "$kBASEURL/verifyPayment";
+  static const String kGETMYBOOKINGS= "$kBASEURL/bookings";
 }
 
 class InvalidRespons {

@@ -25,11 +25,11 @@ class VenueScreenView extends StatelessWidget {
             splashColor: Colors.transparent,
             icon: const Icon(Icons.search, color: AppColors.black),
           ),
-          IconButton(
-            onPressed: () {},
-            splashColor: Colors.transparent,
-            icon: const Icon(Icons.tune, color: AppColors.black),
-          ),
+          // IconButton(
+          //   onPressed: () {},
+          //   splashColor: Colors.transparent,
+          //   icon: const Icon(Icons.tune, color: AppColors.black),
+          // ),
         ],
         bottom: const PreferredSize(
             preferredSize: Size.fromHeight(10), child: SizedBox()),
