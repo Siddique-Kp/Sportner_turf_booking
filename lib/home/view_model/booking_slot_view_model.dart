@@ -3,20 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sporter_turf_booking/home/model/payment_model.dart';
-import 'package:sporter_turf_booking/home/model/proceed_payment_model.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_details_view_model.dart';
-import 'package:sporter_turf_booking/utils/routes/get_it_locator.dart';
-import 'package:sporter_turf_booking/utils/routes/navigation_services.dart';
-import 'package:sporter_turf_booking/utils/routes/navigations.dart';
 import '../../repo/api_services.dart';
 import '../../repo/api_status.dart';
 import '../../utils/constants.dart';
 import '../../utils/keys.dart';
-import '../model/razor_pay_model.dart';
 import '../model/slot_availability_model.dart';
 import '../model/venue_data_model.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class BookingSlotViewModel with ChangeNotifier {
   BookingSlotViewModel() {
@@ -27,12 +20,10 @@ class BookingSlotViewModel with ChangeNotifier {
     _selectedDate = now;
   }
 
-  final NavigationServices _navigationServices = locator<NavigationServices>();
-
   List<SlotAvailabilityModel> _slotAvailability = [];
   int _selectedSport = -1;
   String _selectedSportName = "";
-  DateTime? _selectedDate;
+  DateTime? _selectedDate = DateTime.now();
   final List<DateTime> _dates = [];
   String _selectedRadioButton = "";
   String _facility = "";
@@ -49,147 +40,6 @@ class BookingSlotViewModel with ChangeNotifier {
   String get selectedRadioButton => _selectedRadioButton;
   String get facility => _facility;
   String get selectedTime => _selectedTime;
-
-  /// RAZORPAY PAYMENT METHOD
-  final _razorpay = Razorpay();
-  RazorPayModel? razorPayOrderModel;
-  String? paymentId;
-  String? orderId;
-  String? signature;
-  VenueDataModel? _venuData;
-
-  getVenueData(VenueDataModel venueData) {
-    _venuData = venueData;
-    notifyListeners();
-  }
-
-  openPayment({required RazorPayModel razorPayModel}) {
-    log(razorPayModel.order!.toJson().toString());
-    final options = {
-      'key': 'rzp_test_byX4xjQdkJOyzX',
-      'amount': razorPayModel.order!.amount,
-      'name': 'Sportner App',
-      'order_id': razorPayModel.order!.id,
-      'description': 'Turf booking',
-      'timeout': 60,
-      'prefill': {
-        'contact': '9123456789',
-        'email': 'sportner@turf.com',
-      }
-    };
-    try {
-      _razorpay.open(options);
-      razorPayPayment();
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
-
-  razorPayPayment() {
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-  }
-
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    paymentId = response.paymentId;
-    orderId = response.orderId;
-    signature = response.signature;
-    getProceedPayment();
-  }
-
-  void _handlePaymentError(PaymentFailureResponse response) {
-    // Do something when payment fails
-  }
-
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    // Do something when an external wallet is selected
-  }
-
-  /// PROCEED PAYMENT AND COMPLETE
-
-  Map<String, dynamic> proceedPaymentBody() {
-    final slotData = DateFormat('d,MMM,y').format(
-      DateTime.parse('$_selectedDate'),
-    );
-    final body = ProceedPaymentModel(
-      razorpayOrderId: orderId,
-      razorpayPaymentId: paymentId,
-      razorpaySignature: signature,
-      turfId: _venuData!.sId,
-      facility: _selectedRadioButton,
-      slotDate: slotData,
-      price: _venuData!.actualPrice.toString(),
-      slotTime: _selectedTime,
-      sport: _selectedSportName,
-    );
-    log(body.toJson().toString());
-    return body.toJson();
-  }
-
-  getProceedPayment() async {
-    final accessToken = await getAccessToken();
-    final response = await ApiServices.postMethod(
-        url: Urls.kGETPROCEEDPAYMENT,
-        body: proceedPaymentBody(),
-        headers: {"Authorization": accessToken!});
-    if (response is Success) {
-      _navigationServices
-          .pushAndRemoveUntilTo(NavigatorClass.paymentSuccessView);
-      log("Success");
-      log(response.response.toString());
-    }
-    if (response is Failure) {
-      log("Error");
-    }
-  }
-
-  /// GER ORDER RESPONSE TO PAY THROUGH THE RAZORPAY
-
-  Map<String, dynamic> paymentModelBody(String venueId, String method) {
-    final slotData = DateFormat('d,MMM,y').format(
-      DateTime.parse('$_selectedDate'),
-    );
-    final body = PaymentModel(
-      turf: venueId,
-      method: method,
-      sport: _selectedSportName,
-      slotTime: _selectedTime,
-      facility: _selectedRadioButton,
-      slotDate: slotData,
-    );
-    log(body.toJson().toString());
-    return body.toJson();
-  }
-
-  getOrderModel({
-    required String venueId,
-  }) async {
-    final accessToken = await getAccessToken();
-    final response = await ApiServices.postMethod(
-        url: Urls.kGETORDERID,
-        body: paymentModelBody(venueId, "online"),
-        jsonDecode: razorPayModelFromJson,
-        headers: {"Authorization": accessToken!});
-    if (response is Success) {
-      if (response.response != null) {
-        await setOrderModelResponse(response.response as RazorPayModel);
-      }
-      log("Success");
-      log(response.response.toString());
-    }
-    if (response is Failure) {
-      log("Error");
-    }
-  }
-
-  setOrderModelResponse(RazorPayModel orderModel) async {
-    razorPayOrderModel = orderModel;
-    if (razorPayOrderModel != null) {
-      openPayment(razorPayModel: razorPayOrderModel!);
-    }
-    notifyListeners();
-  }
 
   // GET THE SLOTS AVAILABILITY
 
@@ -228,7 +78,11 @@ class BookingSlotViewModel with ChangeNotifier {
 
   // Selected sport controller ---------
 
-  setSelectedSport(int index, String facility, String sportName) {
+  setSelectedSport(
+    int index,
+    String facility,
+    String sportName,
+  ) {
     _selectedSport = index;
     _selectedSportName = sportName;
     _facility = facility;
@@ -290,6 +144,14 @@ class BookingSlotViewModel with ChangeNotifier {
     }
 
     return true;
+  }
+
+  clearBookingSelection() {
+    _facility = "";
+    _selectedRadioButton = "";
+    _selectedSport = -1;
+    _selectedTime = "HH:MM";
+    notifyListeners();
   }
 
   // Convert to 12 hours

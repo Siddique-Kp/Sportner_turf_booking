@@ -4,6 +4,7 @@ import 'package:provider/single_child_widget.dart';
 import '../../home/view_model/booking_slot_view_model.dart';
 import '../../home/view_model/bottom_nav_view_model.dart';
 import '../../home/view_model/get_location_view_model.dart';
+import '../../home/view_model/proceed_payment_view_model.dart';
 import '../../home/view_model/user_profile_view_model.dart';
 import '../../home/view_model/venue_by_sport_view_model.dart';
 import '../../home/view_model/venue_details_view_model.dart';
@@ -47,6 +48,9 @@ class ProviderClass {
     ),
     ChangeNotifierProvider(
       create: (context) => VenueBySportViewModel(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => ProceedPaymentViewModel(),
     ),
   ];
 }

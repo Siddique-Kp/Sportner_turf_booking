@@ -11,7 +11,7 @@ class VenueListViewModel with ChangeNotifier {
     getVenueListDatas();
   }
   List<VenueDataModel> _venueDataList = [];
-  List<VenueDataModel> _offeredVenues = [];
+  final List<VenueDataModel> _offeredVenues = [];
   Position? _currentPosition;
   bool _isVenueListLoading = false;
 

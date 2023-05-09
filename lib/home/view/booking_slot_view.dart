@@ -17,18 +17,14 @@ class BookingSlotView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final venueData = context.watch<VenueDetailsViewModel>().venueData;
-    WidgetsBinding.instance.addPostFrameCallback(
-      (timeStamp) {
-        context.read<BookingSlotViewModel>().getVenueData(venueData);
-      },
-    );
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
-            context.read<BookingSlotViewModel>().setSelectedSport(-1, "", "");
+            context.read<BookingSlotViewModel>().clearBookingSelection();
           },
           icon: const Icon(Icons.arrow_back),
         ),

@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view_model/booking_slot_view_model.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_details_view_model.dart';

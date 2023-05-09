@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sporter_turf_booking/home/view_model/booking_slot_view_model.dart';
+import 'package:sporter_turf_booking/home/view_model/proceed_payment_view_model.dart';
 import 'package:sporter_turf_booking/utils/routes/navigations.dart';
 import '../../utils/global_colors.dart';
 
@@ -9,7 +9,7 @@ class PaymentSuccessView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bookingViewModel = context.read<BookingSlotViewModel>();
+    final paymentViewModel = context.read<ProceedPaymentViewModel>();
     return WillPopScope(
       onWillPop: () async {
         Navigator.pushReplacementNamed(context, NavigatorClass.mainScreen);
@@ -36,7 +36,7 @@ class PaymentSuccessView extends StatelessWidget {
                 ),
               ),
               Text(
-                "Order id : ${bookingViewModel.orderId}",
+                "Order id : ${paymentViewModel.orderId}",
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 19,

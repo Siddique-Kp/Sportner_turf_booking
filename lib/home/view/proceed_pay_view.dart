@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view_model/booking_slot_view_model.dart';
+import 'package:sporter_turf_booking/home/view_model/proceed_payment_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 import '../components/payment_page_component/booking_details_container.dart';
 import '../components/payment_page_component/booking_policy.dart';
@@ -14,6 +17,12 @@ class ProceedPayView extends StatelessWidget {
   Widget build(BuildContext context) {
     final venueData = context.watch<VenueDetailsViewModel>().venueData;
     final bookingViewModel = context.watch<BookingSlotViewModel>();
+    final paymentViewModel = context.read<ProceedPaymentViewModel>();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      paymentViewModel.getVenueData(venueData);
+      paymentViewModel.setBookingData(bookingViewModel);
+    });
+    log("Rebuilded");
 
     return Scaffold(
       appBar: AppBar(
@@ -41,7 +50,7 @@ class ProceedPayView extends StatelessWidget {
         margin: const EdgeInsets.all(20),
         child: ElevatedButton(
           onPressed: () {
-            bookingViewModel.getOrderModel(venueId: venueData.sId!);
+            paymentViewModel.getOrderModel(venueId: venueData.sId!);
           },
           child: const Text("Proceed to pay"),
         ),
