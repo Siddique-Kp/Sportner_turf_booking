@@ -39,7 +39,7 @@ class HomeNearestTurfWidget extends StatelessWidget {
                   return Padding(
                     padding: const EdgeInsets.only(left: 15),
                     child: VenueCardWidget(
-                      venueDataList: venueViewModel.venuDataList[index],
+                      venueData: venueViewModel.venuDataList[index],
                     ),
                   );
                 },

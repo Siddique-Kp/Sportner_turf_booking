@@ -10,17 +10,16 @@ import 'sports_icon.dart';
 
 class VenueCardWidget extends StatelessWidget {
   final bool isOffer;
-  final VenueDataModel venueDataList;
+  final VenueDataModel venueData;
   const VenueCardWidget({
     super.key,
     this.isOffer = false,
-    required this.venueDataList,
+    required this.venueData,
   });
 
   @override
   Widget build(BuildContext context) {
     final locationViewModel = context.watch<GetLocationViewModel>();
-    final venueData = venueDataList;
     if (locationViewModel.currentPosition != null) {
       context
           .watch<GetLocationViewModel>()
