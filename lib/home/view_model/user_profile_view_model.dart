@@ -1,9 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporter_turf_booking/home/model/user_profile_data_modle.dart';
 import 'package:sporter_turf_booking/user_registration/model/error_response_model.dart';
-import 'package:sporter_turf_booking/utils/keys.dart';
 import '../../repo/api_services.dart';
 import '../../repo/api_status.dart';
 import '../../utils/constants.dart';
@@ -22,7 +20,7 @@ class UserProfileViewModel with ChangeNotifier {
 
   getUserProfileData() async {
     setLoading(true);
-    final accessToken = await getAccessToken();
+    final accessToken = await AccessToken.getAccessToken();
     final response = await ApiServices.getMethod(
       url: Urls.kGETUSERPROFILE,
       headers: {"Authorization": accessToken!},
@@ -52,11 +50,5 @@ class UserProfileViewModel with ChangeNotifier {
   setLoading(bool loading) {
     _isLoading = loading;
     // notifyListeners();
-  }
-
-  Future<String?> getAccessToken() async {
-    final sharedPref = await SharedPreferences.getInstance();
-    final accessToken = sharedPref.getString(GlobalKeys.accesToken);
-    return accessToken;
   }
 }

@@ -41,6 +41,7 @@ class MyBookingsView extends StatelessWidget {
                     bookedPrice: bookingData.price.toString(),
                     district: venuData.district!,
                     venueID: venuData.id!,
+                    bookingData: bookingData,
                   );
                 },
               ),

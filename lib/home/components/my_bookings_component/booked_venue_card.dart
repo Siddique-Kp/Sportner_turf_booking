@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/home/components/glass_snack_bar.dart';
+import 'package:sporter_turf_booking/home/components/warning_alert_box.dart';
 import 'package:sporter_turf_booking/home/view_model/booking_slot_view_model.dart';
+import 'package:sporter_turf_booking/home/view_model/refund_view_model.dart';
 import 'package:sporter_turf_booking/utils/textstyles.dart';
 import '../../../utils/global_colors.dart';
 import '../../../utils/global_values.dart';
+import '../../model/my_bookings_model.dart';
 
 class BookedVenueCard extends StatelessWidget {
   const BookedVenueCard({
@@ -18,6 +22,7 @@ class BookedVenueCard extends StatelessWidget {
     required this.bookedPrice,
     required this.district,
     required this.venueID,
+    required this.bookingData,
   });
 
   final String venueName;
@@ -29,6 +34,7 @@ class BookedVenueCard extends StatelessWidget {
   final String bookedTime;
   final String bookedPrice;
   final String district;
+  final MyBookingsModel bookingData;
 
   @override
   Widget build(BuildContext context) {
@@ -75,28 +81,75 @@ class BookedVenueCard extends StatelessWidget {
             ),
           ],
         ),
-        formatedDate.isBefore(DateTime.now())
+        bookingData.orderId == null
             ? const Text(
-                "Completed",
+                "Invalid booking",
                 style: TextStyle(
-                    color: AppColors.appColor,
+                    color: AppColors.grey,
                     fontWeight: FontWeight.w500,
                     fontSize: 12),
               )
-            : Padding(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: SizedBox(
-                  height: 25,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      backgroundColor: AppColors.red,
-                    ),
-                    onPressed: () async {},
-                    child: const Text("Cancel"),
-                  ),
-                ),
-              )
+            : bookingData.refund == "processed"
+                ? const Text(
+                    "Refunded",
+                    style: TextStyle(
+                        color: AppColors.red,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12),
+                  )
+                : formatedDate.isBefore(DateTime.now()) &&
+                        bookingData.refund != "processed"
+                    ? const Text(
+                        "Completed",
+                        style: TextStyle(
+                            color: AppColors.appColor,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 12),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.only(bottom: 5),
+                        child: SizedBox(
+                          height: 25,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              backgroundColor: AppColors.red,
+                            ),
+                            onPressed: () {
+                              AlertBoxWidget.alertBox(
+                                  context: context,
+                                  blockButton: () {
+                                    context
+                                        .read<RefundViewModel>()
+                                        .getBookingCancellation(
+                                            bookingData.id ?? "", context)
+                                        .then((value) {
+                                      value
+                                          ? GlassSnackBar.snackBar(
+                                              context: context,
+                                              title: "Bookings cancelled!",
+                                              subtitle:
+                                                  "Booking cancellation successful!",
+                                            )
+                                          : GlassSnackBar.snackBar(
+                                              context: context,
+                                              color: AppColors.red,
+                                              title: "Cancellation failed!",
+                                              subtitle:
+                                                  "Booking cancellation failed!",
+                                            );
+                                    });
+                                    Navigator.pop(context);
+                                  },
+                                  blockStatus: false,
+                                  title: "Booking",
+                                  blockText: "Cancel",
+                                  buttonText: "Confirm");
+                            },
+                            child: const Text("Cancel"),
+                          ),
+                        ),
+                      )
       ],
     );
   }

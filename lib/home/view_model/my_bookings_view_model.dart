@@ -1,11 +1,9 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporter_turf_booking/home/model/my_bookings_model.dart';
 import '../../repo/api_services.dart';
 import '../../repo/api_status.dart';
 import '../../utils/constants.dart';
-import '../../utils/keys.dart';
 
 class MyBookingsViewModel with ChangeNotifier {
   MyBookingsViewModel() {
@@ -19,7 +17,7 @@ class MyBookingsViewModel with ChangeNotifier {
 
   getMyBookingsDatas() async {
     setLoading(true);
-    final accessToken = await getAccessToken();
+    final accessToken = await AccessToken.getAccessToken();
     final response = await ApiServices.getMethod(
       url: Urls.kGETMYBOOKINGS,
       jsonDecod: myBookingsModelFromJson,
@@ -47,11 +45,5 @@ class MyBookingsViewModel with ChangeNotifier {
 
   setLoading(bool loading) {
     _isLoading = loading;
-  }
-
-    Future<String?> getAccessToken() async {
-    final sharedPref = await SharedPreferences.getInstance();
-    final accessToken = sharedPref.getString(GlobalKeys.accesToken);
-    return accessToken;
   }
 }

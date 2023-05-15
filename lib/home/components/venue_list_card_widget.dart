@@ -30,8 +30,9 @@ class VenueListCardWidget extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return InkWell(
       onTap: () async {
+        final navigator = Navigator.of(context);
         await context.read<VenueDetailsViewModel>().getSingleVenue(venueID);
-        Navigator.pushNamed(context, NavigatorClass.venueDetailsScreen);
+        navigator.pushNamed(NavigatorClass.venueDetailsScreen);
       },
       child: Row(
         children: [
@@ -82,10 +83,11 @@ class VenueListCardWidget extends StatelessWidget {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(elevation: 0),
               onPressed: () async {
+                final navigator = Navigator.of(context);
                 await context
                     .read<VenueDetailsViewModel>()
                     .getSingleVenue(venueID);
-                Navigator.pushNamed(context, NavigatorClass.venueDetailsScreen);
+                navigator.pushNamed(NavigatorClass.venueDetailsScreen);
               },
               child: const Text("View"),
             ),

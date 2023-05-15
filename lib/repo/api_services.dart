@@ -13,7 +13,8 @@ class ApiServices {
   }) async {
     try {
       log("send reqiust");
-      final response = await http.post(Uri.parse(url), body: body,headers: headers);
+      final response =
+          await http.post(Uri.parse(url), body: body, headers: headers);
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         log("Success");
@@ -39,12 +40,10 @@ class ApiServices {
     try {
       final response = await http.get(Uri.parse(url), headers: headers);
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // log(response.body.toString());
-
         return Success(
-            response: jsonDecod == null ? null : jsonDecod(response.body));
+          response: jsonDecod == null ? null : jsonDecod(response.body),
+        );
       }
-      // log(response.body.toString());
 
       return Failure(
           code: response.statusCode, errorResponse: "Invalid Response");

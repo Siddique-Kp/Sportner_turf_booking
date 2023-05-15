@@ -2,12 +2,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporter_turf_booking/home/view_model/booking_slot_view_model.dart';
 import 'package:sporter_turf_booking/repo/api_services.dart';
 import '../../repo/api_status.dart';
 import '../../utils/constants.dart';
-import '../../utils/keys.dart';
 import '../../utils/routes/navigations.dart';
 import '../model/payment_model.dart';
 import '../model/proceed_payment_model.dart';
@@ -45,12 +43,11 @@ class ProceedPaymentViewModel with ChangeNotifier {
   }
 
   openPayment({required RazorPayModel razorPayModel}) {
-    log(razorPayModel.order!.toJson().toString());
     final options = {
       'key': 'rzp_test_byX4xjQdkJOyzX',
-      'amount': razorPayModel.order!.amount,
+      'amount': razorPayModel.order?.amount,
       'name': 'Sportner App',
-      'order_id': razorPayModel.order!.id,
+      'order_id': razorPayModel.order?.id,
       'description': 'Turf booking',
       'timeout': 60,
       'prefill': {
@@ -109,7 +106,7 @@ class ProceedPaymentViewModel with ChangeNotifier {
   }
 
   getProceedPayment() async {
-    final accessToken = await getAccessToken();
+    final accessToken = await AccessToken.getAccessToken();
     final response = await ApiServices.postMethod(
         url: Urls.kGETPROCEEDPAYMENT,
         body: proceedPaymentBody(),
@@ -148,7 +145,7 @@ class ProceedPaymentViewModel with ChangeNotifier {
     required String venueId,
   }) async {
     razorPayOrderModel = null;
-    final accessToken = await getAccessToken();
+    final accessToken = await AccessToken.getAccessToken();
     final response = await ApiServices.postMethod(
         url: Urls.kGETORDERID,
         body: paymentModelBody(venueId),
@@ -172,11 +169,5 @@ class ProceedPaymentViewModel with ChangeNotifier {
       openPayment(razorPayModel: razorPayOrderModel!);
     }
     notifyListeners();
-  }
-
-  Future<String?> getAccessToken() async {
-    final sharedPref = await SharedPreferences.getInstance();
-    final accessToken = sharedPref.getString(GlobalKeys.accesToken);
-    return accessToken;
   }
 }

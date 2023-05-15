@@ -28,10 +28,11 @@ class VenueCardWidget extends StatelessWidget {
 
     return InkWell(
       onTap: () async {
+        final navigator = Navigator.of(context);
         await context
             .read<VenueDetailsViewModel>()
             .getSingleVenue(venueData.sId!);
-        await Navigator.pushNamed(context, NavigatorClass.venueDetailsScreen);
+        await navigator.pushNamed(NavigatorClass.venueDetailsScreen);
       },
       child: SizedBox(
         width: 150,

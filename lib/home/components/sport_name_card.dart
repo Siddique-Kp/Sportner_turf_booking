@@ -61,12 +61,12 @@ class SportNameCard {
           child: Card(
             child: InkWell(
               onTap: () async {
+                final navigator = Navigator.of(context);
                 await context
                     .read<VenueBySportViewModel>()
                     .getVenueBySportDatas(sportItems.sportName.toLowerCase());
                 log(sportItems.sportName.toLowerCase());
-                Navigator.push(
-                  context,
+                navigator.push(
                   MaterialPageRoute(
                     builder: (context) =>
                         VenueBySportView(title: sportItems.sportName),

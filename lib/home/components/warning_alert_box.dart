@@ -9,6 +9,7 @@ class AlertBoxWidget {
     required bool blockStatus,
     required String title,
     required String blockText,
+    required String buttonText,
   }) {
     return showDialog(
       context: context,
@@ -43,7 +44,7 @@ class AlertBoxWidget {
                 backgroundColor: blockStatus ? AppColors.green : AppColors.red,
                 elevation: 0,
               ),
-              child: Text(blockText),
+              child: Text(buttonText),
             ),
           ],
         );

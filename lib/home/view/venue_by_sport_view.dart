@@ -4,8 +4,6 @@ import 'package:sporter_turf_booking/home/components/error_data_widget.dart';
 import 'package:sporter_turf_booking/home/components/venue_list_card_widget.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_by_sport_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
-import 'package:sporter_turf_booking/utils/textstyles.dart';
-
 import '../components/sports_icon.dart';
 
 class VenueBySportView extends StatelessWidget {
