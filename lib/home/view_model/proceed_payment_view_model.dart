@@ -22,12 +22,20 @@ class ProceedPaymentViewModel with ChangeNotifier {
   String? paymentId;
   String? orderId;
   String? signature;
+  bool _isWallet = false;
   RazorPayModel? razorPayOrderModel;
   VenueDataModel? _venuData;
   final NavigationServices _navigationServices = locator<NavigationServices>();
 
+  bool get isWallet => _isWallet;
+
   setBookingData(BookingSlotViewModel bookingData) {
     _bookingData = bookingData;
+    notifyListeners();
+  }
+
+  setPaymentMethod(bool? value) {
+    _isWallet = !_isWallet;
     notifyListeners();
   }
 
@@ -121,13 +129,13 @@ class ProceedPaymentViewModel with ChangeNotifier {
 
   /// GER ORDER RESPONSE TO PAY THROUGH THE RAZORPAY
 
-  Map<String, dynamic> paymentModelBody(String venueId, String method) {
+  Map<String, dynamic> paymentModelBody(String venueId) {
     final slotData = DateFormat('d,MMM,y').format(
       DateTime.parse('${_bookingData!.selectedDate}'),
     );
     final body = PaymentModel(
       turf: venueId,
-      method: method,
+      method: _isWallet == true ? "wallet" : "online",
       sport: _bookingData!.selectedSportName,
       slotTime: _bookingData!.selectedTime,
       facility: _bookingData!.selectedRadioButton,
@@ -140,10 +148,11 @@ class ProceedPaymentViewModel with ChangeNotifier {
   getOrderModel({
     required String venueId,
   }) async {
+    razorPayOrderModel = null;
     final accessToken = await getAccessToken();
     final response = await ApiServices.postMethod(
         url: Urls.kGETORDERID,
-        body: paymentModelBody(venueId, "online"),
+        body: paymentModelBody(venueId),
         jsonDecode: razorPayModelFromJson,
         headers: {"Authorization": accessToken!});
     if (response is Success) {

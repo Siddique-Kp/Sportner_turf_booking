@@ -18,42 +18,48 @@ class BookingSlotView extends StatelessWidget {
   Widget build(BuildContext context) {
     final venueData = context.watch<VenueDetailsViewModel>().venueData;
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-            context.read<BookingSlotViewModel>().clearBookingSelection();
-          },
-          icon: const Icon(Icons.arrow_back),
-        ),
-        title: const Text(
-          "Booking",
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AvailableSportsWidget(venueData: venueData),
-              AppSizes.kHeight20,
-              const Divider(thickness: 2, color: AppColors.black),
-              AppSizes.kHeight20,
-              const FacilityWidget(),
-              AppSizes.kHeight20,
-              Text("Select Date", style: AppTextStyles.textH2),
-              AppSizes.kHeight20,
-              const DateContainerWidget(),
-              AppSizes.kHeight30,
-              const TimeManageWidget()
-            ],
+    return WillPopScope(
+      onWillPop: () {
+        Navigator.pop(context);
+        return context.read<BookingSlotViewModel>().clearBookingSelection();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+              context.read<BookingSlotViewModel>().clearBookingSelection();
+            },
+            icon: const Icon(Icons.arrow_back),
+          ),
+          title: const Text(
+            "Booking",
           ),
         ),
+        body: Padding(
+          padding: const EdgeInsets.all(20),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AvailableSportsWidget(venueData: venueData),
+                AppSizes.kHeight20,
+                const Divider(thickness: 2, color: AppColors.black),
+                AppSizes.kHeight20,
+                const FacilityWidget(),
+                AppSizes.kHeight20,
+                Text("Select Date", style: AppTextStyles.textH2),
+                AppSizes.kHeight20,
+                const DateContainerWidget(),
+                AppSizes.kHeight30,
+                const TimeManageWidget()
+              ],
+            ),
+          ),
+        ),
+        bottomNavigationBar: const BookingSlotBottomBar(),
       ),
-      bottomNavigationBar: const BookingSlotBottomBar(),
     );
   }
 }

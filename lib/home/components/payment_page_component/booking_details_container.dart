@@ -33,7 +33,9 @@ class BookingDetailsContainer extends StatelessWidget {
       width: double.infinity,
       height: 150,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(7), color: AppColors.lightGrey),
+        borderRadius: BorderRadius.circular(7),
+        color: AppColors.lightGrey,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(

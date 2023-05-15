@@ -43,7 +43,7 @@ class BookingPolicyWidget extends StatelessWidget {
               ),
               AppSizes.kHeight5,
               const Text(
-                  '''Rescheduling is allowed 2 Hours prior to slot time. Rescheduling of a booking can be done only 2 times. Once rescheduled, booking cannot be cancelled.'''),
+                  '''Rescheduling is not allowed prior to slot time.Instead of Rescheduling of a booking you are able to cancell the booking. Once cancelled, you will get your amount back, somehow , you may not be able get the same slot again.'''),
             ],
           ),
           AppSizes.kHeight10,
@@ -56,7 +56,7 @@ class BookingPolicyWidget extends StatelessWidget {
               ),
               AppSizes.kHeight5,
               const Text(
-                  '''0-2 hrs prior to slot: Cancellations not allowed.>2 hrs prior to slot: 15.0% of Gross Amount will be deducted as cancellation fee.'''),
+                  '''0-8 hrs prior to slot: Cancellations not allowed.>8 hrs prior to slot: All the booked Amount will be refunded to your wallet. You can use your wallet for your next booking and Note that you are not able to withdraw the wallet money!'''),
             ],
           ),
         ],

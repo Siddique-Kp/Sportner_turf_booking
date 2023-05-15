@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view_model/my_bookings_view_model.dart';
 import 'package:sporter_turf_booking/home/view_model/proceed_payment_view_model.dart';
+import 'package:sporter_turf_booking/home/view_model/user_profile_view_model.dart';
 import 'package:sporter_turf_booking/utils/routes/navigations.dart';
 import '../../utils/global_colors.dart';
+import '../view_model/booking_slot_view_model.dart';
 
 class PaymentSuccessView extends StatelessWidget {
   const PaymentSuccessView({super.key});
@@ -13,7 +15,14 @@ class PaymentSuccessView extends StatelessWidget {
     final paymentViewModel = context.read<ProceedPaymentViewModel>();
     return WillPopScope(
       onWillPop: () async {
-        Navigator.pushReplacementNamed(context, NavigatorClass.mainScreen);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          NavigatorClass.mainScreen,
+          (route) => false,
+        );
+        context.read<MyBookingsViewModel>().getMyBookingsDatas();
+        context.read<BookingSlotViewModel>().clearBookingSelection();
+        context.read<UserProfileViewModel>().getUserProfileData();
         return true;
       },
       child: Scaffold(
@@ -57,9 +66,16 @@ class PaymentSuccessView extends StatelessWidget {
                   height: 45,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(
-                          context, NavigatorClass.mainScreen);
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        NavigatorClass.mainScreen,
+                        (route) => false,
+                      );
                       context.read<MyBookingsViewModel>().getMyBookingsDatas();
+                      context
+                          .read<BookingSlotViewModel>()
+                          .clearBookingSelection();
+                      context.read<UserProfileViewModel>().getUserProfileData();
                     },
                     style: ElevatedButton.styleFrom(elevation: 0),
                     child: const Text("Go to Home"),
