@@ -117,7 +117,7 @@ class VenueListCardWidget extends StatelessWidget {
               const Icon(
                 Icons.location_on,
                 size: 17,
-                color: AppColors.green,
+                color: AppColors.blue,
               ),
               Text(
                 district,

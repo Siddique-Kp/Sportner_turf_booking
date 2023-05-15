@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/components/appbar_location.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_list_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
+import 'package:sporter_turf_booking/utils/routes/navigations.dart';
 import '../../utils/global_values.dart';
 import '../components/sports_icon.dart';
 import '../components/venue_list_card_widget.dart';
@@ -21,7 +22,9 @@ class VenueScreenView extends StatelessWidget {
         title: const AppBarLocation(),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, NavigatorClass.searchVenueView);
+            },
             splashColor: Colors.transparent,
             icon: const Icon(Icons.search, color: AppColors.black),
           ),

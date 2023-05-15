@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/home/components/error_data_widget.dart';
 import 'package:sporter_turf_booking/home/components/venue_list_card_widget.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_by_sport_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
@@ -20,12 +21,7 @@ class VenueBySportView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       body: venueBySportViewModel.venuDataList.isEmpty
-          ? Center(
-              child: Text(
-                "No Turf found",
-                style: AppTextStyles.textH2,
-              ),
-            )
+          ? const NoDataWidget()
           : Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: SingleChildScrollView(

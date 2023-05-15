@@ -13,7 +13,6 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]).then((value) => runApp(const MyApp()));
-  // setUpLocator();
   runApp(const MyApp());
 }
 
@@ -25,7 +24,6 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: ProviderClass.provider,
       child: MaterialApp(
-        
         title: 'sportner turf booking app',
         debugShowCheckedModeBanner: false,
         builder: (context, child) {
@@ -63,7 +61,10 @@ class MyApp extends StatelessWidget {
 class MyBehavior extends ScrollBehavior {
   @override
   Widget buildOverscrollIndicator(
-      BuildContext context, Widget child, ScrollableDetails details) {
+    BuildContext context,
+    Widget child,
+    ScrollableDetails details,
+  ) {
     return child;
   }
 }

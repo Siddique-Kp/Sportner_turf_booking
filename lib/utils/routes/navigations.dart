@@ -7,6 +7,7 @@ import 'package:sporter_turf_booking/user_registration/view/change_pass_view.dar
 import '../../home/view/bottom_navbar.dart';
 import '../../home/view/home_view.dart';
 import '../../home/view/my_bookings_view.dart';
+import '../../home/view/search_venue_view.dart';
 import '../../user_registration/view/forget_password_view.dart';
 import '../../user_registration/view/login_view.dart';
 import '../../user_registration/view/otp_page_view.dart';
@@ -27,6 +28,7 @@ class NavigatorClass {
   static const venueDetailsScreen = "/VenueDetailsScreen";
   static const myBookingsView = "/MyBookingView";
   static const paymentSuccessView = "/PaymentSuccessView";
+  static const searchVenueView = "/searchVenueView";
 
   static Map<String, Widget Function(BuildContext)> routes() {
     Map<String, Widget Function(BuildContext)> routes = {
@@ -43,6 +45,7 @@ class NavigatorClass {
       "/VenueDetailsScreen": (context) => const VenueDetailsView(),
       "/MyBookingView": (context) => const MyBookingsView(),
       "/PaymentSuccessView": (context) => const PaymentSuccessView(),
+      "/searchVenueView": (context) => const SearchVenueView(),
     };
 
     return routes;

@@ -1,7 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:sporter_turf_booking/home/view_model/my_bookings_view_model.dart';
-
+import 'package:sporter_turf_booking/home/view_model/search_venue_view_model.dart';
 import '../../home/view_model/booking_slot_view_model.dart';
 import '../../home/view_model/bottom_nav_view_model.dart';
 import '../../home/view_model/get_location_view_model.dart';
@@ -55,6 +55,9 @@ class ProviderClass {
     ),
     ChangeNotifierProvider(
       create: (context) => MyBookingsViewModel(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => SearchVenueViewModel(),
     ),
   ];
 }
