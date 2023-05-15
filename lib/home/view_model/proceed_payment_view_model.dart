@@ -8,8 +8,6 @@ import 'package:sporter_turf_booking/repo/api_services.dart';
 import '../../repo/api_status.dart';
 import '../../utils/constants.dart';
 import '../../utils/keys.dart';
-import '../../utils/routes/get_it_locator.dart';
-import '../../utils/routes/navigation_services.dart';
 import '../../utils/routes/navigations.dart';
 import '../model/payment_model.dart';
 import '../model/proceed_payment_model.dart';
@@ -25,7 +23,7 @@ class ProceedPaymentViewModel with ChangeNotifier {
   bool _isWallet = false;
   RazorPayModel? razorPayOrderModel;
   VenueDataModel? _venuData;
-  final NavigationServices _navigationServices = locator<NavigationServices>();
+  // final NavigationServices _navigationServices = locator<NavigationServices>();
 
   bool get isWallet => _isWallet;
 
@@ -117,8 +115,9 @@ class ProceedPaymentViewModel with ChangeNotifier {
         body: proceedPaymentBody(),
         headers: {"Authorization": accessToken!});
     if (response is Success) {
-      _navigationServices
-          .pushAndRemoveUntilTo(NavigatorClass.paymentSuccessView);
+      NavigatorClass.navigatorKey.currentState?.pushNamedAndRemoveUntil(
+          NavigatorClass.paymentSuccessView, (route) => false);
+
       log("Success");
       log(response.response.toString());
     }

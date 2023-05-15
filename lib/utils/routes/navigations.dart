@@ -48,6 +48,8 @@ class NavigatorClass {
     return routes;
   }
 
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   static Route animatedRoute({
     required dynamic route,
     double dx = 0.0,

@@ -190,14 +190,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
-  flutter_rating_bar:
-    dependency: "direct main"
-    description:
-      name: flutter_rating_bar
-      sha256: d2af03469eac832c591a1eba47c91ecc871fe5708e69967073c043b2d775ed93
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.1"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -304,14 +296,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.1"
-  get_it:
-    dependency: "direct main"
-    description:
-      name: get_it
-      sha256: ca77bd0c23e609e09a70989726295a92978589745e129c27d354e61e4070f804
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.4.1"
   google_identity_services_web:
     dependency: transitive
     description:

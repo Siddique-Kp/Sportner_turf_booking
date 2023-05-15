@@ -38,8 +38,6 @@ dependencies:
   firebase_auth: ^4.4.0
   another_flushbar: ^1.12.29
   http: ^0.13.5
-  flutter_rating_bar: ^4.0.1
-  get_it: ^7.4.1
   intl: ^0.17.0
   url_launcher: ^6.1.10
   geolocator: ^9.0.2
