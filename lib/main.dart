@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/providers/provider_classes.dart';
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: ProviderClass.provider,
-      child: GetMaterialApp(
+      child: MaterialApp(
         title: 'sportner turf booking app',
         debugShowCheckedModeBanner: false,
         builder: (context, child) {

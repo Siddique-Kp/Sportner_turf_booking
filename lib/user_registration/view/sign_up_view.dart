@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/user_registration/view/login_view.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
@@ -8,6 +7,7 @@ import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 import 'package:sporter_turf_booking/utils/textstyles.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
+import '../../utils/routes/navigations.dart';
 import '../components/curved_background.dart';
 import '../components/login_button_widget.dart';
 import '../components/registering_text_widget.dart';
@@ -33,7 +33,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-       const SystemUiOverlayStyle(statusBarColor: AppColors.appColor));
+        const SystemUiOverlayStyle(statusBarColor: AppColors.appColor));
     final size = MediaQuery.of(context).size;
     final signUpProvider = context.watch<SignUpViewModel>();
     TextEditingController userNameController =
@@ -133,11 +133,14 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                           leftText: 'Already have an account? ',
                           rightText: "Login",
                           onTap: () {
-                            // Navigator.pushReplacementNamed(
-                            //     context, NavigatorClass.loginScreen);
-                            Get.to(() => const UserLoginScreen(),
-                                transition: Transition.topLevel,
-                                duration: const Duration(seconds: 2));
+                      
+                            Navigator.push(
+                              context,
+                              NavigatorClass.animatedRoute(
+                                route: const UserLoginScreen(),
+                              ),
+                            );
+
                             context.read<SignUpViewModel>().clearTextField();
                             context
                                 .read<SignUpViewModel>()

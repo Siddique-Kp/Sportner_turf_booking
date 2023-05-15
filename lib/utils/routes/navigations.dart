@@ -36,15 +36,53 @@ class NavigatorClass {
       "/otpRegister": (context) => const OtpVerificationPage(),
       "/homeScreen": (context) => const HomeScreenView(),
       "/forgetPass": (context) => ForgetPasswordScreen(),
-      "/changeforgetPass": (context) =>  ChangePassView(),
-      "/bottomBarView": (context) =>  BottomBarView(),
-      "/bookingSlotScreen": (context) =>  const BookingSlotView(),
-      "/paymentScreen": (context) =>  const ProceedPayView(),
-      "/VenueDetailsScreen": (context) =>  const VenueDetailsView(),
-      "/MyBookingView": (context) =>  const MyBookingsView(),
-      "/PaymentSuccessView": (context) =>  const PaymentSuccessView(),
+      "/changeforgetPass": (context) => ChangePassView(),
+      "/bottomBarView": (context) => BottomBarView(),
+      "/bookingSlotScreen": (context) => const BookingSlotView(),
+      "/paymentScreen": (context) => const ProceedPayView(),
+      "/VenueDetailsScreen": (context) => const VenueDetailsView(),
+      "/MyBookingView": (context) => const MyBookingsView(),
+      "/PaymentSuccessView": (context) => const PaymentSuccessView(),
     };
 
     return routes;
+  }
+
+  static Route animatedRoute({
+    required dynamic route,
+    double dx = 0.0,
+    double dy = 1.0,
+    bool fade = true,
+  }) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => route,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        final begin = Offset(dx, dy);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween = Tween(begin: begin, end: end).chain(
+          CurveTween(curve: curve),
+        );
+
+        return fade
+            ? FadeTransition(
+                opacity: animation,
+                child: ScaleTransition(
+                  scale: Tween<double>(begin: 1.0, end: 1.0).animate(
+                    CurvedAnimation(
+                      parent: animation,
+                      curve: Curves.easeInOut,
+                    ),
+                  ),
+                  child: child,
+                ),
+              )
+            : SlideTransition(
+                position: animation.drive(tween),
+                child: child,
+              );
+      },
+    );
   }
 }

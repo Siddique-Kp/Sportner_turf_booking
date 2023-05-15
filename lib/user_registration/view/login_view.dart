@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/user_registration/components/login_button_widget.dart';
 import 'package:sporter_turf_booking/user_registration/components/registering_text_widget.dart';
@@ -177,11 +176,12 @@ class _UserLoginScreenState extends State<UserLoginScreen> {
                     AppSizes.kHeight30,
                     RegisteringText(
                       onTap: () {
-                        // Navigator.pushNamed(
-                        //     context, NavigatorClass.signUpScreen);
-                        Get.to(() => const UserSignUpScreen(),
-                            transition: Transition.topLevel,
-                            duration: const Duration(seconds: 2));
+                        Navigator.push(
+                          context,
+                          NavigatorClass.animatedRoute(
+                            route: const UserSignUpScreen(),
+                          ),
+                        );
                         context.read<UserLoginViewModel>().clearController();
                       },
                       leftText: "Don't have account? ",

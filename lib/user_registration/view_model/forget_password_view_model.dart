@@ -1,14 +1,14 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/home/components/glass_snack_bar.dart';
 import 'package:sporter_turf_booking/repo/api_services.dart';
 import 'package:sporter_turf_booking/user_registration/view/login_view.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
 import 'package:sporter_turf_booking/utils/constants.dart';
-import 'package:sporter_turf_booking/utils/global_colors.dart';
 import '../../repo/api_status.dart';
+import '../../utils/routes/navigations.dart';
 import '../components/snackbar.dart';
-import 'package:get/get.dart';
 
 class ForgetPassViewModel with ChangeNotifier {
   final TextEditingController phoneController = TextEditingController();
@@ -50,18 +50,18 @@ class ForgetPassViewModel with ChangeNotifier {
 
     if (response is Success) {
       setLoading(false);
-
-      Get.snackbar("Password changed successfully", "Please login again",
-          icon: const Icon(
-            Icons.info,
-            color: AppColors.kButtonColor,
-          ),
-          snackPosition: SnackPosition.TOP);
+      GlassSnackBar.snackBar(
+          context: context,
+          title: "Password Changed successfully!",
+          subtitle: "Please login again to continue!");
       await Future.delayed(const Duration(seconds: 2));
+      Navigator.push(
+        context,
+        NavigatorClass.animatedRoute(
+          route: const UserLoginScreen(),
+        ),
+      );
 
-      Get.to(() => const UserLoginScreen(),
-          transition: Transition.circularReveal,
-          duration: const Duration(milliseconds: 500));
       clearTextField();
       log("Success");
     }

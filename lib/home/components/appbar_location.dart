@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/view_model/get_location_view_model.dart';
 import '../../utils/global_colors.dart';
@@ -29,7 +28,7 @@ class AppBarLocation extends StatelessWidget {
                       color: AppColors.lightGrey,
                     ),
                   )
-                : value.currentAddress.isBlank!
+                : value.currentAddress!.country!.isEmpty
                     ? const Text(
                         "No location picked",
                         style: TextStyle(
