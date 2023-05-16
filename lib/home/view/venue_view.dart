@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/components/appbar_location.dart';
+import 'package:sporter_turf_booking/home/components/error_data_widget.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_list_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/routes/navigations.dart';
@@ -37,41 +38,45 @@ class VenueScreenView extends StatelessWidget {
         bottom: const PreferredSize(
             preferredSize: Size.fromHeight(10), child: SizedBox()),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: ListView.separated(
-          itemCount: venueDataList.length,
-          separatorBuilder: (context, index) => AppSizes.kHeight20,
-          itemBuilder: (context, index) {
-            final venueData = venueDataList[index];
-            return SizedBox(
-              width: double.infinity,
-              height: 80,
-              child: VenueListCardWidget(
-                venueName: venueData.venueName!,
-                imageUrl: venueData.image!,
-                sportFacilityLendth: venueData.sportFacility!.length,
-                venuePrice: venueData.actualPrice.toString(),
-                district: venueData.district!,
-                venueID: venueData.sId!,
-                sportIconWidget: ListView.builder(
-                  itemCount: venueData.sportFacility!.length,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Icon(
-                      Sports.spots(
-                        sport: venueData.sportFacility![index].sport!,
+      body: context.watch<VenueListViewModel>().errorCode == 404
+          ? const NoInternetWidget()
+          : Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: ListView.separated(
+                itemCount: venueDataList.length,
+                separatorBuilder: (context, index) => AppSizes.kHeight20,
+                itemBuilder: (context, index) {
+                  final venueData = venueDataList[index];
+                  return SizedBox(
+                    width: double.infinity,
+                    height: 80,
+                    child: VenueListCardWidget(
+                      venueName: venueData.venueName!,
+                      imageUrl: venueData.image!,
+                      sportFacilityLendth: venueData.sportFacility!.length,
+                      venuePrice: venueData.actualPrice.toString(),
+                      district: venueData.district!,
+                      venueID: venueData.sId!,
+                      latitude: venueData.lat!,
+                      longitude: venueData.lng!,
+                      sportIconWidget: ListView.builder(
+                        itemCount: venueData.sportFacility!.length,
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Icon(
+                            Sports.spots(
+                              sport: venueData.sportFacility![index].sport!,
+                            ),
+                            size: 15,
+                          );
+                        },
                       ),
-                      size: 15,
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
-      ),
+            ),
     );
   }
 }

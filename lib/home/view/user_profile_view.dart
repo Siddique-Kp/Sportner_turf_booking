@@ -19,7 +19,7 @@ class UserProfileView extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: Text("Profile", style: AppTextStyles.appbarTitle),
       ),
-      body: userDataViewModel.errorResponse?.code == 101
+      body: userDataViewModel.errorResponse?.code == 404
           ? const Center(
               child: Text("NO Internet"),
             )

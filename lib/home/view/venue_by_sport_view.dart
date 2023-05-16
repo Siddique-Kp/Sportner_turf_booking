@@ -45,6 +45,8 @@ class VenueBySportView extends StatelessWidget {
                             venuePrice: venueData.actualPrice.toString(),
                             district: venueData.district!,
                             venueID: venueData.sId!,
+                            latitude: venueData.lat!,
+                            longitude: venueData.lng!,
                             sportIconWidget: ListView.builder(
                               itemCount: venueData.sportFacility!.length,
                               shrinkWrap: true,

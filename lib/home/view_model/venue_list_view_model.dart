@@ -13,11 +13,13 @@ class VenueListViewModel with ChangeNotifier {
   List<VenueDataModel> _venueDataList = [];
   final List<VenueDataModel> _offeredVenues = [];
   Position? _currentPosition;
+  int? _errorCode;
   bool _isVenueListLoading = false;
 
   List<VenueDataModel> get venuDataList => _venueDataList;
   List<VenueDataModel> get offeredVenues => _offeredVenues;
   Position? get currentPosition => _currentPosition;
+  int? get errorCode => _errorCode;
   bool get isVenueListLoading => _isVenueListLoading;
 
   getVenueListDatas() async {
@@ -34,6 +36,7 @@ class VenueListViewModel with ChangeNotifier {
     }
     if (response is Failure) {
       log("Error");
+      setVenueError(response);
       setVenueListLoading(false);
     }
     setVenueListLoading(false);
@@ -47,6 +50,11 @@ class VenueListViewModel with ChangeNotifier {
 
   setVenueListLoading(bool loading) {
     _isVenueListLoading = loading;
+  }
+
+  setVenueError(Failure error) {
+    _errorCode = error.code;
+    notifyListeners();
   }
 
   getOfferedVenues() {

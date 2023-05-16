@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/home/components/error_data_widget.dart';
+import 'package:sporter_turf_booking/home/view_model/venue_list_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 import '../components/appbar_location.dart';
@@ -18,22 +21,23 @@ class HomeScreenView extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: const AppBarLocation(),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: size.width,
-              height: size.height * 0.20,
-              child: const HomeHeaderSection(),
+      body: context.watch<VenueListViewModel>().errorCode == 404
+          ? const NoInternetWidget()
+          : SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: size.width,
+                    height: size.height * 0.20,
+                    child: const HomeHeaderSection(),
+                  ),
+                  const HomeNearestTurfWidget(),
+                  AppSizes.kHeight20,
+                  const TurfWithOfferWidget()
+                ],
+              ),
             ),
-            
-            const HomeNearestTurfWidget(),
-            AppSizes.kHeight20,
-            const TurfWithOfferWidget()
-          ],
-        ),
-      ),
     );
   }
 }
