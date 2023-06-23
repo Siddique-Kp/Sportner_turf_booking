@@ -21,7 +21,8 @@ class ProceedPaymentViewModel with ChangeNotifier {
   bool _isWallet = false;
   RazorPayModel? razorPayOrderModel;
   VenueDataModel? _venuData;
-  // final NavigationServices _navigationServices = locator<NavigationServices>();
+  bool _razorPayPaymentInitialized = false;
+
 
   bool get isWallet => _isWallet;
 
@@ -42,6 +43,7 @@ class ProceedPaymentViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+
   openPayment({required RazorPayModel razorPayModel}) {
     final options = {
       'key': 'rzp_test_byX4xjQdkJOyzX',
@@ -57,7 +59,10 @@ class ProceedPaymentViewModel with ChangeNotifier {
     };
     try {
       _razorpay.open(options);
-      razorPayPayment();
+      if (!_razorPayPaymentInitialized) {
+        razorPayPayment();
+        _razorPayPaymentInitialized = true;
+      }
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -115,8 +120,7 @@ class ProceedPaymentViewModel with ChangeNotifier {
       NavigatorClass.navigatorKey.currentState?.pushNamedAndRemoveUntil(
           NavigatorClass.paymentSuccessView, (route) => false);
 
-      log("Success");
-      log(response.response.toString());
+      log("Success --------------- --------");
     }
     if (response is Failure) {
       log("Error");
@@ -164,7 +168,8 @@ class ProceedPaymentViewModel with ChangeNotifier {
   }
 
   setOrderModelResponse(RazorPayModel orderModel) async {
-    razorPayOrderModel = orderModel;
+    razorPayOrderModel ??= orderModel;
+
     if (razorPayOrderModel != null) {
       openPayment(razorPayModel: razorPayOrderModel!);
     }
