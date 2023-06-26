@@ -1,54 +1,40 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:sporter_turf_booking/data/response/api_response.dart';
 import 'package:sporter_turf_booking/home/model/user_profile_data_modle.dart';
-import 'package:sporter_turf_booking/user_registration/model/error_response_model.dart';
-import '../../repo/api_services.dart';
-import '../../repo/api_status.dart';
+import 'package:sporter_turf_booking/repository/user_profile_repository.dart';
 import '../../utils/constants.dart';
 
 class UserProfileViewModel with ChangeNotifier {
   UserProfileViewModel() {
     getUserProfileData();
   }
-  UserProfileDataModle? _userProfileData;
-  ErrorResponseModel? _errorResponse;
-  bool _isLoading = false;
 
-  UserProfileDataModle? get userProfileData => _userProfileData;
-  bool get isLoading => _isLoading;
-  ErrorResponseModel? get errorResponse => _errorResponse;
+  final _myRepo = UserProfileRepository();
+  ApiResponse<UserProfileDataModle>? _userProfileModel;
+  ApiResponse<UserProfileDataModle>? get userProfileModel => _userProfileModel;
 
-  getUserProfileData() async {
-    setLoading(true);
-    final accessToken = await AccessToken.getAccessToken();
-    final response = await ApiServices.getMethod(
-      url: Urls.kGETUSERPROFILE,
-      headers: {"Authorization": accessToken!},
-      jsonDecod: userProfileDataModleFromJson,
-    );
-
-    if (response is Success) {
-      log("response success");
-      setLoading(false);
-      await setUserProfileData(response.response as UserProfileDataModle);
-    }
-
-    if (response is Failure) {
-      setLoading(false);
-      // ErrorResponseModel errorResponse = ErrorResponseModel(
-      //   code: response.code,
-      //   message: response.errorResponse,
-      // );
-    }
+ Future getUserProfileData() async {
+    setUserProfileData(ApiResponse.loading());
+    _myRepo
+        .getUserProfile(Urls.kGETUSERPROFILE)
+        .then(
+          (value) => {
+            setUserProfileData(
+              ApiResponse.completed(value),
+            ),
+          },
+        )
+        .onError(
+          (error, stackTrace) => {
+            setUserProfileData(
+              ApiResponse.error(error.toString()),
+            ),
+          },
+        );
   }
 
-  setUserProfileData(UserProfileDataModle userData) async {
-    _userProfileData = userData;
+  setUserProfileData(ApiResponse<UserProfileDataModle> userData) async {
+    _userProfileModel = userData;
     notifyListeners();
-  }
-
-  setLoading(bool loading) {
-    _isLoading = loading;
-    // notifyListeners();
   }
 }

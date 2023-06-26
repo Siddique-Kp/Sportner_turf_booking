@@ -12,7 +12,7 @@ class HomeHeaderSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userData = context.watch<UserProfileViewModel>().userProfileData;
+    final userData = context.watch<UserProfileViewModel>().userProfileModel?.data;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

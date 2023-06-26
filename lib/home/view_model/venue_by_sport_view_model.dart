@@ -1,52 +1,38 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:sporter_turf_booking/data/response/api_response.dart';
 import 'package:sporter_turf_booking/home/model/venue_by_sport_model.dart';
-
-import '../../repo/api_services.dart';
-import '../../repo/api_status.dart';
+import 'package:sporter_turf_booking/repository/venue_by_sports_repository.dart';
 import '../../utils/constants.dart';
 
 class VenueBySportViewModel with ChangeNotifier {
-  // VenueBySportViewModel() {
-  //   getVenueBySportDatas("");
-  // }
-  List<VenueBySportModel> _venueBySportList = [];
-  Position? _currentPosition;
-  bool _isVenueBySportLoading = false;
-
-  List<VenueBySportModel> get venuDataList => _venueBySportList;
-  Position? get currentPosition => _currentPosition;
-  bool get isVenueBySportLoading => _isVenueBySportLoading;
+  final _myRepo = VenueBySportsRepository();
+  ApiResponse<List<VenueBySportModel>> _venueBySportModel =
+      ApiResponse.loading();
+  ApiResponse<List<VenueBySportModel>> get venueDataModel => _venueBySportModel;
 
   getVenueBySportDatas(String sport) async {
-    setVenueBySportLoading(true);
-    final response = await ApiServices.getMethod(
-      url: Urls.kGETVENUEBYSPORT + sport,
-      jsonDecod: venueBySportModelFromJson,
-    );
-    if (response is Success) {
-      if (response.response != null) {
-        await setVenueBySportData(response.response as List<VenueBySportModel>);
-      }
-      log("Success");
-      // log(response.response.toString());
-      setVenueBySportLoading(false);
-    }
-    if (response is Failure) {
-      log("Error");
-      setVenueBySportLoading(false);
-    }
-    setVenueBySportLoading(false);
+    setVenueBySportData(ApiResponse.loading());
+    _myRepo
+        .getVenueBySports(Urls.kGETVENUEBYSPORT + sport)
+        .then(
+          (value) => {
+            setVenueBySportData(
+              ApiResponse.completed(value),
+            ),
+          },
+        )
+        .onError(
+          (error, stackTrace) => {
+            setVenueBySportData(
+              ApiResponse.error(error.toString()),
+            ),
+          },
+        );
   }
 
-  setVenueBySportData(List<VenueBySportModel> venueDataList) async {
-    _venueBySportList = venueDataList;
+  setVenueBySportData(
+      ApiResponse<List<VenueBySportModel>> venueDataModel) async {
+    _venueBySportModel = venueDataModel;
     notifyListeners();
-  }
-
-  setVenueBySportLoading(bool loading) {
-    _isVenueBySportLoading = loading;
   }
 }

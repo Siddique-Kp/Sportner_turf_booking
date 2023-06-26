@@ -61,7 +61,7 @@ class ProceedPayView extends StatelessWidget {
                             Icons.account_balance_wallet,
                             size: 30,
                             color:
-                                userDataViewModel.userProfileData?.wallet == 0
+                                userDataViewModel.userProfileModel?.data?.wallet == 0
                                     ? AppColors.lightGrey
                                     : const Color.fromARGB(151, 0, 181, 97),
                           ),
@@ -73,13 +73,13 @@ class ProceedPayView extends StatelessWidget {
                               Text(
                                 "Include Wallet money!",
                                 style:
-                                    userDataViewModel.userProfileData?.wallet ==
+                                    userDataViewModel.userProfileModel?.data?.wallet ==
                                             0
                                         ? AppTextStyles.textH4grey
                                         : AppTextStyles.textH4,
                               ),
                               Text(
-                                "Wallet balance : ₹ ${userDataViewModel.userProfileData?.wallet ?? 0}.0",
+                                "Wallet balance : ₹ ${userDataViewModel.userProfileModel?.data?.wallet ?? 0}.0",
                                 style: AppTextStyles.textH5grey,
                               ),
                             ],
@@ -92,7 +92,7 @@ class ProceedPayView extends StatelessWidget {
                         return Checkbox(
                           value: proceedPayViewModel.isWallet,
                           onChanged:
-                              userDataViewModel.userProfileData?.wallet == 0
+                              userDataViewModel.userProfileModel?.data?.wallet == 0
                                   ? null
                                   : (value) {
                                       proceedPayViewModel

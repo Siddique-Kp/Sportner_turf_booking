@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/data/response/status.dart';
+import 'package:sporter_turf_booking/home/components/error_data_widget.dart';
 import 'package:sporter_turf_booking/home/components/profile_components/user_profile_container.dart';
 import 'package:sporter_turf_booking/home/view_model/user_profile_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
@@ -12,45 +14,56 @@ class UserProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userDataViewModel = context.watch<UserProfileViewModel>();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.white,
         automaticallyImplyLeading: false,
         title: Text("Profile", style: AppTextStyles.appbarTitle),
       ),
-      body: userDataViewModel.errorResponse?.code == 404
-          ? const Center(
-              child: Text("NO Internet"),
-            )
-          : userDataViewModel.userProfileData == null
-              ? const Center(
-                  child: Text("Could not load data"),
-                )
-              : Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          UserProfileContainer(userData: userDataViewModel.userProfileData!),
-                          AppSizes.kHeight20,
-                          SettingsListTile(userData: userDataViewModel.userProfileData!)
-                        ],
-                      ),
-                      const Text(
-                        "Version 1.0.0",
-                        style: TextStyle(
-                          color: AppColors.grey,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 13,
+      body: Consumer<UserProfileViewModel>(
+        builder: (context, value, child) {
+          switch (value.userProfileModel?.status) {
+            case Status.loading:
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            case Status.error:
+              return const NoInternetWidget();
+            case Status.completed:
+              final userProfileData = value.userProfileModel!.data!;
+              return Padding(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        UserProfileContainer(
+                          userData: userProfileData,
                         ),
+                        AppSizes.kHeight20,
+                        SettingsListTile(
+                          userData: userProfileData,
+                        )
+                      ],
+                    ),
+                    const Text(
+                      "Version 1.0.0",
+                      style: TextStyle(
+                        color: AppColors.grey,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 13,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+              );
+            default:
+              return const SizedBox();
+          }
+        },
+      ),
     );
   }
 }
