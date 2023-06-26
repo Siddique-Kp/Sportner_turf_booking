@@ -36,9 +36,7 @@ class SliverAppBarWidget extends StatelessWidget {
         ),
       ),
       flexibleSpace: FlexibleSpaceBar(
-        background: venueViewModel.isLoading
-            ? const CircularProgressIndicator()
-            : Container(
+        background:  Container(
                 color: AppColors.lightGrey,
                 child: Image.network(
                   venueData.image!,

@@ -1,52 +1,38 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
-import '../../repo/api_services.dart';
-import '../../repo/api_status.dart';
+import 'package:sporter_turf_booking/data/response/api_response.dart';
+import 'package:sporter_turf_booking/repository/venue_details_repository.dart';
 import '../../utils/constants.dart';
 import '../model/venue_data_model.dart';
 
 class VenueDetailsViewModel with ChangeNotifier {
+  ApiResponse<VenueDataModel> _venueDataModel = ApiResponse.loading();
   late VenueDataModel _venueData;
-  bool _isLoading = false;
   int _dayIndex = -1;
 
   VenueDataModel get venueData => _venueData;
-  bool get isLoading => _isLoading;
+  ApiResponse<VenueDataModel> get venueDataModel => _venueDataModel;
   int get dayIndex => _dayIndex;
 
-  getSingleVenue(String id) async {
-    setLoading(true);
-    log("Called single");
-    final response = await ApiServices.getMethod(
-      url: Urls.kGETSINGLEVENUE + id,
-      jsonDecod: venueDataModelFromJson,
-    );
+  final _myRepo = VenueDetailsRepository();
 
-    if (response is Success) {
-      log("response success");
-      await setVenueData(response.response as VenueDataModel);
-      log("Got data");
-      setLoading(false);
-    }
-
-    if (response is Failure) {
-      log("Single response error");
-      setLoading(false);
-    }
-    setLoading(false);
+  getSingleVenue(String id) {
+    setVenueData(ApiResponse.loading());
+    _myRepo
+        .getVenueDetails(Urls.kGETSINGLEVENUE + id)
+        .then((value) => {setVenueData(ApiResponse.completed(value),),})
+        .onError((error, stackTrace) =>
+            {setVenueData(ApiResponse.error(error.toString()))});
   }
 
-  setVenueData(VenueDataModel venueData) async {
-    _venueData = venueData;
+  setVenueData(ApiResponse<VenueDataModel> venueData) async {
+    _venueDataModel = venueData;
+    if (_venueDataModel.data != null) {
+      _venueData = _venueDataModel.data!;
+    }
     notifyListeners();
   }
 
-  setLoading(bool loading) {
-    _isLoading = loading;
-  }
-
   void getDayIndex(String dayName) {
-
     if (_venueData.slots!
         .any((venue) => venue.day!.toLowerCase() == dayName.toLowerCase())) {
       _dayIndex = _venueData.slots!.indexWhere(

@@ -33,7 +33,7 @@ class SearchVenueViewModel with ChangeNotifier {
   }
 
   setDefault(BuildContext context) {
-    venueDataList = context.watch<VenueListViewModel>().venuDataList;
+    venueDataList = context.watch<VenueListViewModel>().venuDataList.data!;
     _resultVenueData = venueDataList;
   }
 

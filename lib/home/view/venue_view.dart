@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/data/response/status.dart';
 import 'package:sporter_turf_booking/home/components/appbar_location.dart';
 import 'package:sporter_turf_booking/home/components/error_data_widget.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_list_view_model.dart';
@@ -15,7 +16,7 @@ class VenueScreenView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final size = MediaQuery.of(context).size;
-    final venueDataList = context.watch<VenueListViewModel>().venuDataList;
+    // final venueDataList = context.watch<VenueListViewModel>().venuDataList.data!;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.white,
@@ -38,12 +39,18 @@ class VenueScreenView extends StatelessWidget {
         bottom: const PreferredSize(
             preferredSize: Size.fromHeight(10), child: SizedBox()),
       ),
-      body: context.watch<VenueListViewModel>().errorCode == 404
-          ? const NoInternetWidget()
-          : Padding(
+      body: Consumer<VenueListViewModel>(builder: (context, venueData, child) {
+        final venueDataList = venueData.venuDataList.data;
+        switch (venueData.venuDataList.status) {
+          case Status.loading:
+            return const CircularProgressIndicator();
+          case Status.error:
+            return const NoInternetWidget();
+          case Status.completed:
+            return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: ListView.separated(
-                itemCount: venueDataList.length,
+                itemCount: venueDataList!.length,
                 separatorBuilder: (context, index) => AppSizes.kHeight20,
                 itemBuilder: (context, index) {
                   final venueData = venueDataList[index];
@@ -76,7 +83,11 @@ class VenueScreenView extends StatelessWidget {
                   );
                 },
               ),
-            ),
+            );
+          default:
+            return const SizedBox();
+        }
+      }),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/data/response/status.dart';
 import 'package:sporter_turf_booking/home/components/error_data_widget.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_list_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
@@ -21,23 +22,33 @@ class HomeScreenView extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: const AppBarLocation(),
       ),
-      body: context.watch<VenueListViewModel>().errorCode == 404
-          ? const NoInternetWidget()
-          : SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: size.width,
-                    height: size.height * 0.20,
-                    child: const HomeHeaderSection(),
-                  ),
-                  const HomeNearestTurfWidget(),
-                  AppSizes.kHeight20,
-                  const TurfWithOfferWidget()
-                ],
+      body: Consumer<VenueListViewModel>(builder: (context, value, child) {
+        switch (value.venuDataList.status) {
+          case Status.error:
+            return const NoInternetWidget();
+          case Status.loading:
+            return const Center(child:  CircularProgressIndicator());
+            case Status.completed:
+             return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: size.width,
+                height: size.height * 0.20,
+                child: const HomeHeaderSection(),
               ),
-            ),
+              const HomeNearestTurfWidget(),
+              AppSizes.kHeight20,
+              const TurfWithOfferWidget()
+            ],
+          ),
+        );
+          default:
+            return const SizedBox();
+        }
+       
+      }),
     );
   }
 }

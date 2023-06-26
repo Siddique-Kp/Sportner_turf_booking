@@ -1,68 +1,50 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:sporter_turf_booking/data/response/api_response.dart';
 import 'package:sporter_turf_booking/home/model/venue_data_model.dart';
-import 'package:sporter_turf_booking/repo/api_services.dart';
-import 'package:sporter_turf_booking/repo/api_status.dart';
 import 'package:sporter_turf_booking/utils/constants.dart';
+import '../../repository/venue_list_repository.dart';
 
 class VenueListViewModel with ChangeNotifier {
   VenueListViewModel() {
-    getVenueListDatas();
+    getVenueListResponse();
   }
-  List<VenueDataModel> _venueDataList = [];
+  ApiResponse<List<VenueDataModel>> _venueDataList = ApiResponse.loading();
   final List<VenueDataModel> _offeredVenues = [];
-  Position? _currentPosition;
-  int? _errorCode;
-  bool _isVenueListLoading = false;
 
-  List<VenueDataModel> get venuDataList => _venueDataList;
+  ApiResponse<List<VenueDataModel>> get venuDataList => _venueDataList;
   List<VenueDataModel> get offeredVenues => _offeredVenues;
-  Position? get currentPosition => _currentPosition;
-  int? get errorCode => _errorCode;
-  bool get isVenueListLoading => _isVenueListLoading;
 
-  getVenueListDatas() async {
-    setVenueListLoading(true);
-    final response = await ApiServices.getMethod(
-      url: Urls.kGETALLVENUE,
-      jsonDecod: venueDataModelListFromJson,
-    );
-    if (response is Success) {
-      if (response.response != null) {
-        await setVenueListData(response.response as List<VenueDataModel>);
-      }
-      setVenueListLoading(false);
-    }
-    if (response is Failure) {
-      log("Error");
-      setVenueError(response);
-      setVenueListLoading(false);
-    }
-    setVenueListLoading(false);
+  final _myRepo = VenueListRepository();
+
+
+
+  getVenueListResponse() async {
+    setVenueListData(ApiResponse.loading());
+    _myRepo.getVenueList(Urls.kGETALLVENUE).then((value) {
+      log(value.toString());
+      setVenueListData(ApiResponse.completed(value));
+    }).onError((error, stackTrace) {
+      log("$error");
+      setVenueListData(ApiResponse.error(error.toString()));
+    });
   }
 
-  setVenueListData(List<VenueDataModel> venueDataList) async {
+  setVenueListData(ApiResponse<List<VenueDataModel>> venueDataList) async {
     _venueDataList = venueDataList;
     getOfferedVenues();
     notifyListeners();
   }
 
-  setVenueListLoading(bool loading) {
-    _isVenueListLoading = loading;
-  }
-
-  setVenueError(Failure error) {
-    _errorCode = error.code;
-    notifyListeners();
-  }
 
   getOfferedVenues() {
-    for (var offered in _venueDataList) {
-      final offerPercent = offered.discountPercentage;
+    if (_venueDataList.data != null) {
+      for (var offered in _venueDataList.data!) {
+        final offerPercent = offered.discountPercentage;
 
-      if (offerPercent! > 0) {
-        _offeredVenues.add(offered);
+        if (offerPercent! > 0) {
+          _offeredVenues.add(offered);
+        }
       }
     }
   }

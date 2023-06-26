@@ -12,7 +12,6 @@ class ApiServices {
     Map<String, String>? headers,
   }) async {
     try {
-      log("send reqiust");
       final response =
           await http.post(Uri.parse(url), body: body, headers: headers);
 
@@ -21,9 +20,6 @@ class ApiServices {
         return Success(
             response: jsonDecode == null ? null : jsonDecode(response.body));
       }
-      log("got response");
-      log(response.body.toLowerCase());
-      log(response.statusCode.toString());
       return Failure(
         code: response.statusCode,
         errorResponse: "Invalid Response",
