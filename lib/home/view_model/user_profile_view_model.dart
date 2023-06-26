@@ -13,7 +13,7 @@ class UserProfileViewModel with ChangeNotifier {
   ApiResponse<UserProfileDataModle>? _userProfileModel;
   ApiResponse<UserProfileDataModle>? get userProfileModel => _userProfileModel;
 
- Future getUserProfileData() async {
+ Future<void> getUserProfileData() async {
     setUserProfileData(ApiResponse.loading());
     _myRepo
         .getUserProfile(Urls.kGETUSERPROFILE)

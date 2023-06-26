@@ -1,49 +1,39 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:sporter_turf_booking/data/response/api_response.dart';
 import 'package:sporter_turf_booking/home/model/my_bookings_model.dart';
-import '../../repo/api_services.dart';
-import '../../repo/api_status.dart';
+import 'package:sporter_turf_booking/repository/my_bookings_repository.dart';
 import '../../utils/constants.dart';
 
 class MyBookingsViewModel with ChangeNotifier {
   MyBookingsViewModel() {
     getMyBookingsDatas();
   }
-  List<MyBookingsModel> _myBookingsList = [];
-  bool _isLoading = false;
 
-  List<MyBookingsModel> get myBookingsList => _myBookingsList;
-  bool get isLoading => _isLoading;
+  final _myRepo = MyBookingsRepository();
 
-  getMyBookingsDatas() async {
-    setLoading(true);
-    final accessToken = await AccessToken.getAccessToken();
-    final response = await ApiServices.getMethod(
-      url: Urls.kGETMYBOOKINGS,
-      jsonDecod: myBookingsModelFromJson,
-      headers: {"Authorization":accessToken!}
-    );
-    if (response is Success) {
-      if (response.response != null) {
-        await setMyBookingsData(response.response as List<MyBookingsModel>);
-      }
-      log("Success");
-      log(response.response.toString());
-      setLoading(false);
-    }
-    if (response is Failure) {
-      log("Error");
-      setLoading(false);
-    }
-    setLoading(false);
+  ApiResponse<List<MyBookingsModel>> _myBookingsModel = ApiResponse.loading();
+  ApiResponse<List<MyBookingsModel>> get myBookingsModel => _myBookingsModel;
+
+  Future<void> getMyBookingsDatas() async {
+    setMyBookingsData(ApiResponse.loading());
+    _myRepo
+        .getMyBookings(Urls.kGETMYBOOKINGS)
+        .then(
+          (value) => {
+            setMyBookingsData(
+              ApiResponse.completed(value),
+            ),
+          },
+        )
+        .onError((error, stackTrace) => {
+              setMyBookingsData(
+                ApiResponse.error(error.toString()),
+              ),
+            });
   }
 
-  setMyBookingsData(List<MyBookingsModel> myBookings) async {
-    _myBookingsList = myBookings;
+  setMyBookingsData(ApiResponse<List<MyBookingsModel>> myBookings) async {
+    _myBookingsModel = myBookings;
     notifyListeners();
-  }
-
-  setLoading(bool loading) {
-    _isLoading = loading;
   }
 }
