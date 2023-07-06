@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../utils/global_colors.dart';
@@ -33,11 +35,9 @@ class VenueListCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-      final locationViewModel = context.watch<GetLocationViewModel>();
+    final locationViewModel = context.watch<GetLocationViewModel>();
     if (locationViewModel.currentPosition != null) {
-      context
-          .watch<GetLocationViewModel>()
-          .getDistance(latitude, longitude);
+      context.watch<GetLocationViewModel>().getDistance(latitude, longitude);
     }
     return InkWell(
       onTap: () async {
@@ -51,7 +51,7 @@ class VenueListCardWidget extends StatelessWidget {
             children: [
               _imageContianer(),
               AppSizes.kWidth10,
-              _turfDetailsContainer(size,context)
+              _turfDetailsContainer(size, context)
             ],
           ),
           const Spacer(),
@@ -165,6 +165,10 @@ class VenueListCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(6),
         color: AppColors.lightGrey,
         image: DecorationImage(
+          onError: (exception, stackTrace) {
+            log("image loading failed");
+            debugPrint(exception.toString());
+          },
           image: NetworkImage(imageUrl),
           fit: BoxFit.cover,
         ),

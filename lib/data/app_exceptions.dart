@@ -1,12 +1,12 @@
 class AppExceptions implements Exception {
   final dynamic _message;
-  final dynamic _prefix;
+  
 
-  AppExceptions([this._message, this._prefix]);
+  AppExceptions([this._message]);
 
   @override
   String toString() {
-    return "$_prefix $_message";
+    return "$_message";
   }
 }
 

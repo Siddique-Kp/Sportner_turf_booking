@@ -15,7 +15,6 @@ class TimeManageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bookingViewModel = context.watch<BookingSlotViewModel>();
-    // final venueViewModel = context.watch<VenueDetailsViewModel>();
     String chosenTime = bookingViewModel.selectedTime;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

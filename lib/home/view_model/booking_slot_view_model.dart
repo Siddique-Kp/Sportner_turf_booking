@@ -1,10 +1,9 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:sporter_turf_booking/data/response/api_response.dart';
 import 'package:sporter_turf_booking/home/view_model/venue_details_view_model.dart';
-import '../../repo/api_services.dart';
-import '../../repo/api_status.dart';
+import 'package:sporter_turf_booking/repository/booking_slot_repository.dart';
 import '../../utils/constants.dart';
 import '../model/slot_availability_model.dart';
 import '../model/venue_data_model.dart';
@@ -17,6 +16,8 @@ class BookingSlotViewModel with ChangeNotifier {
     }
     _selectedDate = now;
   }
+
+  final _myRepo = BookingSlotRepository();
 
   List<SlotAvailabilityModel> _slotAvailability = [];
   int _selectedSport = -1;
@@ -41,36 +42,42 @@ class BookingSlotViewModel with ChangeNotifier {
 
   // GET THE SLOTS AVAILABILITY
 
-  getSlotAvailability({
+  Future getSlotAvailability({
     required String venueId,
   }) async {
     final date = DateFormat('d,MMM,y').format(
       DateTime.parse('$_selectedDate'),
     );
-    log(date);
-    final response = await ApiServices.postMethod(
-      url: Urls.kGETSLOTAVAILABILITY,
-      body: {
-        "turfId": venueId,
-        "slotDate": date,
-      },
-      jsonDecode: slotAvailabilityModelFromJson,
-    );
-    if (response is Success) {
-      if (response.response != null) {
-        await setSlotAvailability(
-            response.response as List<SlotAvailabilityModel>);
-      }
-      log("Success");
-      log(response.response.toString());
-    }
-    if (response is Failure) {
-      log("Error");
-    }
+    _myRepo
+        .getAvailableSlot(
+          url: Urls.kGETSLOTAVAILABILITY,
+          body: {
+            "turfId": venueId,
+            "slotDate": date,
+          },
+        )
+        .then(
+          (value) => {
+            setSlotAvailability(
+              ApiResponse.completed(value),
+            ),
+          },
+        )
+        .onError(
+          (error, stackTrace) => {
+            ApiResponse.error(
+              error.toString(),
+            ),
+          },
+        );
   }
 
-  setSlotAvailability(List<SlotAvailabilityModel> slotAvailability) async {
-    _slotAvailability = slotAvailability;
+  setSlotAvailability(
+    ApiResponse<List<SlotAvailabilityModel>> slotAvailabilityModel,
+  ) async {
+    if (slotAvailabilityModel.data != null) {
+      _slotAvailability = slotAvailabilityModel.data!;
+    }
     notifyListeners();
   }
 

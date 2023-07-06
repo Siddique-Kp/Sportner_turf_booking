@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/components/glass_snack_bar.dart';
 import 'package:sporter_turf_booking/repo/api_services.dart';
+import 'package:sporter_turf_booking/repository/user_auth_repository/forgot_password_repository.dart';
 import 'package:sporter_turf_booking/user_registration/view/login_view.dart';
 import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
 import 'package:sporter_turf_booking/utils/constants.dart';
-import '../../repo/api_status.dart';
 import '../../utils/routes/navigations.dart';
 import '../components/snackbar.dart';
 
@@ -21,56 +21,56 @@ class ForgetPassViewModel with ChangeNotifier {
   bool get isLoadingotp => _isLoadingOtp;
   bool get isLoading => _isLoading;
 
-  getForgetPassStatus(BuildContext context) async {
-    setLoadingOtp(true);
-    final response = await ApiServices.getMethod(
-        url: Urls.kFORGOTPASSmob + phoneController.text);
-    if (response is Success) {
-      log("Success");
-      context
-          .read<FirebaseAuthViewModel>()
-          .fireBasePhoneAuth(context, phoneController.text, true);
-      setLoadingOtp(false);
-    }
-    if (response is Failure) {
-      log("Failed");
-      errorResonses(response.code, response.errorResponse, context);
+  final _myRepo = ForgotPasswordRepoitory();
 
-      setLoadingOtp(false);
-    }
+  Future getForgetPassStatus(BuildContext context) async {
+    setLoadingOtp(true);
+    log(phoneController.text);
+    _myRepo
+        .getForgotPass(url: Urls.kFORGOTPASSmob + phoneController.text)
+        .then(
+          (value) => {
+            print(value),
+            context
+                .read<FirebaseAuthViewModel>()
+                .fireBasePhoneAuth(context, phoneController.text, true),
+            setLoadingOtp(false),
+          },
+        )
+        .onError(
+          (error, stackTrace) => {
+            log(error.toString()),
+            setLoadingOtp(false),
+            SnackBarWidget.snackBar(context, error.toString()),
+          },
+        );
   }
 
   setNewPassword(context) async {
     setLoading(true);
-
-    final response = await ApiServices.postMethod(
-      url: Urls.kFORGOTPASS,
-      body: newPassBody(),
-    );
-
-    if (response is Success) {
-      setLoading(false);
-      GlassSnackBar.snackBar(
-          context: context,
-          title: "Password Changed successfully!",
-          subtitle: "Please login again to continue!");
-      await Future.delayed(const Duration(seconds: 2));
-      Navigator.push(
-        context,
-        NavigatorClass.animatedRoute(
-          route: const UserLoginScreen(),
-        ),
-      );
-
-      clearTextField();
-      log("Success");
-    }
-
-    if (response is Failure) {
-      log("Failed");
-      setLoading(false);
-      errorResonses(response.code, response.errorResponse, context);
-    }
+    _myRepo
+        .setNewPass(url: Urls.kFORGOTPASS, body: newPassBody())
+        .then((value) => {
+              setLoading(false),
+              GlassSnackBar.snackBar(
+                  context: context,
+                  title: "Password Changed successfully!",
+                  subtitle: "Please login again to continue!"),
+              Future.delayed(const Duration(seconds: 2)),
+              Navigator.push(
+                context,
+                NavigatorClass.animatedRoute(
+                  route: const UserLoginScreen(),
+                ),
+              ),
+              clearTextField(),
+              log("Success"),
+            })
+        .onError((error, stackTrace) => {
+              setLoading(false),
+              log("failed"),
+              SnackBarWidget.snackBar(context, error.toString()),
+            });
     setLoading(false);
   }
 
@@ -99,11 +99,11 @@ class ForgetPassViewModel with ChangeNotifier {
     phoneController.clear();
   }
 
-  errorResonses(int? statusCode, Object? message, BuildContext context) {
-    if (statusCode == 404) {
-      return SnackBarWidget.snackBar(
-          context, "Could not find the mobile number");
-    }
-    return SnackBarWidget.snackBar(context, message.toString());
-  }
+  // errorResonses(int? statusCode, Object? message, BuildContext context) {
+  //   if (statusCode == 404) {
+  //     return SnackBarWidget.snackBar(
+  //         context, "Could not find the mobile number");
+  //   }
+  //   return SnackBarWidget.snackBar(context, message.toString());
+  // }
 }

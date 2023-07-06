@@ -2,9 +2,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:sporter_turf_booking/data/response/api_response.dart';
 import 'package:sporter_turf_booking/home/view_model/booking_slot_view_model.dart';
-import 'package:sporter_turf_booking/repo/api_services.dart';
-import '../../repo/api_status.dart';
+import 'package:sporter_turf_booking/repository/proceed_payment_repository.dart';
 import '../../utils/constants.dart';
 import '../../utils/routes/navigations.dart';
 import '../model/payment_model.dart';
@@ -13,6 +13,7 @@ import '../model/razor_pay_model.dart';
 import '../model/venue_data_model.dart';
 
 class ProceedPaymentViewModel with ChangeNotifier {
+  final _myRepo = ProceedPaymentRepository();
   BookingSlotViewModel? _bookingData;
   final _razorpay = Razorpay();
   String? paymentId;
@@ -22,7 +23,6 @@ class ProceedPaymentViewModel with ChangeNotifier {
   RazorPayModel? razorPayOrderModel;
   VenueDataModel? _venuData;
   bool _razorPayPaymentInitialized = false;
-
 
   bool get isWallet => _isWallet;
 
@@ -42,7 +42,6 @@ class ProceedPaymentViewModel with ChangeNotifier {
     _venuData = venueData;
     notifyListeners();
   }
-
 
   openPayment({required RazorPayModel razorPayModel}) {
     final options = {
@@ -111,20 +110,20 @@ class ProceedPaymentViewModel with ChangeNotifier {
   }
 
   getProceedPayment() async {
-    final accessToken = await AccessToken.getAccessToken();
-    final response = await ApiServices.postMethod(
-        url: Urls.kGETPROCEEDPAYMENT,
-        body: proceedPaymentBody(),
-        headers: {"Authorization": accessToken!});
-    if (response is Success) {
-      NavigatorClass.navigatorKey.currentState?.pushNamedAndRemoveUntil(
-          NavigatorClass.paymentSuccessView, (route) => false);
-
-      log("Success --------------- --------");
-    }
-    if (response is Failure) {
-      log("Error");
-    }
+    _myRepo
+        .getProceedPayment(
+          url: Urls.kGETPROCEEDPAYMENT,
+          body: proceedPaymentBody(),
+        )
+        .then(
+          (value) => {
+            NavigatorClass.navigatorKey.currentState?.pushNamedAndRemoveUntil(
+                NavigatorClass.paymentSuccessView, (route) => false)
+          },
+        )
+        .onError(
+          (error, stackTrace) => {},
+        );
   }
 
   /// GER ORDER RESPONSE TO PAY THROUGH THE RAZORPAY
@@ -149,22 +148,24 @@ class ProceedPaymentViewModel with ChangeNotifier {
     required String venueId,
   }) async {
     razorPayOrderModel = null;
-    final accessToken = await AccessToken.getAccessToken();
-    final response = await ApiServices.postMethod(
-        url: Urls.kGETORDERID,
-        body: paymentModelBody(venueId),
-        jsonDecode: razorPayModelFromJson,
-        headers: {"Authorization": accessToken!});
-    if (response is Success) {
-      if (response.response != null) {
-        await setOrderModelResponse(response.response as RazorPayModel);
-      }
-      log("Success");
-      log(response.response.toString());
-    }
-    if (response is Failure) {
-      log("Error");
-    }
+    _myRepo
+        .getOrderModel(
+          url: Urls.kGETORDERID,
+          body: paymentModelBody(venueId),
+        )
+        .then(
+          (value) => {
+            setOrderModelResponse(
+                ApiResponse.completed(value).data as RazorPayModel),
+          },
+        )
+        .onError(
+          (error, stackTrace) => {
+            ApiResponse.error(
+              error.toString(),
+            ),
+          },
+        );
   }
 
   setOrderModelResponse(RazorPayModel orderModel) async {
