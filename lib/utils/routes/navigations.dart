@@ -3,16 +3,16 @@ import 'package:sporter_turf_booking/home/view/proceed_pay_view.dart';
 import 'package:sporter_turf_booking/home/view/booking_slot_view.dart';
 import 'package:sporter_turf_booking/home/view/payment_success_view.dart';
 import 'package:sporter_turf_booking/home/view/turf_details_view.dart';
-import 'package:sporter_turf_booking/user_registration/view/change_pass_view.dart';
+import 'package:sporter_turf_booking/user_authentications/view/change_pass_view.dart';
 import '../../home/view/bottom_navbar.dart';
 import '../../home/view/home_view.dart';
 import '../../home/view/my_bookings_view.dart';
 import '../../home/view/search_venue_view.dart';
-import '../../user_registration/view/forget_password_view.dart';
-import '../../user_registration/view/login_view.dart';
-import '../../user_registration/view/otp_page_view.dart';
-import '../../user_registration/view/sign_up_view.dart';
-import '../../user_registration/view/splash_screen_view.dart';
+import '../../user_authentications/view/forget_password_view.dart';
+import '../../user_authentications/view/login_view.dart';
+import '../../user_authentications/view/otp_page_view.dart';
+import '../../user_authentications/view/sign_up_view.dart';
+import '../../user_authentications/view/splash_screen_view.dart';
 
 class NavigatorClass {
   static const homeScreen = "/homeScreen";

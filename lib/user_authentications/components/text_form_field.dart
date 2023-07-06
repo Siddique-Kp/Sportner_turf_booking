@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/forget_password_view_model.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
+import 'package:sporter_turf_booking/user_authentications/view_model/forget_password_view_model.dart';
+import 'package:sporter_turf_booking/user_authentications/view_model/user_login_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
+import 'package:sporter_turf_booking/user_authentications/view_model/sign_up_view_model.dart';
 import 'pass_visible_button.dart';
 import '../../utils/textfield_validator.dart';
 

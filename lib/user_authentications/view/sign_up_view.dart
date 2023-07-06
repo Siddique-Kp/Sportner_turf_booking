@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:sporter_turf_booking/user_registration/view/login_view.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
+import 'package:sporter_turf_booking/user_authentications/view/login_view.dart';
+import 'package:sporter_turf_booking/user_authentications/view_model/firebase_auth_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 import 'package:sporter_turf_booking/utils/textstyles.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
+import 'package:sporter_turf_booking/user_authentications/view_model/sign_up_view_model.dart';
 import '../../utils/routes/navigations.dart';
 import '../components/curved_background.dart';
 import '../components/login_button_widget.dart';

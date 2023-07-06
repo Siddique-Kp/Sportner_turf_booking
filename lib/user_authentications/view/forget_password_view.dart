@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sporter_turf_booking/user_registration/components/text_form_field.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/forget_password_view_model.dart';
+import 'package:sporter_turf_booking/user_authentications/components/text_form_field.dart';
+import 'package:sporter_turf_booking/user_authentications/view_model/firebase_auth_view_model.dart';
+import 'package:sporter_turf_booking/user_authentications/view_model/forget_password_view_model.dart';
 
 import '../../utils/global_colors.dart';
 import '../../utils/global_values.dart';

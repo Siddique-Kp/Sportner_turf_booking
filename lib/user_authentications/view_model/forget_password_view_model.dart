@@ -2,10 +2,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/components/glass_snack_bar.dart';
-import 'package:sporter_turf_booking/repo/api_services.dart';
 import 'package:sporter_turf_booking/repository/user_auth_repository/forgot_password_repository.dart';
-import 'package:sporter_turf_booking/user_registration/view/login_view.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
+import 'package:sporter_turf_booking/user_authentications/view/login_view.dart';
+import 'package:sporter_turf_booking/user_authentications/view_model/firebase_auth_view_model.dart';
 import 'package:sporter_turf_booking/utils/constants.dart';
 import '../../utils/routes/navigations.dart';
 import '../components/snackbar.dart';
@@ -30,7 +29,6 @@ class ForgetPassViewModel with ChangeNotifier {
         .getForgotPass(url: Urls.kFORGOTPASSmob + phoneController.text)
         .then(
           (value) => {
-            print(value),
             context
                 .read<FirebaseAuthViewModel>()
                 .fireBasePhoneAuth(context, phoneController.text, true),
@@ -39,7 +37,6 @@ class ForgetPassViewModel with ChangeNotifier {
         )
         .onError(
           (error, stackTrace) => {
-            log(error.toString()),
             setLoadingOtp(false),
             SnackBarWidget.snackBar(context, error.toString()),
           },

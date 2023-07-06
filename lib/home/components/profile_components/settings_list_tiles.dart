@@ -6,7 +6,7 @@ import 'package:sporter_turf_booking/home/view_model/bottom_nav_view_model.dart'
 import 'package:sporter_turf_booking/utils/routes/navigations.dart';
 import 'package:sporter_turf_booking/utils/secrets.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../user_registration/view_model/firebase_auth_view_model.dart';
+import '../../../user_authentications/view_model/firebase_auth_view_model.dart';
 import '../../model/user_profile_data_modle.dart';
 import 'profile_settings_list_tile.dart';
 

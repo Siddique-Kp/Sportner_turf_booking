@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/user_login_view_model.dart';
+import 'package:sporter_turf_booking/user_authentications/view_model/firebase_auth_view_model.dart';
+import 'package:sporter_turf_booking/user_authentications/view_model/user_login_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 
 class LoginButtonWidget extends StatelessWidget {

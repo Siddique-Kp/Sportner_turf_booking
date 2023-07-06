@@ -11,10 +11,10 @@ import '../../home/view_model/user_profile_view_model.dart';
 import '../../home/view_model/venue_by_sport_view_model.dart';
 import '../../home/view_model/venue_details_view_model.dart';
 import '../../home/view_model/venue_list_view_model.dart';
-import '../../user_registration/view_model/firebase_auth_view_model.dart';
-import '../../user_registration/view_model/forget_password_view_model.dart';
-import '../../user_registration/view_model/sign_up_view_model.dart';
-import '../../user_registration/view_model/user_login_view_model.dart';
+import '../../user_authentications/view_model/firebase_auth_view_model.dart';
+import '../../user_authentications/view_model/forget_password_view_model.dart';
+import '../../user_authentications/view_model/sign_up_view_model.dart';
+import '../../user_authentications/view_model/user_login_view_model.dart';
 
 class ProviderClass {
  static List<SingleChildWidget> provider = [

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sporter_turf_booking/user_registration/components/otp_textfield.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/firebase_auth_view_model.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/forget_password_view_model.dart';
+import 'package:sporter_turf_booking/user_authentications/components/otp_textfield.dart';
+import 'package:sporter_turf_booking/user_authentications/view_model/firebase_auth_view_model.dart';
+import 'package:sporter_turf_booking/user_authentications/view_model/forget_password_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
 import 'package:sporter_turf_booking/utils/textstyles.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
+import 'package:sporter_turf_booking/user_authentications/view_model/sign_up_view_model.dart';
 
 class OtpVerificationPage extends StatelessWidget {
   final bool isForgotPass;

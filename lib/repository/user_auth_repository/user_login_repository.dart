@@ -1,7 +1,7 @@
 import 'package:sporter_turf_booking/data/network/http_api_service.dart';
 import 'package:sporter_turf_booking/data/network/network_api_service.dart';
 
-import '../../user_registration/model/user_login_model.dart';
+import '../../user_authentications/model/user_login_model.dart';
 
 class UserLoginRepository {
   HttpApiServices apiServices = NetWorkApiServices();

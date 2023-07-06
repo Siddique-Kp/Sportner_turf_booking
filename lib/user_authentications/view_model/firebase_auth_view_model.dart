@@ -6,9 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sporter_turf_booking/user_registration/components/snackbar.dart';
-import 'package:sporter_turf_booking/user_registration/view/otp_page_view.dart';
-import 'package:sporter_turf_booking/user_registration/view_model/sign_up_view_model.dart';
+import 'package:sporter_turf_booking/user_authentications/components/snackbar.dart';
+import 'package:sporter_turf_booking/user_authentications/view/otp_page_view.dart';
+import 'package:sporter_turf_booking/user_authentications/view_model/sign_up_view_model.dart';
 import 'package:sporter_turf_booking/utils/keys.dart';
 import '../../utils/routes/navigations.dart';
 import '../model/firebase_exeptions.dart';
@@ -111,7 +111,7 @@ class FirebaseAuthViewModel with ChangeNotifier {
     final navigator = Navigator.of(context);
     setOtpLoading(true);
     try {
-      log('came here');
+      log('came here otp auth');
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: _verifyOTP,
         smsCode: otpValue,

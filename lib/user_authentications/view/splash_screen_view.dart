@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sporter_turf_booking/home/view/bottom_navbar.dart';
-import 'package:sporter_turf_booking/user_registration/view/login_view.dart';
+import 'package:sporter_turf_booking/user_authentications/view/login_view.dart';
 import 'package:sporter_turf_booking/utils/keys.dart';
 
 import '../../home/view_model/get_location_view_model.dart';

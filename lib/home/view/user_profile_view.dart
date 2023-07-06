@@ -8,7 +8,7 @@ import 'package:sporter_turf_booking/home/components/profile_components/user_pro
 import 'package:sporter_turf_booking/home/view_model/user_profile_view_model.dart';
 import 'package:sporter_turf_booking/utils/global_colors.dart';
 import 'package:sporter_turf_booking/utils/global_values.dart';
-import '../../user_registration/view_model/firebase_auth_view_model.dart';
+import '../../user_authentications/view_model/firebase_auth_view_model.dart';
 import '../../utils/textstyles.dart';
 import '../components/normal_alert_box.dart';
 import '../components/profile_components/settings_list_tiles.dart';
