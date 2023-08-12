@@ -7,6 +7,7 @@ import 'package:sporter_turf_booking/utils/constants.dart';
 import '../../repository/user_auth_repository/user_signup_repository.dart';
 import '../../utils/keys.dart';
 import '../../utils/routes/navigations.dart';
+import '../components/snackbar.dart';
 import '../model/user_signup_model.dart';
 
 class SignUpViewModel with ChangeNotifier {
@@ -17,12 +18,10 @@ class SignUpViewModel with ChangeNotifier {
 
   bool _isShowPassword = true;
   bool _isShowConfPassword = true;
-  bool _isLoading = false;
   UserSignupModel? _userData;
 
   bool get isShowPassword => _isShowPassword;
   bool get isShowConfPassword => _isShowConfPassword;
-  bool get isLoading => _isLoading;
   UserSignupModel get userData => _userData!;
 
   final _myRepo = UserSignUpRepository();
@@ -48,19 +47,25 @@ class SignUpViewModel with ChangeNotifier {
     confirfPassController.clear();
   }
 
-  setLoading(bool loading) async {
-    _isLoading = loading;
-    notifyListeners();
-  }
-
   Future<UserSignupModel?> setUserData(UserSignupModel userData) async {
     _userData = userData;
     return _userData;
   }
 
+  bool? getMobileExist(BuildContext context) {
+    _myRepo.getIsMobielExist(
+        url: Urls.kIsMobileExist,
+        body: {"mobile": phoneController.text.trim()}).then((value) {
+      return false;
+    }).onError((error, stackTrace) {
+      SnackBarWidget.snackBar(context, error.toString());
+      return true;
+    });
+    return null;
+  }
+
   getSignUpStatus(BuildContext context) async {
     final navigator = Navigator.of(context);
-    setLoading(true);
 
     _myRepo
         .getUserSignUp(
@@ -70,7 +75,10 @@ class SignUpViewModel with ChangeNotifier {
         .then(
           (value) => {
             log("success"),
-            setSignupResponse(ApiResponse.completed(value)),
+            setSignupResponse(
+              ApiResponse.completed(value),
+              context,
+            ),
             clearTextField(),
             navigator.pushNamedAndRemoveUntil(
                 NavigatorClass.mainScreen, (route) => false),
@@ -82,12 +90,21 @@ class SignUpViewModel with ChangeNotifier {
             clearPassword(),
           },
         );
-    setLoading(false);
   }
 
-  setSignupResponse(ApiResponse<UserSignupModel> response) {
+  setSignupResponse(
+    ApiResponse<UserSignupModel> response,
+    BuildContext context,
+  ) {
     if (response.status == Status.completed) {
       setSignupStatus(response.data!.accessToken!);
+    } else if (response.status == Status.error) {
+      if (response.message!.contains("mobile - already exist")) {
+        SnackBarWidget.snackBar(
+            context, "User with this mobile number already exists");
+      } else {
+        SnackBarWidget.snackBar(context, response.message.toString());
+      }
     }
   }
 
@@ -110,13 +127,4 @@ class SignUpViewModel with ChangeNotifier {
     );
     return body.toJson();
   }
-
-  // errorResonses(ErrorResponseModel signUperror, BuildContext context) {
-  //   final statusCode = signUperror.code;
-  //   if (statusCode == 409) {
-  //     return SnackBarWidget.snackBar(
-  //         context, "User with this mobile number already exists");
-  //   }
-  //   return SnackBarWidget.snackBar(context, signUperror.message.toString());
-  // }
 }

@@ -16,4 +16,15 @@ class UserSignUpRepository {
       rethrow;
     }
   }
+  Future getIsMobielExist({
+    required String url,
+    required Map body,
+  }) async {
+    try {
+      final response = await apiServices.httpPostMethod(url: url, data: body);
+      return response["message"];
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

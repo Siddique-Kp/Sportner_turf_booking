@@ -119,12 +119,18 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                               ? null
                               : () async {
                                   if (_formKey.currentState!.validate()) {
-                                    await context
-                                        .read<FirebaseAuthViewModel>()
-                                        .fireBasePhoneAuth(
-                                            context,
-                                            signUpProvider.phoneController.text,
-                                            false);
+                                    final isMobileExist = context
+                                        .read<SignUpViewModel>()
+                                        .getMobileExist(context);
+                                    if (isMobileExist== false) {
+                                      await context
+                                          .read<FirebaseAuthViewModel>()
+                                          .fireBasePhoneAuth(
+                                              context,
+                                              signUpProvider
+                                                  .phoneController.text,
+                                              false);
+                                    }
                                   }
                                 },
                         ),
@@ -133,7 +139,6 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                           leftText: 'Already have an account? ',
                           rightText: "Login",
                           onTap: () {
-                      
                             Navigator.push(
                               context,
                               NavigatorClass.animatedRoute(

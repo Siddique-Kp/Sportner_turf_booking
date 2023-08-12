@@ -8,7 +8,7 @@ import Foundation
 import firebase_auth
 import firebase_core
 import geolocator_apple
-import package_info_plus_macos
+import package_info_plus
 import shared_preferences_foundation
 import url_launcher_macos
 

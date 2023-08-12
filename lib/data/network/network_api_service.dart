@@ -70,8 +70,11 @@ class NetWorkApiServices extends HttpApiServices {
       case 401:
        log("4");
         throw UnauthorisedException(jsonBody["message"]);
+      case 409:
+       log("5");
+        throw UnauthorisedException(jsonBody["message"]);
       default:
-        log("dfasdfasdfa");
+        log("default");
         throw FetchDataException("Unknown error ${response.statusCode}");
     }
   }

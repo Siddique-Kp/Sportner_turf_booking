@@ -40,8 +40,8 @@ class UserProfileContainer extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 16),
               ),
-              Text(
-                "+91-${userData.mobile!}",
+            userData.mobile == null ?AppSizes.kWidth10:  Text(
+                "+91-${userData.mobile}",
                 style: const TextStyle(
                     color: AppColors.white,
                     fontWeight: FontWeight.w600,

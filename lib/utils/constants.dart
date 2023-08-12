@@ -2,9 +2,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'keys.dart';
 
 class Urls {
-  static const String kBASEURL = "http://192.168.0.215:5000";
+  static const String kBASEURL = "https://enturfapi.onrender.com";
   static const String kUSERSIGNIN = "$kBASEURL/signin";
   static const String kUSERSIGNUP = "$kBASEURL/signup";
+  static const String kIsMobileExist = "$kBASEURL/mobileExist";
+  static const String kGoogleSIGNIN = "$kBASEURL/signin/google";
   static const String kFORGOTPASSmob =
       "$kBASEURL/forgotPwd/mobileExist?mobile=";
   static const String kFORGOTPASS = "$kBASEURL/forgotPwd";
@@ -28,10 +30,4 @@ class AccessToken {
   }
 }
 
-class InvalidRespons {
-  static const kUSERINVALIDRESPONSE = 100;
-  static const kNOINTERNET = 404;
-  static const kINVALIDFORMAT = 102;
-  static const kUNKNOWNERROR = 103;
-  static const kTIMEOUT = 104;
-}
+

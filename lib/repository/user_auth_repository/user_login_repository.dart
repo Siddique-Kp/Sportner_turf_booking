@@ -15,4 +15,14 @@ class UserLoginRepository {
       rethrow;
     }
   }
+
+  Future getGoogleSignin({required String url, required Map body}) async {
+    try {
+      final response = await apiServices.httpPostMethod(url: url, data: body);
+
+      return userLoginModelFromJson(response);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

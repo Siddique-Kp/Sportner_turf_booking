@@ -1,11 +1,12 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:provider/provider.dart';
 import 'package:sporter_turf_booking/home/components/normal_alert_box.dart';
 import 'package:sporter_turf_booking/home/view_model/bottom_nav_view_model.dart';
 import 'package:sporter_turf_booking/utils/routes/navigations.dart';
 import 'package:sporter_turf_booking/utils/secrets.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 import '../../../user_authentications/view_model/firebase_auth_view_model.dart';
 import '../../model/user_profile_data_modle.dart';
 import 'profile_settings_list_tile.dart';
@@ -40,7 +41,8 @@ class SettingsListTile extends StatelessWidget {
           subtitle: "Contact us on whatsapp",
           icon: Icons.help,
           onTap: () {
-            openWhatsappChat(myMobile);
+            // openWhatsappChat(myMobile);
+            openEmail(myEmail);
           },
         ),
         ProfileSettings(
@@ -80,15 +82,27 @@ class SettingsListTile extends StatelessWidget {
     );
   }
 
-  void openWhatsappChat(String phoneNumber) async {
-    String whatsappUrl = 'https://wa.me/$phoneNumber';
+  // void openWhatsappChat(String phoneNumber) async {
+  //   String whatsappUrl = 'https://wa.me/$phoneNumber';
+  //   try {
+  //     if (await canLaunchUrl(Uri.parse(whatsappUrl))) {
+  //       await launchUrl(Uri.parse(whatsappUrl),
+  //           mode: LaunchMode.externalApplication);
+  //     }
+  //   } catch (e) {
+  //     log(e.toString());
+  //   }
+  // }
+
+  void openEmail(String emailAddress) async {
+    final Email email = Email(
+      recipients: [emailAddress],
+    );
+
     try {
-      if (await canLaunchUrl(Uri.parse(whatsappUrl))) {
-        await launchUrl(Uri.parse(whatsappUrl),
-            mode: LaunchMode.externalApplication);
-      }
-    } catch (e) {
-      log(e.toString());
+      await FlutterEmailSender.send(email);
+    } catch (error) {
+      log(error.toString());
     }
   }
 }

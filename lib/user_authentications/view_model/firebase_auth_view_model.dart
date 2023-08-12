@@ -6,9 +6,13 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sporter_turf_booking/data/response/api_response.dart';
+import 'package:sporter_turf_booking/repository/user_auth_repository/user_login_repository.dart';
 import 'package:sporter_turf_booking/user_authentications/components/snackbar.dart';
+import 'package:sporter_turf_booking/user_authentications/model/user_login_model.dart';
 import 'package:sporter_turf_booking/user_authentications/view/otp_page_view.dart';
 import 'package:sporter_turf_booking/user_authentications/view_model/sign_up_view_model.dart';
+import 'package:sporter_turf_booking/utils/constants.dart';
 import 'package:sporter_turf_booking/utils/keys.dart';
 import '../../utils/routes/navigations.dart';
 import '../model/firebase_exeptions.dart';
@@ -28,8 +32,9 @@ class FirebaseAuthViewModel with ChangeNotifier {
   int get otpResendToken => _otpResendToken!;
   bool get clearOtp => _clearOtp;
 
+  final _userRepo = UserLoginRepository();
+
   Future firebaseGoogleAuth(context) async {
-    final navigator = Navigator.of(context);
     try {
       final googleUser = await googleSigin.signIn();
 
@@ -44,9 +49,10 @@ class FirebaseAuthViewModel with ChangeNotifier {
         idToken: googleAuth.idToken,
       );
       await FirebaseAuth.instance.signInWithCredential(credential);
-      navigator.pushReplacementNamed(NavigatorClass.mainScreen);
-      final sharedPref = await SharedPreferences.getInstance();
-      sharedPref.setBool(GlobalKeys.userLoggedWithGoogle, true);
+      setGoogleSignin(
+          userName: _user!.displayName!,
+          userEmail: _user!.email,
+          context: context);
     } on PlatformException catch (e) {
       log(e.code);
       SnackBarWidget.snackBar(context, "No internet connection");
@@ -150,6 +156,40 @@ class FirebaseAuthViewModel with ChangeNotifier {
       forceResendingToken: _otpResendToken,
       timeout: const Duration(seconds: 60),
     );
+  }
+
+  setGoogleSignin({
+    required String userName,
+    required String userEmail,
+    required BuildContext context,
+  }) async {
+    final navigator = Navigator.of(context);
+    final sharedPref = await SharedPreferences.getInstance();
+    _userRepo.getGoogleSignin(
+      url: Urls.kGoogleSIGNIN,
+      body: {
+        "email": userEmail,
+        "fullName": userName,
+      },
+    ).then(
+      (value) {
+        navigator.pushReplacementNamed(NavigatorClass.mainScreen);
+        sharedPref.setBool(GlobalKeys.userLoggedWithGoogle, true);
+        setGoogleSignupStatus(ApiResponse.completed(value));
+      },
+    ).onError(
+      (error, stackTrace) {
+        SnackBarWidget.snackBar(context, "Google Signin failed");
+      },
+    );
+  }
+
+  setGoogleSignupStatus(
+    ApiResponse<UserLoginModel> response,
+  ) async {
+    final status = await SharedPreferences.getInstance();
+    await status.setBool(GlobalKeys.userLoggedWithGoogle, true);
+    await status.setString(GlobalKeys.accesToken, response.data!.accessToken!);
   }
 
   // ----------- user Login status
